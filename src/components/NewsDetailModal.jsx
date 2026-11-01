@@ -198,7 +198,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
           {/* Full Headline */}
           <div className="space-y-1.5">
-            <h2 className={`text-lg sm:text-2xl md:text-2xl font-black leading-snug tracking-tight ${
+            <h2 className={`text-xl sm:text-3xl md:text-3xl font-bold leading-relaxed tracking-tight ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
               {lang === 'ar' ? post.title : (post.titleEn || post.title)}
@@ -215,7 +215,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             }`}>
               <div className="flex items-start gap-2.5">
                 <FileCheck2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm leading-relaxed sm:leading-relaxed font-semibold text-justify">
+                <p className="text-sm sm:text-base leading-loose font-bold text-justify">
                   {leadParagraph}
                 </p>
               </div>
@@ -224,7 +224,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
           {/* Detailed Paragraphs */}
           {supportingParagraphs.length > 0 && (
-            <div className="space-y-3 text-xs sm:text-sm leading-relaxed sm:leading-loose font-normal text-slate-700 dark:text-slate-300">
+            <div className="space-y-4 text-sm sm:text-base leading-loose font-normal text-slate-700 dark:text-slate-300">
               {supportingParagraphs.map((para, i) => (
                 <p key={i} className="text-justify leading-relaxed sm:leading-loose">
                   {para}
@@ -243,7 +243,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               <Layers className="w-4 h-4" />
               <span>{lang === 'ar' ? 'المعايير الفنية والتقنية المرتبطة بالعمل:' : 'Technical Specifications:'}</span>
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] sm:text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
               <div className="flex items-center gap-2 p-2 rounded-xl bg-white/5 border border-white/5">
                 <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0 shadow-sm shadow-amber-500/50" />
                 <span className="text-slate-300">{lang === 'ar' ? 'المواصفات: كود الطرق الدولي AASHTO' : 'Code: AASHTO Standards'}</span>

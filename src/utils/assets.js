@@ -20,7 +20,7 @@ export const resolveAsset = (path) => {
     return path;
   }
   const clean = path.replace(/^(\.\/|\/)/, '');
-  const versionParam = (clean.includes('road-hero-mobile') || clean.includes('hero-desert-road')) ? '?v=20261101_yellow_road' : '';
+  const versionParam = (clean.includes('road-hero-mobile') || clean.includes('hero-desert-road')) ? '?v=20261101_vivid_yellow_road_v2' : '';
 
   if (typeof window !== 'undefined' && window.location) {
     const pathname = window.location.pathname || '';

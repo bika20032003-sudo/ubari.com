@@ -246,17 +246,16 @@ export default function Header({
 
           {/* Authority Official Title */}
           <div 
-            style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
             className="text-start border-s border-slate-300 dark:border-white/10 ps-1.5 sm:ps-3 min-w-0 flex-1 sm:flex-initial"
           >
             <div className="flex items-center gap-1 min-w-0">
-              <h1 className={`font-black text-[10px] xs:text-[11px] sm:text-sm leading-tight whitespace-nowrap group-hover:text-amber-500 transition-colors ${
-                theme === 'light' ? 'text-slate-900' : 'text-white'
+              <h1 className={`font-bold text-xs xs:text-sm sm:text-base leading-tight whitespace-nowrap group-hover:text-amber-500 transition-colors ${
+                theme === 'light' ? 'text-slate-950' : 'text-white'
               }`}>
                 {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transportation Authority'}
               </h1>
             </div>
-            <p className="text-[9px] sm:text-[10px] text-amber-500 font-bold flex items-center gap-1 whitespace-nowrap mt-0.5">
+            <p className="text-[10px] sm:text-xs text-amber-500 font-bold flex items-center gap-1 whitespace-nowrap mt-0.5">
               <span>{lang === 'ar' ? 'طريق أوباري – غات' : 'Ubari – Ghat'}</span>
               <span className="hidden xs:inline">(360 كم)</span>
             </p>

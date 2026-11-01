@@ -155,11 +155,24 @@
    GLOBAL RESET & ARABIC TYPOGRAPHY HARMONY ENGINE
    ============================================================ */
 html {
+  font-size: 18px;
   scroll-padding-top: 85px;
-  text-rendering: optimizeSpeed;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 19px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 20px;
+  }
 }
 
 html, body, #root {
@@ -213,13 +226,13 @@ html[dir="rtl"] h6,
 [dir="rtl"] h4,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
-  line-height: 1.38 !important;
+  line-height: 1.45 !important;
   font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif !important;
 }
 
 html[dir="rtl"] p,
 [dir="rtl"] p {
-  line-height: 1.75;
+  line-height: 1.85 !important;
   font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
 }
 

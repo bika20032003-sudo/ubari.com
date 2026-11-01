@@ -172,7 +172,7 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-sm sm:text-base font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
@@ -201,7 +201,7 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-sm sm:text-base font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'

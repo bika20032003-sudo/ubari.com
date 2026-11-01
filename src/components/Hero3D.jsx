@@ -230,32 +230,30 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
             </div>
 
             {/* 4K Hero Title */}
-            <div className="space-y-2 sm:space-y-4">
+            <div className="space-y-2.5 sm:space-y-5">
               <h1 
-                style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
-                className={`text-xl xs:text-2xl sm:text-5xl lg:text-6xl font-black leading-normal sm:leading-[1.3] ${
+                className={`text-2xl xs:text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-snug sm:leading-[1.3] ${
                   theme === 'light' ? 'text-slate-950' : 'text-white'
                 }`}
               >
-                <span className="block mb-0.5 sm:mb-2 text-slate-900 dark:text-white text-base xs:text-xl sm:text-4xl lg:text-5xl">{t.heroMainTitle1}</span>
+                <span className="block mb-1 sm:mb-2 text-slate-900 dark:text-white text-lg xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">{t.heroMainTitle1}</span>
                 <span 
-                  style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
-                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-3 pb-3 text-2xl xs:text-3xl sm:text-5xl lg:text-6xl overflow-visible font-black tracking-normal"
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-2 pb-2 text-3xl xs:text-4xl sm:text-6xl lg:text-7xl xl:text-8xl overflow-visible font-bold tracking-normal"
                 >
                   {t.heroMainTitle2}
                 </span>
-                <span className="inline-block text-sm xs:text-base sm:text-3xl font-light text-slate-500 dark:text-white/85 ms-1.5 sm:ms-3">
+                <span className="inline-block text-base xs:text-lg sm:text-3xl lg:text-4xl font-normal text-slate-500 dark:text-white/85 ms-1.5 sm:ms-3">
                   (360 كم)
                 </span>
               </h1>
               
-              <p className={`text-xs xs:text-sm sm:text-lg lg:text-xl font-bold leading-relaxed ${
+              <p className={`text-sm xs:text-base sm:text-xl lg:text-2xl font-bold leading-relaxed ${
                 theme === 'light' ? 'text-slate-800' : 'text-white'
               }`}>
                 {t.heroSubtitle}
               </p>
 
-              <p className={`text-[11px] xs:text-xs sm:text-sm lg:text-base max-w-xl leading-relaxed font-normal ${
+              <p className={`text-xs xs:text-sm sm:text-base lg:text-lg max-w-2xl leading-relaxed font-normal ${
                 theme === 'light' ? 'text-slate-700' : 'text-white'
               }`}>
                 {t.heroDesc}
