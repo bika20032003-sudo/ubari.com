@@ -55,41 +55,43 @@ export default function MarqueeTicker({
   };
   const animDuration = getDuration();
 
-  // ── Variant 1: Selected Work Grid Marquee (Seamless Dual-Track) ──
+  // ── Variant 1: Selected Work Grid Marquee (Seamless Dual-Track with Alpha Faded Edges) ──
   if (variant === 'selected-work') {
     return (
-      <div className="w-full overflow-hidden py-3 select-none relative marquee-container group">
-        {/* Fade gradient masks on sides */}
-        <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-r from-background-current to-transparent" />
-        <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-28 z-10 pointer-events-none bg-gradient-to-l from-background-current to-transparent" />
-
+      <div 
+        className="w-full overflow-hidden py-3 select-none relative marquee-container group"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40px, black calc(100% - 40px), transparent 100%)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 40px, black calc(100% - 40px), transparent 100%)'
+        }}
+      >
         <div className="flex w-full overflow-hidden select-none" dir="ltr">
           {/* Track 1 */}
           <div 
-            className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-6 pe-4 sm:pe-6 py-1 will-change-transform"
+            className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-6 pe-4 sm:pe-6 py-2 will-change-transform"
             style={{ animationDuration: animDuration }}
           >
             {baseList.map((item, idx) => (
               <div
                 key={`work1-${idx}`}
                 dir="rtl"
-                className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 rounded-2xl border shadow-sm transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
+                className={`flex items-center gap-3 px-4 sm:px-5 py-3 rounded-2xl border shadow-md transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
                   theme === 'light'
-                    ? 'bg-white border-slate-200 text-slate-900 shadow-slate-200/40'
-                    : 'bg-[#0f172a] border-white/10 text-white shadow-black/40'
+                    ? 'bg-white border-amber-300/80 text-slate-900 shadow-slate-200/50'
+                    : 'bg-[#0b101e] border-amber-500/25 text-white shadow-black/60'
                 }`}
               >
-                <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
-                <div className="text-start">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs sm:text-sm font-black">{item.title}</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950">
+                <div className="text-start min-w-0">
+                  <div className="flex items-center gap-2 flex-nowrap">
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
                       {item.stat}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-medium">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
                 </div>
               </div>
             ))}
@@ -98,30 +100,30 @@ export default function MarqueeTicker({
           {/* Track 2 (Clone for infinite seamless loop) */}
           <div 
             aria-hidden="true"
-            className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-6 pe-4 sm:pe-6 py-1 will-change-transform"
+            className="flex shrink-0 animate-marquee items-center gap-4 sm:gap-6 pe-4 sm:pe-6 py-2 will-change-transform"
             style={{ animationDuration: animDuration }}
           >
             {baseList.map((item, idx) => (
               <div
                 key={`work2-${idx}`}
                 dir="rtl"
-                className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 rounded-2xl border shadow-sm transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
+                className={`flex items-center gap-3 px-4 sm:px-5 py-3 rounded-2xl border shadow-md transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
                   theme === 'light'
-                    ? 'bg-white border-slate-200 text-slate-900 shadow-slate-200/40'
-                    : 'bg-[#0f172a] border-white/10 text-white shadow-black/40'
+                    ? 'bg-white border-amber-300/80 text-slate-900 shadow-slate-200/50'
+                    : 'bg-[#0b101e] border-amber-500/25 text-white shadow-black/60'
                 }`}
               >
-                <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
-                <div className="text-start">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs sm:text-sm font-black">{item.title}</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950">
+                <div className="text-start min-w-0">
+                  <div className="flex items-center gap-2 flex-nowrap">
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
                       {item.stat}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-medium">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
                 </div>
               </div>
             ))}

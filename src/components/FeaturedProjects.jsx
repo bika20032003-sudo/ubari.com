@@ -284,8 +284,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         </p>
       </div>
 
-      {/* ── Continuous Moving Marquee for Selected Work ── */}
-      <div className="w-full">
+      {/* ── Continuous Moving Marquee for Selected Work (Full Bleed on Mobile with Soft Edges) ── */}
+      <div className="-mx-4 sm:mx-0 w-[calc(100%+2rem)] sm:w-full overflow-hidden">
         <MarqueeTicker variant="selected-work" theme={theme} direction={lang === 'ar' ? 'rtl' : 'ltr'} />
       </div>
 
@@ -407,8 +407,14 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         onTouchMove={onTouchMoveProj}
         onTouchEnd={onTouchEndProj}
       >
-        {/* Mobile Projects Quick Thumbnail Switcher */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 scrollbar-none no-scrollbar -mx-1 px-1">
+        {/* Mobile Projects Quick Thumbnail Switcher with Soft Alpha Fade on Edges */}
+        <div 
+          className="flex items-center gap-2 overflow-x-auto pb-2 pt-0.5 scrollbar-none no-scrollbar -mx-4 px-4"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%)'
+          }}
+        >
           {filteredProjects.map((proj, idx) => (
             <button
               key={proj.id}
