@@ -239,9 +239,10 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                 <button
                   type="button"
                   onClick={() => setSelectedPostModal(currentPost)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-500 border border-amber-500/35 text-xs font-black transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 text-xs font-bold transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm group/btn"
                 >
-                  <span>{lang === 'ar' ? 'قراءة تفاصيل الخبر بالكامل ↗' : 'Read Full Article ↗'}</span>
+                  <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
                 </button>
               </div>
             </div>

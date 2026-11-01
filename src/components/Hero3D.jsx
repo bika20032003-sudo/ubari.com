@@ -404,9 +404,17 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                         />
                       ))}
                     </div>
-                    <span className="text-amber-500 font-black flex items-center gap-1 hover:underline">
-                      <span>{lang === 'ar' ? 'عرض الخبر بالكامل ↗' : 'View Full Post ↗'}</span>
-                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedNewsPost(currentMobileNews);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
+                    >
+                      <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
+                    </button>
                   </div>
                 </div>
 
