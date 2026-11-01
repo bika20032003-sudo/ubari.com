@@ -150,9 +150,8 @@ export default function MarqueeTicker({
         
         {/* ── Fixed Live Broadcast Badge (Refined Frosted Glass Pill) ── */}
         <div className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 text-slate-950 font-black text-[10px] sm:text-xs shadow-md shadow-amber-500/25 z-20 border border-amber-300/40 transition-transform duration-200 hover:scale-[1.02]">
-          <span className="relative flex h-2 w-2 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600 shadow-sm"></span>
+          <span className="relative flex h-2 w-2 flex-shrink-0 items-center justify-center">
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-950/80 shadow-sm"></span>
           </span>
           <span className="tracking-wide whitespace-nowrap">
             <span className="inline sm:hidden">{lang === 'ar' ? 'المستجدات' : 'Updates'}</span>
@@ -160,37 +159,8 @@ export default function MarqueeTicker({
           </span>
         </div>
 
-        {/* ── Marquee Track with Side Fade Masks ── */}
+        {/* ── Marquee Track ── */}
         <div className="relative flex-1 overflow-hidden marquee-container group">
-          
-          {/* Side Fade Gradient Mask - Start (Right in RTL, next to badge) */}
-          <div 
-            className="absolute top-0 bottom-0 start-0 w-8 sm:w-16 z-10 pointer-events-none"
-            style={{
-              background: theme === 'light'
-                ? isRtl
-                  ? 'linear-gradient(to left, rgba(255, 255, 255, 0.6) 0%, transparent 100%)'
-                  : 'linear-gradient(to right, rgba(255, 255, 255, 0.6) 0%, transparent 100%)'
-                : isRtl
-                  ? 'linear-gradient(to left, rgba(6, 10, 22, 0.65) 0%, transparent 100%)'
-                  : 'linear-gradient(to right, rgba(6, 10, 22, 0.65) 0%, transparent 100%)'
-            }}
-          />
-          
-          {/* Side Fade Gradient Mask - End (Left in RTL, screen edge) */}
-          <div 
-            className="absolute top-0 bottom-0 end-0 w-8 sm:w-16 z-10 pointer-events-none"
-            style={{
-              background: theme === 'light'
-                ? isRtl
-                  ? 'linear-gradient(to right, rgba(255, 255, 255, 0.6) 0%, transparent 100%)'
-                  : 'linear-gradient(to left, rgba(255, 255, 255, 0.6) 0%, transparent 100%)'
-                : isRtl
-                  ? 'linear-gradient(to right, rgba(6, 10, 22, 0.65) 0%, transparent 100%)'
-                  : 'linear-gradient(to left, rgba(6, 10, 22, 0.65) 0%, transparent 100%)'
-            }}
-          />
-
           {/* Continuous Moving Track: Smooth pause on hover */}
           <div className="flex w-full overflow-hidden select-none group-hover:[&>div]:[animation-play-state:paused]" dir="ltr">
             {/* Primary Track 1 */}
@@ -218,11 +188,8 @@ export default function MarqueeTicker({
                     {item.text}
                   </span>
 
-                  {/* Red Live Pulse Dot Separator */}
-                  <span className="relative flex h-2 w-2 mx-3 sm:mx-4 flex-shrink-0 items-center justify-center select-none">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-60"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.9)]"></span>
-                  </span>
+                  {/* Elegant Amber Separator (Replaces Red Dot) */}
+                  <span className="text-amber-500/50 mx-2.5 sm:mx-3.5 select-none font-bold text-xs shrink-0">✦</span>
                 </div>
               ))}
             </div>
@@ -253,16 +220,12 @@ export default function MarqueeTicker({
                     {item.text}
                   </span>
 
-                  {/* Red Live Pulse Dot Separator */}
-                  <span className="relative flex h-2 w-2 mx-3 sm:mx-4 flex-shrink-0 items-center justify-center select-none">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-60"></span>
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.9)]"></span>
-                  </span>
+                  {/* Elegant Amber Separator (Replaces Red Dot) */}
+                  <span className="text-amber-500/50 mx-2.5 sm:mx-3.5 select-none font-bold text-xs shrink-0">✦</span>
                 </div>
               ))}
             </div>
           </div>
-
         </div>
 
       </div>

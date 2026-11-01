@@ -131,12 +131,9 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
               <span>{lang === 'ar' ? currentPost.category : currentPost.categoryEn}</span>
             </span>
 
-            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-red-500/10 text-red-500 border border-red-500/25 text-[11px] sm:text-xs font-black">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-              </span>
-              <span>{lang === 'ar' ? 'مستجدات حية' : 'Live Post'}</span>
+            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-amber-500/15 text-amber-500 border border-amber-500/30 text-[11px] sm:text-xs font-black">
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>{lang === 'ar' ? 'مستجدات معتمدة' : 'Official Post'}</span>
             </div>
           </div>
 

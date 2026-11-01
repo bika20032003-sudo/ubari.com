@@ -274,13 +274,6 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                   {currentFeature.title}
                 </h4>
               </div>
-
-              {/* Slide index */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] text-slate-400 font-mono bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded border border-slate-200 dark:border-white/10 whitespace-nowrap">
-                  {activeFeatureIdx + 1} / {originalFeatures.length}
-                </span>
-              </div>
             </div>
 
             {/* Card Description */}
