@@ -20,6 +20,7 @@ export const resolveAsset = (path) => {
     return path;
   }
   const clean = path.replace(/^(\.\/|\/)/, '');
+  const versionParam = (clean.includes('road-hero-mobile') || clean.includes('hero-desert-road')) ? '?v=20261101_yellow_road' : '';
 
   if (typeof window !== 'undefined' && window.location) {
     const pathname = window.location.pathname || '';
@@ -30,11 +31,11 @@ export const resolveAsset = (path) => {
       : (pathname.endsWith('/') ? pathname : pathname + '/');
 
     if (baseDir && baseDir !== '/') {
-      return `${baseDir}${clean}`;
+      return `${baseDir}${clean}${versionParam}`;
     }
   }
 
-  return `./${clean}`;
+  return `./${clean}${versionParam}`;
 };
 
 export const getImageAsset = (key) => {

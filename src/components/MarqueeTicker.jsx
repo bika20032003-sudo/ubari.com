@@ -150,8 +150,9 @@ export default function MarqueeTicker({
         
         {/* ── Fixed Live Broadcast Badge (Refined Frosted Glass Pill) ── */}
         <div className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 text-slate-950 font-black text-[10px] sm:text-xs shadow-md shadow-amber-500/25 z-20 border border-amber-300/40 transition-transform duration-200 hover:scale-[1.02]">
-          <span className="relative flex h-2 w-2 flex-shrink-0 items-center justify-center">
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-slate-950/80 shadow-sm"></span>
+          <span className="relative flex h-2 w-2 flex-shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600 shadow-sm"></span>
           </span>
           <span className="tracking-wide whitespace-nowrap">
             <span className="inline sm:hidden">{lang === 'ar' ? 'المستجدات' : 'Updates'}</span>
@@ -165,7 +166,7 @@ export default function MarqueeTicker({
           <div className="flex w-full overflow-hidden select-none group-hover:[&>div]:[animation-play-state:paused]" dir="ltr">
             {/* Primary Track 1 */}
             <div 
-              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-8 sm:gap-10 pe-8 sm:pe-10 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-10 sm:gap-14 pe-10 sm:pe-14 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
@@ -187,9 +188,6 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
-
-                  {/* Elegant Amber Separator (Replaces Red Dot) */}
-                  <span className="text-amber-500/50 mx-2.5 sm:mx-3.5 select-none font-bold text-xs shrink-0">✦</span>
                 </div>
               ))}
             </div>
@@ -197,7 +195,7 @@ export default function MarqueeTicker({
             {/* Seamless Sibling Track 2 (Cloned for 100% infinite loop with zero delay) */}
             <div 
               aria-hidden="true"
-              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-8 sm:gap-10 pe-8 sm:pe-10 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-10 sm:gap-14 pe-10 sm:pe-14 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
@@ -219,9 +217,6 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
-
-                  {/* Elegant Amber Separator (Replaces Red Dot) */}
-                  <span className="text-amber-500/50 mx-2.5 sm:mx-3.5 select-none font-bold text-xs shrink-0">✦</span>
                 </div>
               ))}
             </div>
