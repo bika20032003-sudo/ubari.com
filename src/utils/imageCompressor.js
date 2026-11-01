@@ -69,6 +69,119 @@ export function compressImageFile(file, maxWidth = 1400, maxHeight = 1000, quali
 }
 
 /**
+ * High-Resolution 4K Image Processor:
+ * Preserves ultra-high visual clarity (up to 2560x1600 / 4K UHD), using WebP/JPEG 
+ * with GPU anti-aliasing and smart compression to fit smoothly in browser memory.
+ */
+export function compressHighResImageFile(file, maxWidth = 2560, maxHeight = 1600, quality = 0.88) {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      return reject(new Error('لم يتم تحديد أي ملف'));
+    }
+
+    if (!file.type || !file.type.startsWith('image/')) {
+      return reject(new Error('الملف المختار ليس صورة صالحة (يرجى اختيار JPG, PNG, WEBP)'));
+    }
+
+    const originalSize = file.size || 0;
+    const reader = new FileReader();
+
+    reader.onerror = () => {
+      reject(new Error('تعذر قراءة ملف الصورة من جهازك'));
+    };
+
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => {
+        reject(new Error('تعذر تحميل الصورة الأصلية للمعالجة الفائقة'));
+      };
+
+      img.onload = () => {
+        const origWidth = img.naturalWidth || img.width;
+        const origHeight = img.naturalHeight || img.height;
+
+        let width = origWidth;
+        let height = origHeight;
+
+        // Determine resolution badge label
+        let resolutionLabel = 'HD عالية الوضوح';
+        if (origWidth >= 3840 || origHeight >= 2160) {
+          resolutionLabel = '4K Ultra HD فائقة الدقة';
+        } else if (origWidth >= 2560 || origHeight >= 1440) {
+          resolutionLabel = '2.5K QHD سينمائية';
+        } else if (origWidth >= 1920 || origHeight >= 1080) {
+          resolutionLabel = '1080p Full HD عالية جداً';
+        }
+
+        // Scale down gracefully only if exceeding maximum bounds
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, width);
+        canvas.height = Math.max(1, height);
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          return resolve({
+            dataUrl: e.target.result,
+            width: origWidth,
+            height: origHeight,
+            originalSize,
+            compressedSize: originalSize,
+            resolutionLabel
+          });
+        }
+
+        // High-end bicubic smoothing for crisp sharp lines
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Try WebP first for optimal compression-to-quality ratio, fallback to JPEG
+        let dataUrl = '';
+        let format = 'webp';
+        try {
+          dataUrl = canvas.toDataURL('image/webp', quality);
+          if (!dataUrl.startsWith('data:image/webp')) {
+            throw new Error('WebP unsupported');
+          }
+        } catch {
+          format = 'jpeg';
+          try {
+            dataUrl = canvas.toDataURL('image/jpeg', quality);
+          } catch {
+            dataUrl = e.target.result;
+          }
+        }
+
+        // Approximate base64 payload size
+        const compressedSize = Math.round((dataUrl.length * 3) / 4);
+
+        resolve({
+          dataUrl,
+          width,
+          height,
+          origWidth,
+          origHeight,
+          format,
+          originalSize,
+          compressedSize,
+          resolutionLabel
+        });
+      };
+
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+/**
  * Safe localStorage setter with quota protection
  */
 export function safeStorageSet(key, value) {

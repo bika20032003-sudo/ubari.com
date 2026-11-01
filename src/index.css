@@ -1,5 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&family=Almarai:wght@400;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+
+/* ── Content-Visibility & Rendering Performance Accelerator ── */
+#about-section,
+#projects-section,
+#map-section,
+#news-post-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *, .dark, .dark *));
 
@@ -13,15 +21,16 @@
   --color-libya-green: #239E46;
   --color-libya-dark: #07090E;
 
-  /* Unified Prestigious Font Stack with Authentic Arabic Orthography (Alexandria / Cairo) */
-  --font-arabic: 'Alexandria', 'Cairo', 'Almarai', sans-serif;
-  --font-alexandria: 'Alexandria', sans-serif;
-  --font-cairo: 'Cairo', sans-serif;
+  /* Unified Prestigious Font Stack with Authentic Arabic Orthography (Tajawal / Noto Sans Arabic / Almarai) */
+  --font-arabic: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
+  --font-tajawal: 'Tajawal', sans-serif;
+  --font-noto: 'Noto Sans Arabic', sans-serif;
   --font-almarai: 'Almarai', sans-serif;
-  --font-tajawal: 'Alexandria', 'Cairo', sans-serif;
-  --font-sans: 'Alexandria', 'Cairo', 'Almarai', sans-serif;
-  --font-display: 'Alexandria', 'Cairo', sans-serif;
-  --font-outfit: 'Outfit', 'Alexandria', sans-serif;
+  --font-cairo: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-alexandria: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-sans: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
+  --font-display: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-outfit: 'Outfit', 'Tajawal', sans-serif;
 }
 
 /* ============================================================
@@ -134,7 +143,7 @@ html {
 }
 
 html, body, #root {
-  font-family: 'Alexandria', 'Cairo', 'Almarai', sans-serif !important;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif !important;
   max-width: 100vw;
   overflow-x: hidden !important;
 }
@@ -185,17 +194,17 @@ html[dir="rtl"] h6,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
   line-height: 1.38 !important;
-  font-family: 'Cairo', 'Tajawal', sans-serif !important;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif !important;
 }
 
 html[dir="rtl"] p,
 [dir="rtl"] p {
   line-height: 1.75;
-  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
 }
 
 button, input, select, textarea {
-  font-family: 'Cairo', 'Tajawal', sans-serif;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
 }
 
 /* 4K Tech Grid Overlay */

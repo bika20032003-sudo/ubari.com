@@ -73,7 +73,8 @@ import {
   Newspaper,
   Crown,
   Cloud,
-  Copy
+  Copy,
+  Sparkles
 } from 'lucide-react';
 import { 
   initialFieldPhotos, 
@@ -91,6 +92,7 @@ import {
   saveTickerNews,
   getSavedHeroCard,
   saveHeroCard,
+  getSavedHeroBackground,
   syncExecutiveProjectsFromCloud,
   syncFieldPhotosFromCloud,
   syncNewsFromCloud,
@@ -106,6 +108,7 @@ import {
 } from '../services/api';
 import DocumentReportsHub from './DocumentReportsHub';
 import MarqueeTicker from './MarqueeTicker';
+import HeroMediaControlStudio from './HeroMediaControlStudio';
 import { compressImageFile, safeStorageSet, safeStorageGet } from '../utils/imageCompressor';
 import {
   getSupabaseConfig,
@@ -222,7 +225,7 @@ const default12Sectors = [
   { id: 'SEC-08', name: 'القطاع 08: وادي تخرخوري - أيسين', lengthKm: 30, progress: 48.0, contractor: 'شركة الأفق الوطني', residentEngineer: 'م. فتحي الزروق', status: 'متوسطة', statusColor: 'amber', thickness: 8, machinery: 26, workers: 78 },
   { id: 'SEC-09', name: 'القطاع 09: أيسين - وادي البركت', lengthKm: 30, progress: 42.0, contractor: 'شركة الطرق الليبية', residentEngineer: 'م. أحمد المقريف', status: 'متوسطة', statusColor: 'amber', thickness: 8, machinery: 24, workers: 70 },
   { id: 'SEC-10', name: 'القطاع 10: البركت - المدخل الشمالي', lengthKm: 30, progress: 35.4, contractor: 'شركة المستقبل للمقاولات', residentEngineer: 'م. علي الغاتي', status: 'ضعيفة', statusColor: 'rose', thickness: 7, machinery: 26, workers: 85 },
-  { id: 'SEC-11', name: 'القطاع 11: مدخل مدينة غات التاريخية', lengthKm: 30, progress: 55.0, contractor: 'شركة الجنوب للمشاريع', residentEngineer: 'م. خالد التيندي', status: 'وفق الجدول', statusColor: 'emerald', thickness: 10, machinery: 30, workers: 92 },
+  { id: 'SEC-11', name: 'القطاع 11: مدخل غات التاريخي', lengthKm: 30, progress: 55.0, contractor: 'شركة الجنوب للمشاريع', residentEngineer: 'م. خالد التيندي', status: 'وفق الجدول', statusColor: 'emerald', thickness: 10, machinery: 30, workers: 92 },
   { id: 'SEC-12', name: 'القطاع 12: غات - المثلث الحدودي والوصلات', lengthKm: 30, progress: 28.7, contractor: 'شركة التضامن للمقاولات', residentEngineer: 'م. نوري الحاسي', status: 'ضعيفة', statusColor: 'rose', thickness: 7, machinery: 20, workers: 60 }
 ];
 
@@ -577,6 +580,7 @@ export default function ExecutiveDashboard({
   // Sidebar navigation menu definition (Executive Projects, Map & Sectors, News Center, Media, Supabase Cloud)
   const sidebarNavItems = [
     { id: 'executive-projects', label: 'المشروعات التنفيذية للمسار', icon: Building2, badge: 'مشاريع المسار' },
+    { id: 'hero-media-control', label: 'التحكم في صور وخلفيات البوابة', icon: Sparkles, badge: 'دقة 4K ✨' },
     { id: 'map-sectors-control', label: 'محطات الخريطة والقطاعات', icon: MapPin, badge: 'تحكم مباشر 🗺️' },
     { id: 'news-center', label: 'مركز الأخبار والمستجدات', icon: Newspaper, badge: 'مركز الأخبار' },
     { id: 'media', label: 'الصور والفيديو', icon: ImageIcon },
@@ -1463,6 +1467,7 @@ export default function ExecutiveDashboard({
                       await saveCloudNews(getSavedNewsPosts());
                       await saveCloudTickerNews(getSavedTickerNews());
                       await saveCloudStoreItem('portal-hero-showcase-card', getSavedHeroCard());
+                      await saveCloudStoreItem('portal_hero_bg_image', getSavedHeroBackground());
                       await saveCloudStoreItem('portal-map-locations', localMapLocations);
                       await saveCloudStoreItem('portal-selected-work-items', localSelectedWorkItems);
                       showToast('تمت المزامنة السحابية الشاملة بنجاح! ⚡ ستظهر جميع التعديلات فوراً على الهواتف والكمبيوتر.');
@@ -2487,7 +2492,15 @@ export default function ExecutiveDashboard({
                       هذه هي البطاقة الإدارية الاستراتيجية البارزة التي تظهر للمواطنين والزوار في أعلى صفحة الموقع الرئيسية بجوار عنوان المشروع. يمكنك تغيير صورتها (برفع صورة جديدة من جهازك)، تعديل عنوانها، وسمها، نسبة إنجازها، ومؤشرات مسارها في أي وقت بنقرة واحدة.
                     </p>
 
-                    <div className="pt-2 flex items-center gap-3">
+                    <div className="pt-2 flex items-center gap-3 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={() => setActiveSidebarItem('hero-media-control')}
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-amber-500/30 cursor-pointer transition-all hover:scale-105"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        <span>استوديو صور وخلفيات البوابة 4K</span>
+                      </button>
                       <button
                         onClick={() => {
                           setHeroCardForm({ ...localHeroCard });
@@ -3051,7 +3064,7 @@ export default function ExecutiveDashboard({
 
 
 
-          {!['home', 'sectors', 'reports', 'media', 'users', 'executive-projects', 'news-center', 'news', 'map-sectors-control', 'supabase-cloud'].includes(activeSidebarItem) && (
+          {!['home', 'sectors', 'reports', 'media', 'users', 'executive-projects', 'hero-media-control', 'news-center', 'news', 'map-sectors-control', 'supabase-cloud'].includes(activeSidebarItem) && (
             <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm space-y-4 text-center animate-fadeIn">
               <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
                 <LayoutGrid className="w-8 h-8" />
@@ -3648,6 +3661,7 @@ export default function ExecutiveDashboard({
                             await saveCloudPhotos(photos);
                             // 3. Push hero card
                             await saveCloudStoreItem('portal-hero-showcase-card', getSavedHeroCard());
+                      await saveCloudStoreItem('portal_hero_bg_image', getSavedHeroBackground());
                             // 4. Push news posts
                             await saveCloudStoreItem('portal-news-posts', getSavedNewsPosts());
                             // 5. Push ticker news
@@ -3798,6 +3812,14 @@ export default function ExecutiveDashboard({
           )}
 
           {/* ── FOOTER BAR (Dark Navy `#0A1128`) ── */}
+          {/* ── VIEW: HERO 4K STUDIO ── */}
+          {activeSidebarItem === 'hero-media-control' && (
+            <HeroMediaControlStudio
+              showToast={showToast}
+              setActiveSidebarItem={setActiveSidebarItem}
+            />
+          )}
+
           <footer className="bg-[#0A1128] text-slate-400 rounded-2xl p-3.5 text-xs flex flex-col sm:flex-row items-center justify-between gap-2 shadow-sm font-medium">
 
             <span>جميع الحقوق محفوظة © 2026</span>
@@ -5844,7 +5866,7 @@ export default function ExecutiveDashboard({
                     required
                     value={mapLocationForm.title}
                     onChange={(e) => setMapLocationForm({ ...mapLocationForm, title: e.target.value })}
-                    placeholder="مثال: مدينة العوينات أو قطاع تهالة"
+                    placeholder="مثال: العوينات أو قطاع تهالة"
                     className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500 font-bold"
                   />
                 </div>

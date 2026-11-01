@@ -37,14 +37,18 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
     return lang === 'ar' ? 'طقس صحراوي' : 'Desert Climate';
   };
 
-  // Fetch Live Weather API for Ubari (26.59° N, 12.78° E) & Ghat (24.96° N, 10.18° E)
+  // Fetch Live Weather API for Ubari (26.59° N, 12.78° E) & Ghat (24.96° N, 10.18° E) with safety timeout
   const fetchLiveWeather = async () => {
     setLoading(true);
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+
       const [resUbari, resGhat] = await Promise.all([
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=26.59&longitude=12.78&current_weather=true'),
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=24.9647&longitude=10.1764&current_weather=true')
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=26.59&longitude=12.78&current_weather=true', { signal: controller.signal }),
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=24.9647&longitude=10.1764&current_weather=true', { signal: controller.signal })
       ]);
+      clearTimeout(timeoutId);
 
       const dataUbari = await resUbari.json();
       const dataGhat = await resGhat.json();
@@ -73,7 +77,7 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
 
       setUpdatedAt(new Date().toLocaleTimeString(lang === 'ar' ? 'ar-LY' : 'en-US', { hour: '2-digit', minute: '2-digit' }));
     } catch (err) {
-      // Fallback silently
+      // Fallback silently without throwing
     } finally {
       setLoading(false);
     }
@@ -82,10 +86,11 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
   useEffect(() => {
     fetchLiveWeather();
 
-    // Auto-update weather telemetry automatically every 60 seconds (1 minute)
+    // Auto-update weather telemetry smoothly every 5 minutes (pauses when tab is hidden)
     const timer = setInterval(() => {
+      if (document.hidden) return;
       fetchLiveWeather();
-    }, 60000);
+    }, 300000);
 
     return () => clearInterval(timer);
   }, [lang]);

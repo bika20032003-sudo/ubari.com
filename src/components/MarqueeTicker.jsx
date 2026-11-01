@@ -34,14 +34,16 @@ export default function MarqueeTicker({
     };
   }, [variant]);
 
-  const activeItems = items.length > 0 
+  const candidateItems = items && items.length > 0 
     ? items 
     : (variant === 'hero' ? defaultHeroItems : dynamicSelectedWorkItems);
 
-  // Ensure base list has enough items for widescreen displays (minimum 8 items)
-  let baseList = [...activeItems];
-  while (baseList.length < 8) {
-    baseList = [...baseList, ...activeItems];
+  const safeItems = candidateItems && candidateItems.length > 0 ? candidateItems : defaultHeroItems;
+
+  // Ensure base list has enough items for widescreen displays (minimum 8 items, safe from infinite loops)
+  let baseList = [...safeItems];
+  while (baseList.length < 8 && safeItems.length > 0) {
+    baseList = [...baseList, ...safeItems];
   }
 
   // Calculate speed: calm, comfortable reading velocity with continuous 0s delay

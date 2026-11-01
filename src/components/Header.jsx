@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { isCurrentDeviceAuthorized, authorizeCurrentDevice } from '../utils/deviceSecurity';
 import { 
   ShieldCheck, 
   Eye, 
@@ -36,6 +37,48 @@ export default function Header({
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
+
+  // Device & IP Access Control: Restrict login visibility exclusively to authorized PC/IP
+  const [canShowLogin, setCanShowLogin] = useState(() => isCurrentDeviceAuthorized());
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setCanShowLogin(isCurrentDeviceAuthorized());
+    };
+    window.addEventListener('device_auth_changed', handleAuthChange);
+
+    // Background validation against backend
+    fetch('/api/auth/device-access-check')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.authorized) {
+          authorizeCurrentDevice();
+          setCanShowLogin(true);
+        }
+      })
+      .catch(() => {});
+
+    return () => window.removeEventListener('device_auth_changed', handleAuthChange);
+  }, []);
+
+  // Secret triple-click on authority logo to toggle/unlock login button on owner's device
+  const logoClicksRef = useRef(0);
+  const logoClickTimeoutRef = useRef(null);
+
+  const handleLogoClick = () => {
+    logoClicksRef.current += 1;
+    if (logoClickTimeoutRef.current) clearTimeout(logoClickTimeoutRef.current);
+
+    if (logoClicksRef.current >= 3) {
+      logoClicksRef.current = 0;
+      authorizeCurrentDevice();
+      setCanShowLogin(true);
+    } else {
+      logoClickTimeoutRef.current = setTimeout(() => {
+        logoClicksRef.current = 0;
+      }, 1500);
+    }
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -186,7 +229,14 @@ export default function Header({
           data-cursor-label={lang === 'ar' ? 'الرئيسية' : 'Home'}
         >
           {/* Official Agency Emblem */}
-          <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-[1.5px] shadow-sm shadow-amber-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0">
+          <div 
+            onClick={(e) => {
+              e.stopPropagation();
+              handleLogoClick();
+              handleNavClick('hero', 'hero-section');
+            }}
+            className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-[1.5px] shadow-sm shadow-amber-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0"
+          >
             <img 
               src="./logo-agency.jpg" 
               alt="جهاز تنفيذ مشروعات المواصلات" 
@@ -196,7 +246,7 @@ export default function Header({
 
           {/* Authority Official Title */}
           <div 
-            style={{ fontFamily: "'Alexandria', 'Cairo', sans-serif" }}
+            style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
             className="text-start border-s border-slate-300 dark:border-white/10 ps-1.5 sm:ps-3 min-w-0 flex-1 sm:flex-initial"
           >
             <div className="flex items-center gap-1 min-w-0">
@@ -262,20 +312,34 @@ export default function Header({
             <ArrowUpRight className="w-3 h-3 opacity-70" />
           </a>
 
-
-
-          {/* ── BEFORE LOGIN: Glass "دخول" Button (Desktop/Tablet) ── */}
-          {!user ? (
+          {/* ── زر الانتقال السريع للوحة التحكم للمدير العام ── */}
+          {(user?.isAdmin || user?.username === 'admin_ubari') && (
             <button
-              onClick={onOpenGoogleAuth}
-              className={`hidden sm:flex px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-200 items-center justify-center border shadow-sm cursor-pointer hover:scale-105 ${
-                theme === 'light'
-                  ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
-                  : 'bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-amber-400/50'
-              }`}
+              onClick={() => setActiveTab(activeTab === 'dashboard' ? 'hero' : 'dashboard')}
+              className="px-3 py-1.5 rounded-xl text-xs font-black transition-all items-center gap-1.5 border shadow-sm cursor-pointer flex bg-amber-500 hover:bg-amber-400 text-slate-950 border-amber-400 shadow-amber-500/25 active:scale-95 animate-fadeIn"
+              title="التبديل بين لوحة التحكم التنفيذية وعرض البوابة"
             >
-              <span>{lang === 'ar' ? 'دخول' : 'Sign In'}</span>
+              <LayoutDashboard className="w-3.5 h-3.5" />
+              <span>{activeTab === 'dashboard' ? 'عرض البوابة' : 'لوحة التحكم'}</span>
             </button>
+          )}
+
+
+
+          {/* ── BEFORE LOGIN: Glass "دخول" Button (Desktop/Tablet - Restricted to Authorized PC/IP) ── */}
+          {!user ? (
+            canShowLogin && (
+              <button
+                onClick={onOpenGoogleAuth}
+                className={`hidden sm:flex px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-200 items-center justify-center border shadow-sm cursor-pointer hover:scale-105 ${
+                  theme === 'light'
+                    ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
+                    : 'bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-amber-400/50'
+                }`}
+              >
+                <span>{lang === 'ar' ? 'دخول' : 'Sign In'}</span>
+              </button>
+            )
           ) : (
             /* ── AFTER LOGIN: User Avatar Dropdown (Desktop & Tablet) ── */
             <div className="relative hidden sm:block" ref={dropdownRef}>
@@ -496,16 +560,29 @@ export default function Header({
               </div>
             </a>
 
-            {!user && (
+            {!user ? (
+              canShowLogin && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenGoogleAuth();
+                  }}
+                  className="w-full px-3.5 py-2.5 rounded-xl text-xs font-black text-start bg-amber-500 text-slate-950 flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 cursor-pointer hover:bg-amber-400 transition-colors"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>{lang === 'ar' ? 'تسجيل الدخول' : 'Sign In'}</span>
+                </button>
+              )
+            ) : (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onOpenGoogleAuth();
+                  onLogout();
                 }}
-                className="w-full px-3.5 py-2.5 rounded-xl text-xs font-black text-start bg-amber-500 text-slate-950 flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 cursor-pointer hover:bg-amber-400 transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-xl text-xs font-black text-start bg-red-500/15 text-red-400 border border-red-500/30 flex items-center justify-center gap-2 shadow-sm cursor-pointer hover:bg-red-500/25 transition-colors"
               >
-                <LogIn className="w-4 h-4" />
-                <span>{lang === 'ar' ? 'تسجيل الدخول' : 'Sign In'}</span>
+                <LogOut className="w-4 h-4 text-red-500" />
+                <span>{lang === 'ar' ? 'تسجيل الخروج' : 'Sign Out'}</span>
               </button>
             )}
           </div>

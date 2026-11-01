@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 import pool, { testDbConnection } from './db.js';
 
 dotenv.config();
@@ -259,6 +260,58 @@ app.get('/api/health', async (req, res) => {
     database: dbStatus ? 'connected' : 'ready_fallback',
     timestamp: new Date().toISOString()
   });
+});
+
+// ── 7. فحص صلاحية الجهاز والـ IP المعتمد لعرض أيقونة الدخول ──────
+app.get('/api/auth/device-access-check', (req, res) => {
+  const forwarded = req.headers['x-forwarded-for'];
+  const clientIp = forwarded ? forwarded.split(',')[0].trim() : (req.socket.remoteAddress || req.ip || '');
+  
+  const isLocal = 
+    clientIp === '127.0.0.1' || 
+    clientIp === '::1' || 
+    clientIp === '::ffff:127.0.0.1' ||
+    clientIp.startsWith('192.168.') ||
+    clientIp.startsWith('10.') ||
+    clientIp.startsWith('172.');
+
+  res.json({
+    authorized: isLocal,
+    clientIp,
+    isLocal
+  });
+});
+
+// ── 8. التحقق الآمن المشفر لحساب المدير العام (admin_ubari) ───────
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body || {};
+  const userQuery = (username || '').trim().toLowerCase();
+  
+  if (userQuery === 'admin_ubari' || userQuery === 'admin_ubari@trans.gov.ly' || userQuery === 'admin') {
+    const salt = 'ubari_portal_secure_salt_2026';
+    const expectedHash = 'f638a3c576496f32ca830e034197c8b237827f7df429a5c9fe132489910d19ca';
+    const hash = crypto.createHash('sha256').update((password || '') + salt).digest('hex');
+    
+    if (hash === expectedHash) {
+      return res.json({
+        success: true,
+        user: {
+          id: 'admin_ubari_01',
+          name: 'المدير العام للبوابة',
+          username: 'admin_ubari',
+          email: 'admin_ubari@trans.gov.ly',
+          role: 'المدير العام والمشرف التنفيذي للبوابة',
+          isAdmin: true,
+          type: 'حساب إدارة عليا معتمد',
+          permissions: ['all', 'dashboard', 'hero_studio', 'sectors', 'analytics']
+        }
+      });
+    } else {
+      return res.status(401).json({ success: false, message: 'كلمة المرور غير صحيحة' });
+    }
+  }
+
+  res.status(404).json({ success: false, message: 'اسم المستخدم غير موجود' });
 });
 
 // ── تشغيل الخادم ──────────────────────────────────────────────

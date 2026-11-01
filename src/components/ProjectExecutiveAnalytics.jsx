@@ -63,7 +63,7 @@ export default function ProjectExecutiveAnalytics({
     {
       id: 3,
       title: lang === 'ar' ? 'اعتماد المستخلص الفني الرابع' : 'Technical Claim 04 Approved',
-      sector: lang === 'ar' ? 'القطاع الثاني (مدينة العوينات)' : 'Sector 02 (Al-Uwaynat City)',
+      sector: lang === 'ar' ? 'القطاع الثاني (العوينات)' : 'Sector 02 (Al-Uwaynat)',
       status: lang === 'ar' ? 'مطابقة نسبة الإنجاز 74%' : '74% Progress Verified',
       author: 'أ. فاطمة الورفلي',
       time: lang === 'ar' ? 'يوم أمس' : 'Yesterday'

@@ -88,11 +88,12 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
     }
   };
 
-  // 5-second automatic progression with fade animation (المدة خمسة ثواني مع انميشن تلاشي)
+  // 6-second automatic progression with fade animation (pauses when tab is hidden)
   useEffect(() => {
     const interval = setInterval(() => {
+      if (document.hidden) return;
       handleNext();
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [originalFeatures.length]);
 

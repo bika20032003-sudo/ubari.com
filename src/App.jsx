@@ -117,10 +117,18 @@ function App() {
     return localStorage.getItem('portal_lang') || 'ar';
   });
 
-  // User state
+  // User state (Session-based with local fallback: preserves state across reloads)
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('portal_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const session = sessionStorage.getItem('portal_user');
+      if (session) return JSON.parse(session);
+      const local = localStorage.getItem('portal_user');
+      if (local) {
+        sessionStorage.setItem('portal_user', local);
+        return JSON.parse(local);
+      }
+    } catch (e) {}
+    return null;
   });
 
   // Google Auth modal state
@@ -224,14 +232,25 @@ function App() {
   // Login handler
   const handleLoginSuccess = (userData) => {
     setUser(userData);
-    localStorage.setItem('portal_user', JSON.stringify(userData));
+    try {
+      sessionStorage.setItem('portal_user', JSON.stringify(userData));
+      localStorage.setItem('portal_user', JSON.stringify(userData));
+    } catch (e) {}
     setIsGoogleAuthModalOpen(false);
+    // Directly navigate to Executive Dashboard for admin_ubari
+    if (userData?.isAdmin || userData?.username === 'admin_ubari') {
+      setActiveTab('dashboard');
+    }
   };
 
-  // Logout handler
+  // Portal Logout handler
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('portal_user');
+    try {
+      sessionStorage.removeItem('portal_user');
+      localStorage.removeItem('portal_user');
+    } catch (e) {}
+
     if (activeTab === 'dashboard') {
       setActiveTab('hero');
     }
@@ -328,7 +347,7 @@ function App() {
             </div>
 
             {/* Section: Interactive Ubari - Ghat Project Map */}
-            <div id="map-section" className="gsap-header">
+            <div className="gsap-header">
               <InteractiveProjectMap theme={theme} lang={lang} />
             </div>
           </>

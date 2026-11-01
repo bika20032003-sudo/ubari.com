@@ -252,8 +252,9 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   useEffect(() => {
     if (!filteredProjects || filteredProjects.length <= 1) return;
     const interval = setInterval(() => {
+      if (document.hidden) return;
       handleNextProject();
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [filteredProjects.length]);
 

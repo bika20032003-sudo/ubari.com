@@ -19,12 +19,15 @@ import {
 import { translations } from '../i18n/translations';
 import MarqueeTicker from './MarqueeTicker';
 import NewsDetailModal from './NewsDetailModal';
-import { getSavedHeroCard, getSavedNewsPosts } from '../services/api';
+import { getSavedHeroCard, getSavedNewsPosts, getSavedHeroBackground } from '../services/api';
 import { resolveAsset } from '../utils/assets';
 
 export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenGoogleAuth, lang = 'ar', tickerNews }) {
   const t = translations[lang] || translations.ar;
   const progressVal = summaryData?.overallProgress ?? 68.5;
+
+  // Dynamic Hero 4K Background State (Controllable from Dashboard)
+  const [heroBg, setHeroBg] = useState(getSavedHeroBackground);
 
   // Dynamic Hero Showcase Card State (Controllable from Dashboard - Preserved for Desktop)
   const [heroCard, setHeroCard] = useState(getSavedHeroCard);
@@ -38,14 +41,19 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   useEffect(() => {
     const handleStorageChange = () => {
       setHeroCard(getSavedHeroCard());
+      setHeroBg(getSavedHeroBackground());
       const updatedNews = getSavedNewsPosts();
       setMobileNewsList(updatedNews);
     };
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('cloud_news_updated', handleStorageChange);
+    window.addEventListener('cloud_hero_updated', handleStorageChange);
+    window.addEventListener('cloud_hero_bg_updated', handleStorageChange);
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('cloud_news_updated', handleStorageChange);
+      window.removeEventListener('cloud_hero_updated', handleStorageChange);
+      window.removeEventListener('cloud_hero_bg_updated', handleStorageChange);
     };
   }, []);
 
@@ -71,10 +79,11 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
     goToMobileNews(prevIdx);
   }, [mobileNewsIdx, mobileNewsList, goToMobileNews]);
 
-  // 6-second mobile news carousel auto progression with fade
+  // 6-second mobile news carousel auto progression with fade (pauses when tab is hidden)
   useEffect(() => {
     if (!mobileNewsList || mobileNewsList.length <= 1) return;
     const interval = setInterval(() => {
+      if (document.hidden) return;
       nextMobileNews();
     }, 6000);
     return () => clearInterval(interval);
@@ -112,25 +121,29 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
       className="relative min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden bg-grid-pattern select-none pt-20 sm:pt-24 pb-4"
     >
       
-      {/* ── 4K Cinematic Background Road Photo (Direct GPU Hardware Texture) ── */}
+      {/* ── 4K Cinematic Background Road Photo (Direct GPU Hardware Texture & Dynamic Control) ── */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <picture className="w-full h-full block">
           {/* Mobile Portrait 9:16 Ultra-Sharp Image */}
           <source 
             media="(max-width: 768px)" 
-            srcSet={resolveAsset('./road-hero-mobile.jpg')} 
+            srcSet={resolveAsset(heroBg.mobileImage || heroBg.image || './road-hero-mobile.jpg')} 
           />
-          {/* Desktop & Tablet 2.5K Panoramic Widescreen Image */}
+          {/* Desktop & Tablet 2.5K/4K Panoramic Widescreen Image */}
           <source 
             media="(min-width: 769px)" 
-            srcSet={resolveAsset('./hero-desert-road.jpg')} 
+            srcSet={resolveAsset(heroBg.image || './hero-desert-road.jpg')} 
           />
           <img 
-            src={resolveAsset('./hero-desert-road.jpg')} 
+            src={resolveAsset(heroBg.image || './hero-desert-road.jpg')} 
             alt="مشروع طريق أوباري - غات 4K" 
-            fetchPriority="high"
+            fetchpriority="high"
             decoding="async"
-            className="w-full h-full object-cover object-center"
+            style={{
+              filter: heroBg.filter || 'none',
+              objectPosition: heroBg.objectPosition || 'center'
+            }}
+            className="w-full h-full object-cover object-center transition-all duration-700"
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
@@ -144,17 +157,23 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
         </div>
 
         {/* Multi-Layer Gradient Overlays for High-Contrast Readability */}
-        <div className={`hero-overlay-left absolute inset-0 ${
-          theme === 'light'
-            ? 'bg-gradient-to-r from-[#F8FAFC]/85 via-[#F8FAFC]/50 to-transparent'
-            : 'bg-gradient-to-r from-[#06080E]/95 via-[#06080E]/70 to-transparent'
-        }`} />
+        <div 
+          style={{ opacity: (heroBg.overlayOpacity ?? 70) / 100 }}
+          className={`hero-overlay-left absolute inset-0 transition-opacity duration-500 ${
+            theme === 'light'
+              ? 'bg-gradient-to-r from-[#F8FAFC]/85 via-[#F8FAFC]/50 to-transparent'
+              : 'bg-gradient-to-r from-[#06080E]/95 via-[#06080E]/70 to-transparent'
+          }`} 
+        />
         {/* Mobile vertical contrast scrim to prevent text bleed over bright photos on phone */}
-        <div className={`sm:hidden absolute inset-0 ${
-          theme === 'light'
-            ? 'bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/50 to-[#F8FAFC]/95'
-            : 'bg-gradient-to-b from-[#06080E]/90 via-[#06080E]/50 to-[#06080E]/95'
-        }`} />
+        <div 
+          style={{ opacity: (heroBg.overlayOpacity ?? 70) / 100 }}
+          className={`sm:hidden absolute inset-0 transition-opacity duration-500 ${
+            theme === 'light'
+              ? 'bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/50 to-[#F8FAFC]/95'
+              : 'bg-gradient-to-b from-[#06080E]/90 via-[#06080E]/50 to-[#06080E]/95'
+          }`} 
+        />
         <div className={`hero-overlay-top absolute inset-0 ${
           theme === 'light'
             ? 'bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#F8FAFC]/25'
@@ -213,15 +232,15 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
             {/* 4K Hero Title */}
             <div className="space-y-2 sm:space-y-4">
               <h1 
-                style={{ fontFamily: "'Alexandria', 'Cairo', sans-serif" }}
-                className={`text-xl xs:text-2xl sm:text-5xl lg:text-6xl font-extrabold leading-tight sm:leading-snug ${
+                style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                className={`text-xl xs:text-2xl sm:text-5xl lg:text-6xl font-black leading-normal sm:leading-[1.3] ${
                   theme === 'light' ? 'text-slate-950' : 'text-white'
                 }`}
               >
                 <span className="block mb-0.5 sm:mb-2 text-slate-900 dark:text-white text-base xs:text-xl sm:text-4xl lg:text-5xl">{t.heroMainTitle1}</span>
                 <span 
-                  style={{ fontFamily: "'Alexandria', 'Cairo', sans-serif" }}
-                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pb-2.5 pt-0.5 text-2xl xs:text-3xl sm:text-5xl lg:text-6xl overflow-visible font-extrabold"
+                  style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-3 pb-3 text-2xl xs:text-3xl sm:text-5xl lg:text-6xl overflow-visible font-black tracking-normal"
                 >
                   {t.heroMainTitle2}
                 </span>

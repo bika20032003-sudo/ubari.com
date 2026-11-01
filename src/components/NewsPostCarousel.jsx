@@ -56,12 +56,13 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
     goToSlide(prev);
   }, [currentIndex, goToSlide, posts.length]);
 
-  // 5-second automatic progression with fade animation
+  // 6-second automatic progression with fade animation (pauses when tab is hidden or hovered)
   useEffect(() => {
     if (isPaused || posts.length <= 1) return;
     const interval = setInterval(() => {
+      if (document.hidden) return;
       nextSlide();
-    }, 5000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [nextSlide, isPaused, posts.length]);
 
@@ -160,7 +161,8 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                 src={resolveAsset(currentPost.image)} 
                 alt={currentPost.title} 
                 className="w-full h-full object-cover object-center min-h-[250px] sm:min-h-[360px] photo-hover-zoom group-hover:scale-108 transition-transform duration-700 ease-out"
-                loading="eager"
+                loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');

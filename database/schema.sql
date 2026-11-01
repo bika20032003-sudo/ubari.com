@@ -186,7 +186,8 @@ INSERT INTO `map_locations` (`id`, `title`, `coords`, `latitude`, `longitude`, `
 ('ghat', 'مدينة غات (نهاية الطريق 360 كم)', '24.9647,10.1764', 24.964700, 10.176400, 'المحطة 360+00', 58.00, 'المنفذ الحدودي الجنوبي الغربي وتأهيل مداخل المدينة التاريخية.', 'https://maps.google.com/maps?q=Ghat,Libya&t=&z=11&ie=UTF8&iwloc=&output=embed');
 
 -- 5. إدخال حسابات المستخدمين والمهندسين
-INSERT INTO `users` (`id`, `name`, `email`, `role`, `account_type`, `avatar_url`) VALUES
-(1, 'م. أحمد الشريف', 'eng.ahmed@trans.gov.ly', 'مدير مشروع قطاع أوباري', 'حساب رسمي معتمد', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'),
-(2, 'م. سالم الزوي', 'eng.salem@trans.gov.ly', 'مهندس الإشراف الفني والرقابة', 'حساب إشرافي', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'),
-(3, 'مواطن / متابع المشروع', 'citizen.visitor@gmail.com', 'وضع المتابعة العامة والبلاغات', 'حساب زائر', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80');
+INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `role`, `account_type`, `avatar_url`) VALUES
+(1, 'المدير العام للبوابة', 'admin_ubari', 'f638a3c576496f32ca830e034197c8b237827f7df429a5c9fe132489910d19ca', 'المدير العام والمشرف التنفيذي للبوابة', 'حساب إدارة عليا معتمد', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'),
+(2, 'م. أحمد الشريف', 'eng.ahmed@trans.gov.ly', NULL, 'مدير مشروع قطاع أوباري', 'حساب رسمي معتمد', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'),
+(3, 'م. سالم الزوي', 'eng.salem@trans.gov.ly', NULL, 'مهندس الإشراف الفني والرقابة', 'حساب إشرافي', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80'),
+(4, 'مواطن / متابع المشروع', 'citizen.visitor@trans.gov.ly', NULL, 'وضع المتابعة العامة والبلاغات', 'حساب زائر', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80');

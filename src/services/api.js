@@ -132,39 +132,45 @@ const initialDocuments = [
   }
 ];
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = '/api';
 
 export const fetchProjectSummary = async () => {
   try {
     const res = await fetch(`${API_BASE_URL}/summary`);
-    if (res.ok) return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      return { success: true, data };
+    }
   } catch (e) {
     // MySQL Server offline, use mock engine
   }
-  await new Promise(r => setTimeout(r, 150));
-  return initialSummary;
+  return { success: true, data: initialSummary };
 };
 
 export const fetchSectors = async () => {
   try {
     const res = await fetch(`${API_BASE_URL}/sectors`);
-    if (res.ok) return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      return { success: true, data };
+    }
   } catch (e) {
     // MySQL Server offline, use mock engine
   }
-  await new Promise(r => setTimeout(r, 150));
-  return initialSectors;
+  return { success: true, data: initialSectors };
 };
 
 export const fetchContractors = async () => {
   try {
     const res = await fetch(`${API_BASE_URL}/contractors`);
-    if (res.ok) return await res.json();
+    if (res.ok) {
+      const data = await res.json();
+      return { success: true, data };
+    }
   } catch (e) {
     // MySQL Server offline, use mock engine
   }
-  await new Promise(r => setTimeout(r, 150));
-  return initialContractors;
+  return { success: true, data: initialContractors };
 };
 
 const initialFieldPhotos = [
@@ -351,7 +357,7 @@ export const nationalProjects = [
   },
   {
     id: 'PRJ-GHT-ENT-045',
-    title: 'مشروع تطوير وتحديث مداخل مدينة غات التاريخية والبركت',
+    title: 'مشروع تطوير وتحديث مداخل غات التاريخية والبركت',
     titleEn: 'Ghat Historical Entrances & Al Barkat Corridor Upgrade',
     region: 'مدخل غات والبركت',
     regionEn: 'Ghat & Al Barkat',
@@ -368,7 +374,7 @@ export const nationalProjects = [
     image: './road-asphalt-paver.jpg',
     coords: { x: 16, y: 82 },
     realCoords: '24.9600,10.1800',
-    desc: 'ازدواج وتطوير المدخل الشمالي لمدينة غات وربطه بمحور البركت والمنفذ الجنوبي بتصاميم تراثية تعكس الطابع المعماري للمدينة.',
+    desc: 'ازدواج وتطوير المدخل الشمالي لغات وربطه بمحور البركت والمنفذ الجنوبي بتصاميم تراثية تعكس الطابع المعماري للمنطقة.',
     specs: {
       thickness: '12 سم طبقتين',
       paved: '24.8 كم',
@@ -823,14 +829,15 @@ export const syncAllPortalData = async () => {
 
   try {
     // جلب أحدث الحالات السحابية
-    const [cloudProjects, cloudPhotos, cloudNews, cloudTicker, cloudHero, cloudMapLocs, cloudSectorsWork] = await Promise.allSettled([
+    const [cloudProjects, cloudPhotos, cloudNews, cloudTicker, cloudHero, cloudMapLocs, cloudSectorsWork, cloudHeroBg] = await Promise.allSettled([
       syncExecutiveProjectsFromCloud(),
       syncFieldPhotosFromCloud(),
       syncNewsFromCloud(),
       syncTickerNewsFromCloud(),
       syncHeroCardFromCloud(),
       syncMapLocationsFromCloud(),
-      syncSelectedWorkItemsFromCloud()
+      syncSelectedWorkItemsFromCloud(),
+      syncHeroBackgroundFromCloud()
     ]);
 
     // تحقق من وجود بيانات محلية على الهاتف تحتاج إلى رفع إلى السحابة
@@ -868,18 +875,34 @@ export const syncAllPortalData = async () => {
   }
 };
 
-// تشغيل المزامنة السحابية التلقائية عند تحميل الصفحة والتنقل بين التبويبات
+// تشغيل المزامنة السحابية التلقائية بشكل منضبط واقتصادي للموارد لتجنب تهنيج المتصفح
 if (typeof window !== 'undefined') {
-  const triggerInitialSync = () => {
+  let lastSyncTime = 0;
+  let isSyncing = false;
+
+  const triggerInitialSync = async (force = false) => {
+    const now = Date.now();
+    // تجنب التكرار والتهنيج (فاصل 3 دقائق كحد أدنى إلا إذا تم تغيير الإعدادات يدوياً)
+    if (!force && (isSyncing || now - lastSyncTime < 180000)) {
+      return;
+    }
     if (isSupabaseConfigured()) {
-      syncAllPortalData();
+      try {
+        isSyncing = true;
+        lastSyncTime = now;
+        await syncAllPortalData();
+      } catch (e) {
+        // Fallback silently
+      } finally {
+        isSyncing = false;
+      }
     }
   };
-  setTimeout(triggerInitialSync, 300);
-  window.addEventListener('focus', triggerInitialSync);
-  window.addEventListener('online', triggerInitialSync);
-  window.addEventListener('pageshow', triggerInitialSync);
-  window.addEventListener('supabase_config_changed', triggerInitialSync);
+
+  // تأخير المزامنة حتى يستقر تحميل الصفحة دون استهلاك معالج المستخدم
+  setTimeout(() => triggerInitialSync(false), 2000);
+  window.addEventListener('online', () => triggerInitialSync(false));
+  window.addEventListener('supabase_config_changed', () => triggerInitialSync(true));
 }
 
 export const saveExecutiveProjects = (projects) => {
@@ -933,6 +956,7 @@ export const saveHeroCard = (heroCard) => {
   try {
     localStorage.setItem('portal-hero-showcase-card', JSON.stringify(heroCard));
     window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('cloud_hero_updated'));
   } catch (e) {}
 
   if (isSupabaseConfigured()) {
@@ -940,6 +964,80 @@ export const saveHeroCard = (heroCard) => {
       console.warn('[Supabase] فشل حفظ بطاقة الهيرو سحابياً:', err);
     });
   }
+};
+
+// ── Hero 4K Background State Management (التحكم في خلفية البوابة الرئيسية بدقة 4K) ──
+export const initialHeroBackground = {
+  image: './hero-desert-road.jpg',
+  mobileImage: './road-hero-mobile.jpg',
+  overlayOpacity: 70, // percentage for text contrast
+  filter: 'none',
+  objectPosition: 'center',
+  isCustom: false
+};
+
+export const getSavedHeroBackground = () => {
+  try {
+    const saved = localStorage.getItem('portal_hero_bg_image');
+    if (saved) {
+      if (saved.startsWith('{')) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          return { ...initialHeroBackground, ...parsed, isCustom: true };
+        }
+      } else if (typeof saved === 'string' && saved.length > 5) {
+        return { ...initialHeroBackground, image: saved, mobileImage: saved, isCustom: true };
+      }
+    }
+  } catch (e) {}
+  return initialHeroBackground;
+};
+
+export const saveHeroBackground = (bgConfig) => {
+  try {
+    const payload = typeof bgConfig === 'string'
+      ? { ...initialHeroBackground, image: bgConfig, mobileImage: bgConfig, isCustom: true }
+      : { ...initialHeroBackground, ...bgConfig, isCustom: true };
+    localStorage.setItem('portal_hero_bg_image', JSON.stringify(payload));
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('cloud_hero_bg_updated'));
+  } catch (e) {
+    console.warn('[SafeStorage] Quota exceeded saving hero bg:', e);
+  }
+
+  if (isSupabaseConfigured()) {
+    saveCloudStoreItem('portal_hero_bg_image', typeof bgConfig === 'object' ? bgConfig : { image: bgConfig }).catch(err => {
+      console.warn('[Supabase] فشل حفظ خلفية الواجهة سحابياً:', err);
+    });
+  }
+};
+
+export const resetHeroBackground = () => {
+  try {
+    localStorage.removeItem('portal_hero_bg_image');
+    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('cloud_hero_bg_updated'));
+  } catch (e) {}
+  if (isSupabaseConfigured()) {
+    saveCloudStoreItem('portal_hero_bg_image', null).catch(() => {});
+  }
+};
+
+export const syncHeroBackgroundFromCloud = async () => {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const cloudBg = await fetchCloudStoreItem('portal_hero_bg_image');
+    if (cloudBg) {
+      const payload = typeof cloudBg === 'string'
+        ? { ...initialHeroBackground, image: cloudBg, mobileImage: cloudBg, isCustom: true }
+        : { ...initialHeroBackground, ...cloudBg, isCustom: true };
+      localStorage.setItem('portal_hero_bg_image', JSON.stringify(payload));
+      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new Event('cloud_hero_bg_updated'));
+      return payload;
+    }
+  } catch (e) {}
+  return null;
 };
 
 // ── Interactive Map Locations & Telemetry HUD State ──
@@ -958,10 +1056,10 @@ export const initialMapLocations = [
   },
   {
     id: 'aluwaynat_city',
-    title: 'مدينة العوينات',
-    titleEn: 'Al-Uwaynat City',
+    title: 'العوينات',
+    titleEn: 'Al-Uwaynat',
     coords: '25.7766,10.5630',
-    mapQuery: '25.7766,10.5630(مدينة+العوينات)',
+    mapQuery: '25.7766,10.5630(العوينات)',
     sector: 'المحطة 120+00',
     stage: 'طبقة الأساس والعبّارات الخرسانية',
     progress: 74,
@@ -982,15 +1080,15 @@ export const initialMapLocations = [
   },
   {
     id: 'ghat',
-    title: 'مدينة غات (نهاية الطريق 360 كم)',
-    titleEn: 'Ghat City (Route End 360 km)',
+    title: 'غات (نهاية الطريق 360 كم)',
+    titleEn: 'Ghat (Route End 360 km)',
     coords: '24.9647,10.1764',
-    mapQuery: '24.9647,10.1764(مدينة+غات)',
+    mapQuery: '24.9647,10.1764(غات)',
     sector: 'المحطة 360+00',
     stage: 'تأهيل المداخل واللوحات المرورية',
     progress: 58,
     zoom: 12,
-    desc: 'المنفذ الحدودي الجنوبي الغربي وتأهيل مداخل المدينة التاريخية.'
+    desc: 'المنفذ الحدودي الجنوبي الغربي وتأهيل المداخل التاريخية.'
   }
 ];
 
@@ -1000,11 +1098,29 @@ export const getSavedMapLocations = () => {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        const cleaned = parsed.map(item => ({
+          ...item,
+          title: (item.title || '')
+            .replace(/مدينة\s*/g, '')
+            .replace(/\(مدينة\s*/g, '(')
+            .trim(),
+          desc: (item.desc || '')
+            .replace(/مدينة\s*/g, '')
+            .replace(/المدينة/g, 'المنطقة')
+            .trim()
+        }));
+        if (saved.includes('مدينة')) {
+          localStorage.setItem('portal_map_locations', JSON.stringify(cleaned));
+        }
+        return cleaned;
       }
     }
   } catch (e) {}
-  return initialMapLocations;
+  return initialMapLocations.map(item => ({
+    ...item,
+    title: (item.title || '').replace(/مدينة\s*/g, '').replace(/\(مدينة\s*/g, '(').trim(),
+    desc: (item.desc || '').replace(/مدينة\s*/g, '').replace(/المدينة/g, 'المنطقة').trim()
+  }));
 };
 
 export const saveMapLocations = (locations) => {

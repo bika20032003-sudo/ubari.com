@@ -12,6 +12,14 @@ import { getSavedMapLocations } from '../services/api';
 
 export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
   const t = translations[lang] || translations.ar;
+  
+  // Helper to ensure 'مدينة' never leaks onto UI titles even with older cache
+  const cleanCityWord = (str) => (str || '')
+    .replace(/مدينة\s*/g, '')
+    .replace(/\(مدينة\s*/g, '(')
+    .replace(/المدينة/g, 'المنطقة')
+    .trim();
+
   const [locations, setLocations] = useState(() => getSavedMapLocations());
   const [selectedLocId, setSelectedLocId] = useState(() => {
     const locs = getSavedMapLocations();
@@ -19,6 +27,35 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
   });
   const [mapType, setMapType] = useState('m'); // 'm' = Roadmap, 'k' = Satellite
   const [isMapTouchActive, setIsMapTouchActive] = useState(false);
+  const [shouldRenderMap, setShouldRenderMap] = useState(false);
+  const mapContainerRef = useRef(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldRenderMap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    // Purge any stale locations containing 'مدينة' from localStorage
+    try {
+      const saved = localStorage.getItem('portal_map_locations');
+      if (saved && saved.includes('مدينة')) {
+        const cleaned = getSavedMapLocations();
+        localStorage.setItem('portal_map_locations', JSON.stringify(cleaned));
+        setLocations(cleaned);
+      }
+    } catch (e) {}
+  }, []);
 
   useEffect(() => {
     const handleUpdate = () => {
@@ -75,7 +112,7 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
         <p className={`text-xs sm:text-sm max-w-2xl font-medium leading-relaxed ${
           theme === 'light' ? 'text-slate-600' : 'text-slate-400'
         }`}>
-          {t.mapDesc}
+          {cleanCityWord(t.mapDesc)}
         </p>
       </div>
 
@@ -96,7 +133,7 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
               }`}
             >
               <Compass className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isSelected ? 'text-slate-950' : 'text-amber-500'}`} />
-              <span>{loc.title}</span>
+              <span>{cleanCityWord(loc.title)}</span>
             </button>
           );
         })}
@@ -121,14 +158,14 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
             <div className="min-w-0 flex-1 text-start">
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className={`font-black text-sm sm:text-lg truncate ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
-                  {selectedLoc.title}
+                  {cleanCityWord(selectedLoc.title)}
                 </h3>
                 <span className="text-[10px] px-2 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-500 font-bold border border-emerald-500/30 shrink-0">
                   {t.mapLive}
                 </span>
               </div>
               <p className={`text-xs mt-0.5 font-medium leading-relaxed ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
-                {selectedLoc.desc}
+                {cleanCityWord(selectedLoc.desc)}
               </p>
             </div>
           </div>
@@ -174,21 +211,39 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
         </div>
 
         {/* Map Frame */}
-        <div className="relative w-full h-[380px] sm:h-[500px] bg-slate-950 overflow-hidden">
-          <iframe
-            key={`${selectedLoc.id}-${mapType}`}
-            title={selectedLoc.title}
-            src={embedUrl}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className={`w-full h-full transition-opacity ${
-              isMapTouchActive ? 'pointer-events-auto' : 'pointer-events-none sm:pointer-events-auto'
-            }`}
-          />
+        <div ref={mapContainerRef} className="relative w-full h-[380px] sm:h-[500px] bg-slate-950 overflow-hidden">
+          {shouldRenderMap ? (
+            <iframe
+              key={`${selectedLoc.id}-${mapType}`}
+              title={selectedLoc.title}
+              src={embedUrl}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className={`w-full h-full transition-opacity ${
+                isMapTouchActive ? 'pointer-events-auto' : 'pointer-events-none sm:pointer-events-auto'
+              }`}
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900/60 p-6 text-center space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-500 animate-pulse">
+                <Compass className="w-6 h-6" />
+              </div>
+              <p className="text-xs text-slate-300 font-medium">
+                {lang === 'ar' ? 'الخريطة التفاعلية جاهزة للعرض' : 'Interactive Map is ready'}
+              </p>
+              <button
+                type="button"
+                onClick={() => setShouldRenderMap(true)}
+                className="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-black hover:bg-amber-400 transition-all cursor-pointer shadow-md"
+              >
+                {lang === 'ar' ? 'عرض خريطة القمر الصناعي الآن' : 'Load Satellite Map Now'}
+              </button>
+            </div>
+          )}
 
           {/* Mobile Tap-To-Interact Protection Overlay */}
           {!isMapTouchActive && (
