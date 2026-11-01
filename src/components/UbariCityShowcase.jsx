@@ -14,7 +14,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-cyan-600 dark:text-cyan-400',
       iconColor: 'text-cyan-500',
       iconBg: 'bg-cyan-500/15 border-cyan-500/30',
-      badge: lang === 'ar' ? 'معايير دولية' : 'Global Specs'
+      badge: t.ubariLakesTitle
     },
     {
       id: 1,
@@ -24,7 +24,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-amber-600 dark:text-amber-400',
       iconColor: 'text-amber-500',
       iconBg: 'bg-amber-500/15 border-amber-500/30',
-      badge: lang === 'ar' ? 'سلامة مرورية' : 'Road Safety'
+      badge: t.ubariTransportTitle
     },
     {
       id: 2,
@@ -34,7 +34,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-emerald-600 dark:text-emerald-400',
       iconColor: 'text-emerald-500',
       iconBg: 'bg-emerald-500/15 border-emerald-500/30',
-      badge: lang === 'ar' ? 'تصريف هيدروليكي' : 'Flood Safe'
+      badge: t.ubariEnergyTitle
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-violet-600 dark:text-violet-400',
       iconColor: 'text-violet-500',
       iconBg: 'bg-violet-500/15 border-violet-500/30',
-      badge: lang === 'ar' ? 'تخطيط حراري' : 'Road Markings'
+      badge: t.ubariHeritageTitle
     }
   ];
 
@@ -264,15 +264,15 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 : 'bg-[#090e1a]/95 border-white/10 text-white shadow-black/80'
             }`}
           >
-            {/* Card Header: Icon + Badge + Counter */}
+            {/* Card Header: Icon + Title Badge + Counter */}
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
                 <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shadow-sm shrink-0 ${currentFeature.iconBg} ${currentFeature.iconColor}`}>
                   <CurrentIcon className="w-3.5 h-3.5" />
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-500 border border-amber-500/30 whitespace-nowrap shrink-0">
-                  {currentFeature.badge}
-                </span>
+                <h4 className="text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 truncate">
+                  {currentFeature.title}
+                </h4>
               </div>
 
               {/* 5s Auto Indicator & Slide index */}
@@ -287,11 +287,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               </div>
             </div>
 
-            {/* Card Title & Description */}
+            {/* Card Description */}
             <div className="space-y-1 my-2">
-              <h4 className={`font-bold text-xs ${currentFeature.color}`}>
-                {currentFeature.title}
-              </h4>
               <div className="text-[10.5px] text-slate-600 dark:text-slate-300 leading-normal font-normal space-y-1 text-start">
                 {currentFeature.desc.includes('\n') ? (
                   currentFeature.desc.split('\n').map((point, idx) => (
