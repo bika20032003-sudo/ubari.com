@@ -4,8 +4,9 @@
 @font-face {
   font-family: 'Traditional Arabic';
   src: local('Traditional Arabic'),
+       local('Amiri'),
        url('./assets/fonts/Traditional-Arabic.ttf') format('truetype');
-  font-weight: 400;
+  font-weight: 400 600;
   font-style: normal;
   font-display: swap;
 }
@@ -13,8 +14,10 @@
 @font-face {
   font-family: 'Traditional Arabic';
   src: local('Traditional Arabic Bold'),
+       local('Traditional Arabic'),
+       local('Amiri Bold'),
        url('./assets/fonts/Traditional-Arabic-Bold.ttf') format('truetype');
-  font-weight: 700;
+  font-weight: 700 900;
   font-style: normal;
   font-display: swap;
 }
@@ -41,7 +44,7 @@
   --color-libya-green: #239E46;
   --color-libya-dark: #07090E;
 
-  /* Unified Prestigious Font Stack with Authentic Arabic Orthography (Tajawal / Noto Sans Arabic / Almarai) */
+  /* Unified Prestigious Font Stack with Authentic Arabic Orthography */
   --font-arabic: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
   --font-tajawal: 'Traditional Arabic', 'Amiri', serif;
   --font-noto: 'Traditional Arabic', 'Amiri', serif;
@@ -51,6 +54,26 @@
   --font-sans: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
   --font-display: 'Traditional Arabic', 'Amiri', serif;
   --font-outfit: 'Outfit', 'Traditional Arabic', 'Amiri', serif;
+
+  /* Optical Scaled Typography for Traditional Arabic */
+  --text-xs: 0.88rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.6;
+  --text-base: 1.15rem;
+  --text-base--line-height: 1.75;
+  --text-lg: 1.3rem;
+  --text-lg--line-height: 1.75;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.6;
+  --text-2xl: 1.85rem;
+  --text-2xl--line-height: 1.5;
+  --text-3xl: 2.25rem;
+  --text-3xl--line-height: 1.4;
+  --text-4xl: 2.75rem;
+  --text-4xl--line-height: 1.35;
+  --text-5xl: 3.4rem;
+  --text-5xl--line-height: 1.3;
 }
 
 /* ============================================================
@@ -155,7 +178,7 @@
    GLOBAL RESET & ARABIC TYPOGRAPHY HARMONY ENGINE
    ============================================================ */
 html {
-  font-size: 18px;
+  font-size: 20px;
   scroll-padding-top: 85px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -165,13 +188,13 @@ html {
 
 @media (min-width: 640px) {
   html {
-    font-size: 19px;
+    font-size: 21.5px;
   }
 }
 
 @media (min-width: 1024px) {
   html {
-    font-size: 20px;
+    font-size: 22.5px;
   }
 }
 
@@ -238,6 +261,85 @@ html[dir="rtl"] p,
 
 button, input, select, textarea {
   font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
+}
+
+/* ============================================================
+   TRADITIONAL ARABIC HARMONY & OPTICAL WEIGHT STABILIZATION
+   ============================================================ */
+/* Lift and harmonize all hardcoded micro-text to ensure readability */
+[class*="text-\[8px\]"],
+[class*="text-\[9px\]"],
+[class*="text-\[9.5px\]"] {
+  font-size: 0.85rem !important;
+  line-height: 1.45 !important;
+}
+
+[class*="text-\[10px\]"],
+[class*="text-\[10.5px\]"] {
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+[class*="text-\[11px\]"],
+[class*="text-\[11.5px\]"],
+[class*="text-\[12px\]"] {
+  font-size: 0.98rem !important;
+  line-height: 1.55 !important;
+}
+
+[class*="text-\[13px\]"] {
+  font-size: 1.05rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Ensure rich, authoritative ink strokes for Traditional Arabic */
+html[dir="rtl"] body,
+[dir="rtl"] body {
+  font-weight: 600;
+}
+
+html[dir="rtl"] p,
+[dir="rtl"] p {
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.95 !important;
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  font-weight: 700 !important;
+  line-height: 1.45 !important;
+}
+
+html[dir="rtl"] button,
+[dir="rtl"] button,
+html[dir="rtl"] a,
+[dir="rtl"] a {
+  font-weight: 700 !important;
+}
+
+/* Standardize weights to prevent faint or thin rendering in Traditional Arabic */
+.font-normal,
+.font-light,
+.font-medium {
+  font-weight: 600 !important;
+}
+
+.font-semibold,
+.font-bold,
+.font-extrabold,
+.font-black {
+  font-weight: 700 !important;
 }
 
 /* 4K Tech Grid Overlay */

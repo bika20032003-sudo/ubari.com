@@ -265,18 +265,18 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
       {/* ── Section Title Header with GSAP Reveal ── */}
       <div className="text-center max-w-3xl mx-auto space-y-3 gsap-header">
-        <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black border shadow-sm ${theme === 'light'
+        <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm sm:text-base font-bold border shadow-sm ${theme === 'light'
             ? 'bg-amber-100/90 border-amber-300 text-amber-950'
             : 'bg-amber-500/10 border-amber-500/35 text-amber-300'
           }`}>
           <Layers className="w-4 h-4 text-amber-500" />
           <span>{lang === 'ar' ? 'مشاريع مسار طريق أوباري - غات' : 'Ubari – Ghat Road Corridor Projects'}</span>
         </div>
-        <h2 className={`text-xl xs:text-2xl sm:text-4xl lg:text-5xl font-black leading-tight sm:leading-snug ${theme === 'light' ? 'text-slate-950' : 'text-white'
+        <h2 className={`text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight sm:leading-snug ${theme === 'light' ? 'text-slate-950' : 'text-white'
           }`}>
           {lang === 'ar' ? 'المشروعات التنفيذية لمسار أوباري – غات (360 كم)' : 'Execution Projects – Ubari – Ghat Highway'}
         </h2>
-        <p className={`text-xs sm:text-base font-medium ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'
+        <p className={`text-base sm:text-xl font-bold ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'
           }`}>
           {lang === 'ar'
             ? 'المشاريع الهندسية المتكاملة والمتابعات الميدانية الجاري تنفيذها على امتداد قطاعات طريق أوباري - غات.'
@@ -356,10 +356,10 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                 <span>{project.id}</span>
                 <span>{project.startDate} {project.targetDate ? `— ${project.targetDate}` : ''}</span>
               </div>
-              <h3 className={`text-2xl font-black ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
+              <h3 className={`text-2xl sm:text-3xl font-bold ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
                 {project.title}
               </h3>
-              <p className={`text-sm font-medium leading-relaxed line-clamp-2 ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+              <p className={`text-base sm:text-lg font-bold leading-relaxed line-clamp-2 ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'
                 }`}>
                 {project.desc}
               </p>
@@ -526,10 +526,10 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
             {/* Post Content */}
             <div className="p-3.5 space-y-2">
-              <h3 className="text-sm font-black leading-snug">
+              <h3 className="text-lg sm:text-xl font-bold leading-snug">
                 {currentMobileProject.title}
               </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-normal">
+              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-200 leading-relaxed line-clamp-2 font-bold">
                 {currentMobileProject.desc}
               </p>
 

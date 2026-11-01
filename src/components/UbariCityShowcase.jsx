@@ -138,10 +138,10 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                   {t.ubariBadge}
                 </span>
               </div>
-              <h3 className={`text-sm sm:text-base lg:text-lg font-bold leading-snug mt-1 ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
+              <h3 className={`text-lg sm:text-xl lg:text-2xl font-bold leading-snug mt-1 ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
                 {t.ubariTitle}
               </h3>
-              <p className={`text-[11px] sm:text-xs mt-0.5 font-normal ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
+              <p className={`text-xs sm:text-sm lg:text-base mt-1 font-bold ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>
                 {t.ubariSub}
               </p>
             </div>
@@ -154,7 +154,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
         </div>
 
         {/* Narrative Paragraph (Compact & Clean) */}
-        <p className={`text-xs sm:text-[13px] leading-relaxed text-start relative z-10 font-normal ${
+        <p className={`text-sm sm:text-base leading-loose text-start relative z-10 font-bold ${
           theme === 'light' ? 'text-slate-700' : 'text-slate-300'
         }`}>
           {t.ubariParagraph}
@@ -173,9 +173,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-cyan-500/15 text-cyan-500 border border-cyan-500/30 flex items-center justify-center shrink-0">
                 <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <h4 className="font-bold text-xs sm:text-[13px] text-cyan-600 dark:text-cyan-400 leading-tight">{t.ubariLakesTitle}</h4>
+              <h4 className="font-bold text-sm sm:text-base text-cyan-600 dark:text-cyan-400 leading-tight">{t.ubariLakesTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
               {t.ubariLakesDesc.split('\n').map((point, idx) => (
                 <div key={idx} className="flex items-start gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1 shrink-0 shadow-sm shadow-cyan-500/50" />
@@ -195,9 +195,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 flex items-center justify-center shrink-0">
                 <Signpost className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <h4 className="font-bold text-xs sm:text-[13px] text-amber-600 dark:text-amber-400 leading-tight">{t.ubariTransportTitle}</h4>
+              <h4 className="font-bold text-sm sm:text-base text-amber-600 dark:text-amber-400 leading-tight">{t.ubariTransportTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
               {t.ubariTransportDesc.split('\n').map((point, idx) => (
                 <div key={idx} className="flex items-start gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-500/50" />
@@ -217,9 +217,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 flex items-center justify-center shrink-0">
                 <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <h4 className="font-bold text-xs sm:text-[13px] text-emerald-600 dark:text-emerald-400 leading-tight">{t.ubariEnergyTitle}</h4>
+              <h4 className="font-bold text-sm sm:text-base text-emerald-600 dark:text-emerald-400 leading-tight">{t.ubariEnergyTitle}</h4>
             </div>
-            <p className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-normal font-normal">
               {t.ubariEnergyDesc}
             </p>
           </div>
@@ -234,9 +234,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-violet-500/15 text-violet-500 border border-violet-500/30 flex items-center justify-center shrink-0">
                 <Paintbrush className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
-              <h4 className="font-bold text-xs sm:text-[13px] text-violet-600 dark:text-violet-400 leading-tight">{t.ubariHeritageTitle}</h4>
+              <h4 className="font-bold text-sm sm:text-base text-violet-600 dark:text-violet-400 leading-tight">{t.ubariHeritageTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
+            <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
               {t.ubariHeritageDesc.split('\n').map((point, idx) => (
                 <div key={idx} className="flex items-start gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1 shrink-0 shadow-sm shadow-violet-500/50" />
@@ -270,7 +270,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shadow-sm shrink-0 ${currentFeature.iconBg} ${currentFeature.iconColor}`}>
                   <CurrentIcon className="w-3.5 h-3.5" />
                 </div>
-                <h4 className="text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 truncate">
+                <h4 className="text-sm sm:text-base font-bold px-3 py-1 rounded-md bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 truncate">
                   {currentFeature.title}
                 </h4>
               </div>
@@ -278,7 +278,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
 
             {/* Card Description */}
             <div className="space-y-1 my-2">
-              <div className="text-[10.5px] text-slate-600 dark:text-slate-300 leading-normal font-normal space-y-1 text-start">
+              <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed font-bold space-y-1 text-start">
                 {currentFeature.desc.includes('\n') ? (
                   currentFeature.desc.split('\n').map((point, idx) => (
                     <div key={idx} className="flex items-start gap-1.5">

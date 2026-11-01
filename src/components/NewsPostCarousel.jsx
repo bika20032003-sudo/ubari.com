@@ -220,7 +220,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
               {/* Bold Title */}
               <h3 
                 onClick={() => setSelectedPostModal(currentPost)}
-                className={`text-base sm:text-xl lg:text-2xl font-black leading-snug cursor-pointer hover:text-amber-500 transition-colors ${
+                className={`text-xl sm:text-2xl lg:text-3xl font-bold leading-snug cursor-pointer hover:text-amber-500 transition-colors ${
                   theme === 'light' ? 'text-slate-950' : 'text-white'
                 }`}
               >
@@ -228,7 +228,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
               </h3>
 
               {/* Comprehensive Description */}
-              <p className={`text-xs sm:text-sm leading-relaxed font-medium ${
+              <p className={`text-sm sm:text-base lg:text-lg leading-relaxed font-bold ${
                 theme === 'light' ? 'text-slate-600' : 'text-slate-300'
               }`}>
                 {lang === 'ar' ? currentPost.desc : currentPost.descEn}
@@ -239,7 +239,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                 <button
                   type="button"
                   onClick={() => setSelectedPostModal(currentPost)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-500 border border-amber-500/35 text-xs font-black transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-500 border border-amber-500/35 text-sm sm:text-base font-bold transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
                 >
                   <span>{lang === 'ar' ? 'قراءة تفاصيل الخبر بالكامل ↗' : 'Read Full Article ↗'}</span>
                 </button>
