@@ -398,7 +398,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                           type="button"
                           onClick={(e) => { e.stopPropagation(); goToMobileNews(i); }}
                           className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                            i === mobileNewsIdx ? 'w-4 bg-amber-500' : 'w-1.5 bg-slate-300 dark:bg-white/20'
+                            i === mobileNewsIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
                           }`}
                           aria-label={`News ${i + 1}`}
                         />

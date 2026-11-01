@@ -146,9 +146,6 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
             <div className="flex items-center gap-1.5 font-mono text-[9px]">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse inline-block" />
               <span>{updatedAt}</span>
-              <span className="text-[8px] text-emerald-500/80 font-sans">
-                {lang === 'ar' ? 'تلقائي' : 'Live'}
-              </span>
             </div>
           </div>
         </div>
@@ -219,11 +216,11 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
             </div>
           </div>
 
-          {/* ── End: Live Auto-Sync Status ── */}
+          {/* ── End: Live Sync Status ── */}
           <div className="flex items-center gap-2 flex-shrink-0 text-[10px] text-slate-400 ms-auto sm:ms-0">
             <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5 font-mono">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block" />
-              <span className="hidden xl:inline">{lang === 'ar' ? 'تحديث تلقائي مستمر:' : 'Auto Live:'}</span>
+              <span className="hidden xl:inline">{lang === 'ar' ? 'تحديث مستمر:' : 'Live Update:'}</span>
               <span>{updatedAt}</span>
             </span>
           </div>

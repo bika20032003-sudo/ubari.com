@@ -481,10 +481,6 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
               </div>
 
               <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-1 font-mono whitespace-nowrap">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span>5s</span>
-                </span>
                 <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg border whitespace-nowrap ${
                   currentMobileProject.isFieldDoc
                     ? 'bg-amber-500/15 text-amber-500 border-amber-500/30'
@@ -563,7 +559,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                         }, 200);
                       }}
                       className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer shrink-0 ${
-                        i === activeProjectMobileIdx ? 'w-4 bg-amber-500' : 'w-1.5 bg-slate-300 dark:bg-white/20'
+                        i === activeProjectMobileIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
                       }`}
                       aria-label={`Project ${i + 1}`}
                     />

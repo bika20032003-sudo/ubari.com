@@ -267,8 +267,8 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                   title={`${lang === 'ar' ? 'عرض الخبر' : 'View Post'} ${idx + 1}`}
                   className={`transition-all duration-300 rounded-full cursor-pointer ${
                     isActive
-                      ? 'w-5 h-2 bg-blue-500 shadow-md shadow-blue-500/60 scale-105'
-                      : 'w-2 h-2 bg-white/40 hover:bg-white/90 hover:scale-125'
+                      ? 'w-5 h-2 bg-amber-500 shadow-md shadow-amber-500/60 scale-105'
+                      : 'w-2 h-2 bg-amber-500/35 hover:bg-amber-400 hover:scale-125 border border-amber-500/40'
                   }`}
                 />
               );

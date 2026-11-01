@@ -275,12 +275,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 </h4>
               </div>
 
-              {/* 5s Auto Indicator & Slide index */}
+              {/* Slide index */}
               <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] text-emerald-500 font-bold flex items-center gap-1 font-mono whitespace-nowrap">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-                  <span>5s</span>
-                </span>
                 <span className="text-[10px] text-slate-400 font-mono bg-slate-100 dark:bg-white/5 px-2 py-0.5 rounded border border-slate-200 dark:border-white/10 whitespace-nowrap">
                   {activeFeatureIdx + 1} / {originalFeatures.length}
                 </span>
@@ -318,7 +314,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                       }, 200);
                     }}
                     className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      i === activeFeatureIdx ? 'w-4 bg-amber-500' : 'w-1.5 bg-slate-300 dark:bg-white/20'
+                      i === activeFeatureIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
                     }`}
                     aria-label={`Card ${i + 1}`}
                   />
