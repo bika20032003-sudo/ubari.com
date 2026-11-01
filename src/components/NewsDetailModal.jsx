@@ -112,12 +112,12 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             </div>
             <div className="min-w-0 flex-1 overflow-hidden text-start">
               <div className="flex items-center gap-1.5 min-w-0">
-                <span className="font-black text-sm sm:text-base font-bold text-amber-500 truncate block">
+                <span className="font-black text-xs sm:text-sm text-amber-500 truncate block">
                   {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 shadow-sm shadow-emerald-500/50" />
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 font-medium truncate block">
+              <p className="text-[10px] sm:text-[11px] text-slate-400 truncate block">
                 {lang === 'ar' ? 'المكتب الإعلامي • تقرير ميداني معتمد' : 'Media Office • Official Field Report'}
               </p>
             </div>
@@ -161,7 +161,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
             {/* Top Category Badge */}
             <div className="absolute top-3 start-3 pointer-events-none">
-              <span className="inline-flex items-center gap-1.5 bg-black/75 backdrop-blur-md px-3 py-1 rounded-xl border border-amber-500/30 text-xs sm:text-sm font-bold text-amber-400 shadow-md">
+              <span className="inline-flex items-center gap-1.5 bg-black/75 backdrop-blur-md px-3 py-1 rounded-xl border border-amber-500/30 text-[10.5px] sm:text-xs font-black text-amber-400 shadow-md">
                 <Sparkles className="w-3 h-3 text-amber-400" />
                 <span>{post.category || (lang === 'ar' ? 'توثيق ميداني' : 'Field Documentation')}</span>
               </span>
@@ -169,12 +169,12 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
             {/* Bottom Photo Telemetry Badges */}
             <div className="absolute bottom-3 start-3 end-3 flex items-center justify-between text-white text-xs gap-2 pointer-events-none flex-wrap">
-              <span className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-xs sm:text-sm font-bold min-w-0 truncate shadow-md">
+              <span className="flex items-center gap-1.5 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-[11px] sm:text-xs font-bold min-w-0 truncate shadow-md">
                 <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span className="truncate">{post.location || (lang === 'ar' ? 'المدخل الجنوبي للمسار' : 'Southern Corridor')}</span>
               </span>
 
-              <span className="bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs sm:text-sm font-mono text-slate-200 border border-white/15 shrink-0 whitespace-nowrap shadow-md flex items-center gap-1">
+              <span className="bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10.5px] sm:text-[11.5px] font-mono text-slate-200 border border-white/15 shrink-0 whitespace-nowrap shadow-md flex items-center gap-1">
                 <Calendar className="w-3 h-3 text-amber-400" />
                 <span>{post.timeAgo || (lang === 'ar' ? 'منذ يومين' : '2 days ago')}</span>
               </span>
@@ -183,7 +183,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
           {/* Post Metadata Strip */}
           <div className="flex items-center justify-between text-xs flex-wrap gap-2 pt-1 border-b border-slate-100 dark:border-white/10 pb-3">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-bold flex-wrap">
+            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-[11px] sm:text-xs font-medium flex-wrap">
               <span className="text-amber-500 font-bold flex items-center gap-1">
                 <Building2 className="w-3.5 h-3.5" />
                 <span className="truncate max-w-[180px] sm:max-w-none">{post.author || (lang === 'ar' ? 'وحدة الطاقة المتجددة والسلامة' : 'Safety & Energy Unit')}</span>
@@ -198,7 +198,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
           {/* Full Headline */}
           <div className="space-y-1.5">
-            <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold leading-relaxed tracking-tight ${
+            <h2 className={`text-lg sm:text-2xl md:text-2xl font-black leading-snug tracking-tight ${
               theme === 'light' ? 'text-slate-950' : 'text-white'
             }`}>
               {lang === 'ar' ? post.title : (post.titleEn || post.title)}
@@ -215,7 +215,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             }`}>
               <div className="flex items-start gap-2.5">
                 <FileCheck2 className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-base sm:text-lg leading-loose font-bold text-justify">
+                <p className="text-xs sm:text-sm leading-relaxed sm:leading-relaxed font-semibold text-justify">
                   {leadParagraph}
                 </p>
               </div>
@@ -224,7 +224,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
           {/* Detailed Paragraphs */}
           {supportingParagraphs.length > 0 && (
-            <div className="space-y-4 text-base sm:text-lg leading-loose font-bold text-slate-700 dark:text-slate-200">
+            <div className="space-y-3 text-xs sm:text-sm leading-relaxed sm:leading-loose font-normal text-slate-700 dark:text-slate-300">
               {supportingParagraphs.map((para, i) => (
                 <p key={i} className="text-justify leading-relaxed sm:leading-loose">
                   {para}
@@ -239,11 +239,11 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               ? 'bg-slate-50 border-slate-200 text-slate-800'
               : 'bg-[#0f172a]/80 border-white/10 text-white shadow-md'
           }`}>
-            <h4 className="text-sm sm:text-base font-bold text-amber-500 flex items-center gap-1.5">
+            <h4 className="text-xs font-black text-amber-500 flex items-center gap-1.5">
               <Layers className="w-4 h-4" />
               <span>{lang === 'ar' ? 'المعايير الفنية والتقنية المرتبطة بالعمل:' : 'Technical Specifications:'}</span>
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm sm:text-base font-bold">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] sm:text-xs">
               <div className="flex items-center gap-2 p-2 rounded-xl bg-white/5 border border-white/5">
                 <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0 shadow-sm shadow-amber-500/50" />
                 <span className="text-slate-300">{lang === 'ar' ? 'المواصفات: كود الطرق الدولي AASHTO' : 'Code: AASHTO Standards'}</span>
@@ -267,7 +267,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
         {/* ── Modal Footer with Safe Area Padding & Mobile Dismiss Button ── */}
         <div className="px-4 sm:px-6 py-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs relative z-10 shrink-0 bg-slate-50/95 dark:bg-black/60 pb-[max(env(safe-area-inset-bottom,0px),0.75rem)] gap-3">
-          <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 min-w-0 truncate">
+          <span className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 min-w-0 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
             <span className="truncate">{lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات - دولة ليبيا' : 'Transport Projects Authority - Libya'}</span>
           </span>
@@ -275,7 +275,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
           <button
             type="button"
             onClick={onClose}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition-all active:scale-95 shadow-sm cursor-pointer shrink-0"
+            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all active:scale-95 shadow-sm cursor-pointer shrink-0"
           >
             {lang === 'ar' ? 'إغلاق التقرير' : 'Close'}
           </button>

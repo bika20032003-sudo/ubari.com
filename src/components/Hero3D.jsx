@@ -224,37 +224,39 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
           <div className="w-full lg:w-7/12 space-y-4 sm:space-y-6 animate-fadeIn text-start gsap-header">
             
             {/* Official Kicker */}
-            <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-amber-500">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0" />
+            <div className="flex items-center gap-2 text-[11px] sm:text-sm font-bold text-amber-500">
+              <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0" />
               <span>{lang === 'ar' ? 'دولة ليبيا • جهاز تنفيذ مشروعات المواصلات' : 'State of Libya • Transportation Projects Authority'}</span>
             </div>
 
             {/* 4K Hero Title */}
-            <div className="space-y-3 sm:space-y-6">
+            <div className="space-y-2 sm:space-y-4">
               <h1 
-                className={`text-3xl xs:text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-snug sm:leading-[1.25] ${
+                style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                className={`text-xl xs:text-2xl sm:text-5xl lg:text-6xl font-black leading-normal sm:leading-[1.3] ${
                   theme === 'light' ? 'text-slate-950' : 'text-white'
                 }`}
               >
-                <span className="block mb-1 sm:mb-2 text-slate-900 dark:text-white text-xl xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">{t.heroMainTitle1}</span>
+                <span className="block mb-0.5 sm:mb-2 text-slate-900 dark:text-white text-base xs:text-xl sm:text-4xl lg:text-5xl">{t.heroMainTitle1}</span>
                 <span 
-                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-2 pb-2 text-4xl xs:text-5xl sm:text-7xl lg:text-8xl xl:text-9xl overflow-visible font-bold tracking-normal"
+                  style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-3 pb-3 text-2xl xs:text-3xl sm:text-5xl lg:text-6xl overflow-visible font-black tracking-normal"
                 >
                   {t.heroMainTitle2}
                 </span>
-                <span className="inline-block text-lg xs:text-xl sm:text-4xl lg:text-5xl font-bold text-amber-500/90 dark:text-amber-400/90 ms-2 sm:ms-4">
+                <span className="inline-block text-sm xs:text-base sm:text-3xl font-light text-slate-500 dark:text-white/85 ms-1.5 sm:ms-3">
                   (360 كم)
                 </span>
               </h1>
               
-              <p className={`text-base xs:text-lg sm:text-2xl lg:text-3xl font-bold leading-relaxed ${
+              <p className={`text-xs xs:text-sm sm:text-lg lg:text-xl font-bold leading-relaxed ${
                 theme === 'light' ? 'text-slate-800' : 'text-white'
               }`}>
                 {t.heroSubtitle}
               </p>
 
-              <p className={`text-sm xs:text-base sm:text-lg lg:text-xl max-w-3xl leading-relaxed sm:leading-loose font-bold ${
-                theme === 'light' ? 'text-slate-800' : 'text-slate-100'
+              <p className={`text-[11px] xs:text-xs sm:text-sm lg:text-base max-w-xl leading-relaxed font-normal ${
+                theme === 'light' ? 'text-slate-700' : 'text-white'
               }`}>
                 {t.heroDesc}
               </p>
@@ -310,18 +312,18 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                     </div>
                     <div className="text-start leading-tight min-w-0 flex-1 overflow-hidden">
                       <div className="flex items-center gap-1 min-w-0">
-                        <span className="font-bold text-xs sm:text-sm truncate">
+                        <span className="font-black text-xs truncate">
                           {lang === 'ar' ? 'مشروعات المواصلات' : 'Transport Projects'}
                         </span>
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       </div>
-                      <span className="text-xs text-slate-400 font-medium truncate block">
+                      <span className="text-[10px] text-slate-400 font-medium truncate block">
                         {lang === 'ar' ? (currentMobileNews.author || 'المكتب الإعلامي') : (currentMobileNews.authorEn || 'Media Office')} • {lang === 'ar' ? (currentMobileNews.timeAgo || 'مباشر') : (currentMobileNews.timeAgoEn || 'Live')}
                       </span>
                     </div>
                   </div>
 
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 shrink-0 whitespace-nowrap">
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 shrink-0 whitespace-nowrap">
                     {lang === 'ar' ? 'المستجدات الميدانية' : 'Field News'}
                   </span>
                 </div>
@@ -379,10 +381,10 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                   <div className={`space-y-2 transition-all duration-300 ease-in-out ${
                     isNewsFading ? 'opacity-0 translate-y-0.5' : 'opacity-100 translate-y-0'
                   }`}>
-                    <h3 className="font-bold text-base sm:text-lg leading-snug line-clamp-2">
+                    <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
                       {lang === 'ar' ? currentMobileNews.title : (currentMobileNews.titleEn || currentMobileNews.title)}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed font-bold">
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
                       {lang === 'ar' ? currentMobileNews.desc : (currentMobileNews.descEn || currentMobileNews.desc)}
                     </p>
                   </div>
@@ -402,7 +404,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                         />
                       ))}
                     </div>
-                    <span className="text-xs sm:text-sm text-amber-500 font-bold flex items-center gap-1 hover:underline">
+                    <span className="text-amber-500 font-black flex items-center gap-1 hover:underline">
                       <span>{lang === 'ar' ? 'عرض الخبر بالكامل ↗' : 'View Full Post ↗'}</span>
                     </span>
                   </div>

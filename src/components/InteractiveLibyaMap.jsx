@@ -169,9 +169,9 @@ export default function InteractiveLibyaMap({ theme, lang = 'ar' }) {
                 />
 
                 {/* Regional Territory Labels */}
-                <text x="240" y="190" fill="rgba(255,255,255,0.3)" fontSize="18" fontWeight="bold" fontFamily="'Traditional Arabic', 'Amiri', serif">إقليم طرابلس (الغرب)</text>
-                <text x="680" y="240" fill="rgba(255,255,255,0.3)" fontSize="18" fontWeight="bold" fontFamily="'Traditional Arabic', 'Amiri', serif">إقليم برقة (الشرق)</text>
-                <text x="360" y="440" fill="rgba(255,171,0,0.4)" fontSize="24" fontWeight="bold" fontFamily="'Traditional Arabic', 'Amiri', serif">إقليم فزان (الجنوب الليبي)</text>
+                <text x="240" y="190" fill="rgba(255,255,255,0.3)" fontSize="14" fontWeight="bold" fontFamily="Tajawal">إقليم طرابلس (الغرب)</text>
+                <text x="680" y="240" fill="rgba(255,255,255,0.3)" fontSize="14" fontWeight="bold" fontFamily="Tajawal">إقليم برقة (الشرق)</text>
+                <text x="360" y="440" fill="rgba(255,171,0,0.4)" fontSize="18" fontWeight="black" fontFamily="Tajawal">إقليم فزان (الجنوب الليبي)</text>
 
                 {/* Major Inter-city Highway Connecting Corridors */}
                 {/* Coastal Highway */}

@@ -86,12 +86,12 @@ export default function MarqueeTicker({
                 </div>
                 <div className="text-start min-w-0">
                   <div className="flex items-center gap-2 flex-nowrap">
-                    <span className="text-sm sm:text-base font-bold whitespace-nowrap">{item.title}</span>
-                    <span className="px-2 py-0.5 rounded-full text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
                       {item.stat}
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm text-amber-500/90 font-bold whitespace-nowrap mt-0.5">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
                 </div>
               </div>
             ))}
@@ -118,12 +118,12 @@ export default function MarqueeTicker({
                 </div>
                 <div className="text-start min-w-0">
                   <div className="flex items-center gap-2 flex-nowrap">
-                    <span className="text-sm sm:text-base font-bold whitespace-nowrap">{item.title}</span>
-                    <span className="px-2 py-0.5 rounded-full text-xs sm:text-sm font-bold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
                       {item.stat}
                     </span>
                   </div>
-                  <p className="text-xs sm:text-sm text-amber-500/90 font-bold whitespace-nowrap mt-0.5">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
                 </div>
               </div>
             ))}
@@ -151,7 +151,7 @@ export default function MarqueeTicker({
       <div className="max-w-7xl mx-auto flex items-center gap-3 sm:gap-4 relative">
         
         {/* ── Fixed Live Broadcast Badge (Refined Frosted Glass Pill) ── */}
-        <div className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 text-slate-950 font-bold text-xs sm:text-sm shadow-md shadow-amber-500/25 z-20 border border-amber-300/40 transition-transform duration-200 hover:scale-[1.02]">
+        <div className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-orange-500 text-slate-950 font-black text-[10px] sm:text-xs shadow-md shadow-amber-500/25 z-20 border border-amber-300/40 transition-transform duration-200 hover:scale-[1.02]">
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600 shadow-sm"></span>
@@ -172,9 +172,9 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-base sm:text-lg font-bold">
+                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-bold tracking-wide border transition-all ${
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'
@@ -201,9 +201,9 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-base sm:text-lg font-bold">
+                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-bold tracking-wide border transition-all ${
+                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'

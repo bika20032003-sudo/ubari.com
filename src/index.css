@@ -1,28 +1,5 @@
 @import "tailwindcss";
 
-/* -- Traditional Arabic Web Font Pipeline (Identical to user reference image) -- */
-@font-face {
-  font-family: 'Traditional Arabic';
-  src: local('Traditional Arabic'),
-       local('Amiri'),
-       url('./assets/fonts/Traditional-Arabic.ttf') format('truetype');
-  font-weight: 400 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Traditional Arabic';
-  src: local('Traditional Arabic Bold'),
-       local('Traditional Arabic'),
-       local('Amiri Bold'),
-       url('./assets/fonts/Traditional-Arabic-Bold.ttf') format('truetype');
-  font-weight: 700 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-
 /* ── Content-Visibility & Rendering Performance Accelerator ── */
 #about-section,
 #projects-section,
@@ -44,36 +21,16 @@
   --color-libya-green: #239E46;
   --color-libya-dark: #07090E;
 
-  /* Unified Prestigious Font Stack with Authentic Arabic Orthography */
-  --font-arabic: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
-  --font-tajawal: 'Traditional Arabic', 'Amiri', serif;
-  --font-noto: 'Traditional Arabic', 'Amiri', serif;
-  --font-almarai: 'Traditional Arabic', 'Amiri', serif;
-  --font-cairo: 'Traditional Arabic', 'Amiri', serif;
-  --font-alexandria: 'Traditional Arabic', 'Amiri', serif;
-  --font-sans: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
-  --font-display: 'Traditional Arabic', 'Amiri', serif;
-  --font-outfit: 'Outfit', 'Traditional Arabic', 'Amiri', serif;
-
-  /* Optical Scaled Typography for Traditional Arabic */
-  --text-xs: 0.88rem;
-  --text-xs--line-height: 1.5;
-  --text-sm: 1rem;
-  --text-sm--line-height: 1.6;
-  --text-base: 1.15rem;
-  --text-base--line-height: 1.75;
-  --text-lg: 1.3rem;
-  --text-lg--line-height: 1.75;
-  --text-xl: 1.5rem;
-  --text-xl--line-height: 1.6;
-  --text-2xl: 1.85rem;
-  --text-2xl--line-height: 1.5;
-  --text-3xl: 2.25rem;
-  --text-3xl--line-height: 1.4;
-  --text-4xl: 2.75rem;
-  --text-4xl--line-height: 1.35;
-  --text-5xl: 3.4rem;
-  --text-5xl--line-height: 1.3;
+  /* Unified Prestigious Font Stack with Authentic Arabic Orthography (Tajawal / Noto Sans Arabic / Almarai) */
+  --font-arabic: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
+  --font-tajawal: 'Tajawal', sans-serif;
+  --font-noto: 'Noto Sans Arabic', sans-serif;
+  --font-almarai: 'Almarai', sans-serif;
+  --font-cairo: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-alexandria: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-sans: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
+  --font-display: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+  --font-outfit: 'Outfit', 'Tajawal', sans-serif;
 }
 
 /* ============================================================
@@ -178,28 +135,15 @@
    GLOBAL RESET & ARABIC TYPOGRAPHY HARMONY ENGINE
    ============================================================ */
 html {
-  font-size: 20px;
   scroll-padding-top: 85px;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizeSpeed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-@media (min-width: 640px) {
-  html {
-    font-size: 21.5px;
-  }
-}
-
-@media (min-width: 1024px) {
-  html {
-    font-size: 22.5px;
-  }
-}
-
 html, body, #root {
-  font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif !important;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif !important;
   max-width: 100vw;
   overflow-x: hidden !important;
 }
@@ -249,97 +193,18 @@ html[dir="rtl"] h6,
 [dir="rtl"] h4,
 [dir="rtl"] h5,
 [dir="rtl"] h6 {
-  line-height: 1.45 !important;
-  font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif !important;
+  line-height: 1.38 !important;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif !important;
 }
 
 html[dir="rtl"] p,
 [dir="rtl"] p {
-  line-height: 1.85 !important;
-  font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
+  line-height: 1.75;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
 }
 
 button, input, select, textarea {
-  font-family: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
-}
-
-/* ============================================================
-   TRADITIONAL ARABIC HARMONY & OPTICAL WEIGHT STABILIZATION
-   ============================================================ */
-/* Lift and harmonize all hardcoded micro-text to ensure readability */
-[class*="text-\[8px\]"],
-[class*="text-\[9px\]"],
-[class*="text-\[9.5px\]"] {
-  font-size: 0.85rem !important;
-  line-height: 1.45 !important;
-}
-
-[class*="text-\[10px\]"],
-[class*="text-\[10.5px\]"] {
-  font-size: 0.9rem !important;
-  line-height: 1.5 !important;
-}
-
-[class*="text-\[11px\]"],
-[class*="text-\[11.5px\]"],
-[class*="text-\[12px\]"] {
-  font-size: 0.98rem !important;
-  line-height: 1.55 !important;
-}
-
-[class*="text-\[13px\]"] {
-  font-size: 1.05rem !important;
-  line-height: 1.6 !important;
-}
-
-/* Ensure rich, authoritative ink strokes for Traditional Arabic */
-html[dir="rtl"] body,
-[dir="rtl"] body {
-  font-weight: 600;
-}
-
-html[dir="rtl"] p,
-[dir="rtl"] p {
-  font-weight: 600;
-  font-size: 1.12rem;
-  line-height: 1.95 !important;
-}
-
-html[dir="rtl"] h1,
-html[dir="rtl"] h2,
-html[dir="rtl"] h3,
-html[dir="rtl"] h4,
-html[dir="rtl"] h5,
-html[dir="rtl"] h6,
-[dir="rtl"] h1,
-[dir="rtl"] h2,
-[dir="rtl"] h3,
-[dir="rtl"] h4,
-[dir="rtl"] h5,
-[dir="rtl"] h6 {
-  font-weight: 700 !important;
-  line-height: 1.45 !important;
-}
-
-html[dir="rtl"] button,
-[dir="rtl"] button,
-html[dir="rtl"] a,
-[dir="rtl"] a {
-  font-weight: 700 !important;
-}
-
-/* Standardize weights to prevent faint or thin rendering in Traditional Arabic */
-.font-normal,
-.font-light,
-.font-medium {
-  font-weight: 600 !important;
-}
-
-.font-semibold,
-.font-bold,
-.font-extrabold,
-.font-black {
-  font-weight: 700 !important;
+  font-family: 'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif;
 }
 
 /* 4K Tech Grid Overlay */

@@ -246,16 +246,17 @@ export default function Header({
 
           {/* Authority Official Title */}
           <div 
+            style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
             className="text-start border-s border-slate-300 dark:border-white/10 ps-1.5 sm:ps-3 min-w-0 flex-1 sm:flex-initial"
           >
             <div className="flex items-center gap-1 min-w-0">
-              <h1 className={`font-bold text-sm xs:text-base sm:text-lg leading-tight whitespace-nowrap group-hover:text-amber-500 transition-colors ${
-                theme === 'light' ? 'text-slate-950' : 'text-white'
+              <h1 className={`font-black text-[10px] xs:text-[11px] sm:text-sm leading-tight whitespace-nowrap group-hover:text-amber-500 transition-colors ${
+                theme === 'light' ? 'text-slate-900' : 'text-white'
               }`}>
                 {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transportation Authority'}
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-amber-500 font-bold flex items-center gap-1 whitespace-nowrap mt-0.5">
+            <p className="text-[9px] sm:text-[10px] text-amber-500 font-bold flex items-center gap-1 whitespace-nowrap mt-0.5">
               <span>{lang === 'ar' ? 'طريق أوباري – غات' : 'Ubari – Ghat'}</span>
               <span className="hidden xs:inline">(360 كم)</span>
             </p>
@@ -272,7 +273,7 @@ export default function Header({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id, item.targetId)}
-                className={`relative px-3.5 py-1.5 rounded-xl text-sm lg:text-base font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
+                className={`relative px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
                   isActive
                     ? theme === 'light'
                       ? 'bg-amber-500/15 text-amber-900 border border-amber-500/40 shadow-sm font-black'
