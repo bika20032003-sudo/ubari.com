@@ -169,6 +169,14 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             >
               <Share2 className="w-4 h-4" />
             </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-rose-500/30 flex items-center justify-center text-rose-400 hover:text-white hover:bg-rose-600 active:scale-95 transition-all cursor-pointer text-base font-black bg-rose-500/10 shadow-sm"
+              title={lang === 'ar' ? 'إغلاق' : 'Close'}
+            >
+              ✕
+            </button>
           </div>
         </div>
 
@@ -382,20 +390,13 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
         {/* ── Modal Footer with Safe Area Padding ── */}
         <div 
-          className="px-4 sm:px-6 py-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs relative z-20 shrink-0 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md"
+          className="px-4 sm:px-6 py-2.5 sm:py-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-center text-xs relative z-20 shrink-0 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md"
           style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 14px)' }}
         >
           <span className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 min-w-0 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40 shrink-0" />
             <span className="truncate">{lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات - دولة ليبيا' : 'Transport Projects Execution Authority - State of Libya'}</span>
           </span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all cursor-pointer shadow-md active:scale-95 shrink-0"
-          >
-            {lang === 'ar' ? 'إغلاق النافذة' : 'Close Window'}
-          </button>
         </div>
 
       </div>
