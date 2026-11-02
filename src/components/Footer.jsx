@@ -15,7 +15,7 @@ export default function Footer({ setActiveTab, theme, lang = 'ar' }) {
   };
 
   return (
-    <footer className={`text-xs pt-16 pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t select-none ${
+    <footer className={`text-xs pt-8 sm:pt-12 pb-8 sm:pb-10 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t select-none ${
       theme === 'light'
         ? 'bg-white text-slate-600 border-slate-200'
         : 'bg-[#05070c] text-slate-400 border-white/10'

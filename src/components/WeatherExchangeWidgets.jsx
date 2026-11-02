@@ -96,7 +96,7 @@ export default function WeatherExchangeWidgets({ theme, lang = 'ar' }) {
   }, [lang]);
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-2 relative z-20 animate-fadeIn select-none">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-1 sm:my-2 relative z-20 animate-fadeIn select-none">
       {/* ── 2026 Dual-City Highway Weather Telemetry Ribbon (Ubari & Ghat) ── */}
       <div className={`relative overflow-hidden rounded-2xl py-2 px-3 sm:px-5 border shadow-sm transition-colors duration-200 ${
         theme === 'light'

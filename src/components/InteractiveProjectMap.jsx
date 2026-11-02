@@ -90,7 +90,7 @@ export default function InteractiveProjectMap({ theme, lang = 'ar' }) {
   const directUrl = `https://maps.google.com/?q=${encodeURIComponent(targetQuery)}`;
 
   return (
-    <section id="map-section" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8 animate-fadeIn select-none">
+    <section id="map-section" className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 animate-fadeIn select-none">
       
       {/* Section Header */}
       <div className="space-y-3 text-start">

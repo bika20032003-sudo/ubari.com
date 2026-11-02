@@ -279,7 +279,7 @@ function App() {
       )}
 
       {/* Main Content Area */}
-      <main className={activeTab === 'dashboard' ? 'min-h-screen' : 'space-y-16 pb-16'}>
+      <main className={activeTab === 'dashboard' ? 'min-h-screen' : 'space-y-4 sm:space-y-8 pb-8 sm:pb-12'}>
         
         {/* Tab: Exclusive Executive Project Manager Dashboard & CMS */}
         {activeTab === 'dashboard' && (

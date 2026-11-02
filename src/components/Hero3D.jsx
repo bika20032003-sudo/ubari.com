@@ -118,7 +118,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   return (
     <section 
       id="hero-section" 
-      className="relative min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden bg-grid-pattern select-none pt-20 sm:pt-24 pb-4"
+      className="relative min-h-0 sm:min-h-[85vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden bg-grid-pattern select-none pt-16 sm:pt-22 pb-2 sm:pb-4"
     >
       
       {/* ── 4K Cinematic Background Road Photo (Direct GPU Hardware Texture & Dynamic Control) ── */}
@@ -216,7 +216,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
       </div>
 
       {/* ── Main Hero Content ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full space-y-6 sm:space-y-10 my-auto">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full space-y-4 sm:space-y-8 my-auto py-2 sm:py-4">
         
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-10 lg:gap-16">
           

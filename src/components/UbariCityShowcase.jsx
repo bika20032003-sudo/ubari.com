@@ -109,7 +109,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
   const CurrentIcon = currentFeature.icon;
 
   return (
-    <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto animate-fadeIn select-none">
+    <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-2 sm:py-4 animate-fadeIn select-none">
       
       {/* ── 2026 4K Luxury Road Project Showcase Card (Compact & Harmonious) ── */}
       <div className={`p-3.5 xs:p-4 sm:p-6 rounded-2xl border shadow-xl space-y-3 sm:space-y-4 relative overflow-hidden transition-all ${

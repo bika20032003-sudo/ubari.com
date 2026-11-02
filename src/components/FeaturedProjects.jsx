@@ -262,7 +262,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   const currentMobileProject = filteredProjects[activeProjectMobileIdx] || filteredProjects[0];
 
   return (
-    <section id="projects-section" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10 select-none">
+    <section id="projects-section" className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 select-none">
 
       {/* ── Section Title Header with GSAP Reveal ── */}
       <div className="text-center max-w-3xl mx-auto space-y-3 gsap-header">
