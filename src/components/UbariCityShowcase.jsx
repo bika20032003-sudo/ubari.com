@@ -14,8 +14,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-cyan-600 dark:text-cyan-400',
       iconColor: 'text-cyan-500',
       iconBg: 'bg-cyan-500/15 border-cyan-500/30',
-      badgeBg: 'bg-cyan-500/15 text-cyan-500 dark:text-cyan-400 border-cyan-500/30',
-      dotColor: 'bg-cyan-500 shadow-cyan-500/50',
+      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
       badge: t.ubariLakesTitle
     },
     {
@@ -26,8 +26,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-amber-600 dark:text-amber-400',
       iconColor: 'text-amber-500',
       iconBg: 'bg-amber-500/15 border-amber-500/30',
-      badgeBg: 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30',
-      dotColor: 'bg-amber-500 shadow-amber-500/50',
+      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
       badge: t.ubariTransportTitle
     },
     {
@@ -38,8 +38,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-emerald-600 dark:text-emerald-400',
       iconColor: 'text-emerald-500',
       iconBg: 'bg-emerald-500/15 border-emerald-500/30',
-      badgeBg: 'bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 border-emerald-500/30',
-      dotColor: 'bg-emerald-500 shadow-emerald-500/50',
+      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
       badge: t.ubariEnergyTitle
     },
     {
@@ -50,8 +50,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-violet-600 dark:text-violet-400',
       iconColor: 'text-violet-500',
       iconBg: 'bg-violet-500/15 border-violet-500/30',
-      badgeBg: 'bg-violet-500/15 text-violet-500 dark:text-violet-400 border-violet-500/30',
-      dotColor: 'bg-violet-500 shadow-violet-500/50',
+      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
       badge: t.ubariHeritageTitle
     }
   ];
@@ -183,13 +183,24 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               </div>
               <h4 className="font-bold text-xs sm:text-[13px] text-cyan-600 dark:text-cyan-400 leading-tight">{t.ubariLakesTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
-              {t.ubariLakesDesc.split('\n').map((point, idx) => (
-                <div key={idx} className="flex items-start gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1 shrink-0 shadow-sm shadow-cyan-500/50" />
-                  <span>{point}</span>
-                </div>
-              ))}
+            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1.5 text-start">
+              {t.ubariLakesDesc.split('\n').map((point, idx) => {
+                const colonIdx = point.indexOf(':');
+                const hasColon = colonIdx > -1;
+                return (
+                  <div key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40" />
+                    <span>
+                      {hasColon ? (
+                        <>
+                          <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <span>{point.slice(colonIdx + 1)}</span>
+                        </>
+                      ) : point}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -205,13 +216,24 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               </div>
               <h4 className="font-bold text-xs sm:text-[13px] text-amber-600 dark:text-amber-400 leading-tight">{t.ubariTransportTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
-              {t.ubariTransportDesc.split('\n').map((point, idx) => (
-                <div key={idx} className="flex items-start gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-500/50" />
-                  <span>{point}</span>
-                </div>
-              ))}
+            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1.5 text-start">
+              {t.ubariTransportDesc.split('\n').map((point, idx) => {
+                const colonIdx = point.indexOf(':');
+                const hasColon = colonIdx > -1;
+                return (
+                  <div key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40" />
+                    <span>
+                      {hasColon ? (
+                        <>
+                          <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <span>{point.slice(colonIdx + 1)}</span>
+                        </>
+                      ) : point}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -244,13 +266,24 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               </div>
               <h4 className="font-bold text-xs sm:text-[13px] text-violet-600 dark:text-violet-400 leading-tight">{t.ubariHeritageTitle}</h4>
             </div>
-            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1 text-start">
-              {t.ubariHeritageDesc.split('\n').map((point, idx) => (
-                <div key={idx} className="flex items-start gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-500 mt-1 shrink-0 shadow-sm shadow-violet-500/50" />
-                  <span>{point}</span>
-                </div>
-              ))}
+            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1.5 text-start">
+              {t.ubariHeritageDesc.split('\n').map((point, idx) => {
+                const colonIdx = point.indexOf(':');
+                const hasColon = colonIdx > -1;
+                return (
+                  <div key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40" />
+                    <span>
+                      {hasColon ? (
+                        <>
+                          <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <span>{point.slice(colonIdx + 1)}</span>
+                        </>
+                      ) : point}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -286,14 +319,27 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
 
             {/* Card Description */}
             <div className="space-y-1 my-2">
-              <div className="text-[10.5px] text-slate-600 dark:text-slate-300 leading-normal font-normal space-y-1 text-start">
+              <div className="text-[10.5px] text-slate-600 dark:text-slate-300 leading-normal font-normal space-y-1.5 text-start">
                 {currentFeature.desc.includes('\n') ? (
-                  currentFeature.desc.split('\n').map((point, idx) => (
-                    <div key={idx} className="flex items-start gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 shadow-sm ${currentFeature.dotColor || 'bg-amber-500 shadow-amber-500/50'}`} />
-                      <span>{point}</span>
-                    </div>
-                  ))
+                  currentFeature.desc.split('\n').map((point, idx) => {
+                    const colonIdx = point.indexOf(':');
+                    const hasColon = colonIdx > -1;
+                    return (
+                      <div key={idx} className="flex items-start gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 shadow-sm ${currentFeature.dotColor || 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-amber-400/60 ring-1 ring-amber-300/40'}`} />
+                        <span>
+                          {hasColon ? (
+                            <>
+                              <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                              <span>{point.slice(colonIdx + 1)}</span>
+                            </>
+                          ) : (
+                            point
+                          )}
+                        </span>
+                      </div>
+                    );
+                  })
                 ) : (
                   <p>{currentFeature.desc}</p>
                 )}

@@ -746,10 +746,14 @@ export const syncExecutiveProjectsFromCloud = async () => {
   try {
     const cloudProjects = await fetchCloudProjects();
     if (cloudProjects && Array.isArray(cloudProjects) && cloudProjects.length > 0) {
-      safeStorageSet('portal-national-projects', cloudProjects);
+      const cloudIds = new Set(cloudProjects.map(p => p.id));
+      const remainingDefaults = nationalProjects.filter(p => !cloudIds.has(p.id));
+      const mergedProjects = [...cloudProjects, ...remainingDefaults];
+
+      safeStorageSet('portal-national-projects', mergedProjects);
       window.dispatchEvent(new Event('storage'));
-      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: cloudProjects }));
-      return cloudProjects;
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: mergedProjects }));
+      return mergedProjects;
     }
   } catch (e) {
     console.warn('[Supabase Sync] خطأ في مزامنة المشروعات:', e);
@@ -847,7 +851,11 @@ export const syncAllPortalData = async () => {
       if (localProjects && Array.isArray(localProjects) && localProjects.length > 0) {
         const cloudProjectsVal = cloudProjects.status === 'fulfilled' ? cloudProjects.value : null;
         if (!cloudProjectsVal || localProjects.length > cloudProjectsVal.length) {
-          await saveCloudProjects(localProjects);
+          const cloudArr = Array.isArray(cloudProjectsVal) ? cloudProjectsVal : [];
+          const mergedMap = new Map();
+          cloudArr.forEach(p => mergedMap.set(p.id, p));
+          localProjects.forEach(p => mergedMap.set(p.id, p));
+          await saveCloudProjects(Array.from(mergedMap.values()));
         }
       }
 

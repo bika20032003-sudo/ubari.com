@@ -56,7 +56,9 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     try {
       const savedCustom = safeStorageGet('portal-national-projects', null);
       if (savedCustom && Array.isArray(savedCustom) && savedCustom.length > 0) {
-        baseProjects = savedCustom;
+        const savedIds = new Set(savedCustom.map(p => p.id));
+        const remainingDefaults = nationalProjects.filter(p => !savedIds.has(p.id));
+        baseProjects = [...savedCustom, ...remainingDefaults];
       }
     } catch (e) {}
     return baseProjects;
@@ -71,8 +73,11 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     // 1. Immediately fetch latest cloud projects from Supabase
     fetchCloudProjects().then((cloudData) => {
       if (isMounted && cloudData && Array.isArray(cloudData) && cloudData.length > 0) {
-        setProjectsList(cloudData);
-        safeStorageSet('portal-national-projects', cloudData);
+        const cloudIds = new Set(cloudData.map(p => p.id));
+        const remainingDefaults = nationalProjects.filter(p => !cloudIds.has(p.id));
+        const merged = [...cloudData, ...remainingDefaults];
+        setProjectsList(merged);
+        safeStorageSet('portal-national-projects', merged);
       }
     }).catch(err => {
       console.warn('[FeaturedProjects] تعذر الجلب المباشر من سوبابيس:', err);
@@ -82,7 +87,9 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     const handleStorageUpdate = (e) => {
       if (!isMounted) return;
       if (e?.detail && Array.isArray(e.detail) && e.detail.length > 0) {
-        setProjectsList(e.detail);
+        const detailIds = new Set(e.detail.map(p => p.id));
+        const remainingDefaults = nationalProjects.filter(p => !detailIds.has(p.id));
+        setProjectsList([...e.detail, ...remainingDefaults]);
       } else {
         const loaded = loadAllExecutiveProjects();
         if (loaded && loaded.length > 0) {
@@ -538,8 +545,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
               {/* Dots Indicators + Full Story Prompt ("عرض المزيد") */}
               <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
-                <div className="flex items-center gap-1">
-                  {filteredProjects.slice(0, 6).map((_, i) => (
+                <div className="flex items-center gap-1 flex-wrap">
+                  {filteredProjects.map((_, i) => (
                     <button
                       key={i}
                       type="button"
@@ -564,7 +571,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                     e.stopPropagation();
                     setSelectedModalProject(currentMobileProject);
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer shrink-0"
                 >
                   <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
@@ -572,6 +579,55 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
               </div>
             </div>
 
+          </div>
+        )}
+
+        {/* Mobile Horizontal Quick-Switch Track for all projects */}
+        {filteredProjects && filteredProjects.length > 1 && (
+          <div className="pt-1 space-y-1.5">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
+              <span>{lang === 'ar' ? `جميع المشروعات المنفذة (${filteredProjects.length})` : `All Corridor Projects (${filteredProjects.length})`}</span>
+              <span className="text-[10px] text-amber-500 font-normal">{lang === 'ar' ? 'اضغط للتبديل والتصفح' : 'Tap to view'}</span>
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar -mx-1 px-1">
+              {filteredProjects.map((proj, pIdx) => {
+                const isSelected = pIdx === activeProjectMobileIdx;
+                return (
+                  <button
+                    key={proj.id || pIdx}
+                    type="button"
+                    onClick={() => {
+                      setProjectFadeActive(false);
+                      setTimeout(() => {
+                        setActiveProjectMobileIdx(pIdx);
+                        setProjectFadeActive(true);
+                      }, 180);
+                    }}
+                    className={`flex items-center gap-2 p-1.5 rounded-xl border shrink-0 text-start transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-amber-500/15 border-amber-500/50 text-amber-400 shadow-sm ring-1 ring-amber-500/30'
+                        : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/20'
+                    }`}
+                  >
+                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-black/40 border border-white/10">
+                      <img
+                        src={resolveAsset(proj.image || './road-asphalt-paver.jpg')}
+                        alt={proj.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                        }}
+                      />
+                    </div>
+                    <div className="max-w-[125px] leading-tight">
+                      <div className="text-[10px] font-bold truncate">{proj.title}</div>
+                      <div className="text-[9px] text-slate-400 font-mono truncate">{proj.id}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
