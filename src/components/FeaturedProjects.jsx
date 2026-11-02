@@ -480,12 +480,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
       >
         {/* Mobile Horizontal Quick-Switch Track for all projects (موضوع فوق المشروعات مباشرة) */}
         {displayProjects && displayProjects.length > 1 && (
-          <div className="space-y-1.5 pb-1">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
-              <span className="text-amber-500 dark:text-amber-400 font-black">
-                {lang === 'ar' ? `جميع المشروعات المنفذة (${displayProjects.length})` : `All Corridor Projects (${displayProjects.length})`}
-              </span>
-            </div>
+          <div className="pb-1">
             <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar -mx-1 px-1">
               {displayProjects.map((proj, pIdx) => {
                 const isSelected = pIdx === safeMobileIdx;
