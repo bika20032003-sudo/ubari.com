@@ -265,20 +265,15 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
         </div>
 
-        {/* ── Modal Footer with Safe Area Padding & Mobile Dismiss Button ── */}
-        <div className="px-4 sm:px-6 py-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs relative z-10 shrink-0 bg-slate-50/95 dark:bg-black/60 pb-[max(env(safe-area-inset-bottom,0px),0.75rem)] gap-3">
+        {/* ── Modal Footer with Safe Area Padding ── */}
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-xs relative z-10 shrink-0 bg-slate-50/90 dark:bg-black/40 pb-[max(env(safe-area-inset-bottom,0px),0.75rem)]">
           <span className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 min-w-0 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
-            <span className="truncate">{lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات - دولة ليبيا' : 'Transport Projects Authority - Libya'}</span>
+            <span className="truncate">{lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات - دولة ليبيا' : 'Transport Projects Execution Authority - State of Libya'}</span>
           </span>
-
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-all active:scale-95 shadow-sm cursor-pointer shrink-0"
-          >
-            {lang === 'ar' ? 'إغلاق التقرير' : 'Close'}
-          </button>
+          <span className="text-[9.5px] sm:text-[10px] text-slate-400 dark:text-slate-500 font-mono shrink-0 ms-2">
+            {lang === 'ar' ? 'بوابة المشروعات الرسمية' : 'Official Portal'}
+          </span>
         </div>
 
       </div>
