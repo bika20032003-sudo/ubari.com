@@ -270,7 +270,7 @@ export default function InteractiveLibyaMap({ theme, lang = 'ar' }) {
                     className="w-full h-full object-cover" 
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                      e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />

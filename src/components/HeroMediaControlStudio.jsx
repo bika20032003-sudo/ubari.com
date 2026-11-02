@@ -73,8 +73,8 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
       id: 'asphalt-paver',
       title: 'آليات رصف الأسفلت والدمك الحديثة',
       badge: 'ميداني مباشر',
-      image: './road-asphalt-paver.jpg',
-      mobileImage: './road-asphalt-paver.jpg',
+      image: './road-paving-official.jpg',
+      mobileImage: './road-paving-official.jpg',
       desc: 'كوادر الرصف الميدانية أثناء العمل مع فاردة الأسفلت العملاقة وقت الغروب'
     },
     {
@@ -392,7 +392,7 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
                     className="absolute inset-0 w-full h-full object-cover object-center"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                      e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                     }}
                   />
                   
@@ -442,7 +442,7 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
                       <div className="w-full rounded-xl overflow-hidden border border-white/20 bg-black/60 backdrop-blur-md p-2 space-y-1.5">
                         <div className="h-16 rounded-lg overflow-hidden bg-slate-800">
                           <img 
-                            src={resolveAsset(heroCard.image || './road-asphalt-paver.jpg')} 
+                            src={resolveAsset(heroCard.image || './road-paving-official.jpg')} 
                             alt="Mini Card" 
                             className="w-full h-full object-cover" 
                           />
@@ -493,7 +493,7 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
                   {/* Mini Mobile Card */}
                   <div className="relative z-10 rounded-xl overflow-hidden border border-white/20 bg-black/70 p-2 space-y-1">
                     <div className="h-16 rounded overflow-hidden">
-                      <img src={resolveAsset(heroCard.image || './road-asphalt-paver.jpg')} alt="Card" className="w-full h-full object-cover" />
+                      <img src={resolveAsset(heroCard.image || './road-paving-official.jpg')} alt="Card" className="w-full h-full object-cover" />
                     </div>
                     <span className="text-[8px] font-bold text-amber-400 block truncate">{heroCard.tag || 'المستجدات'}</span>
                   </div>
@@ -674,7 +674,7 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                            e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                           }}
                         />
                         <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-lg bg-black/70 backdrop-blur-md text-amber-400 text-[10px] font-bold">
@@ -759,12 +759,12 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
               <div className="w-full max-w-sm rounded-2xl overflow-hidden border border-slate-200 bg-[#070b14] shadow-xl text-start">
                 <div className="h-48 relative overflow-hidden bg-black">
                   <img
-                    src={resolveAsset(heroCard.image || './road-asphalt-paver.jpg')}
+                    src={resolveAsset(heroCard.image || './road-paving-official.jpg')}
                     alt="Hero Showcase Card"
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
-                      e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                      e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -838,7 +838,7 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
                 <span className="text-xs font-bold text-slate-700 block">أو اختر صورة جاهزة للبطاقة:</span>
                 <div className="grid grid-cols-3 gap-2.5">
                   {[
-                    { name: 'فاردة الأسفلت', src: './road-asphalt-paver.jpg' },
+                    { name: 'فاردة الأسفلت', src: './road-paving-official.jpg' },
                     { name: 'المسار من الجو', src: './road-aerial-highway.jpg' },
                     { name: 'الجريدر والتسوية', src: './road-grader-earthwork.jpg' },
                     { name: 'مداحل الدمك', src: './road-rollers-compaction.jpg' },

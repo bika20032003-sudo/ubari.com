@@ -25,7 +25,7 @@ import { resolveAsset } from '../utils/assets';
 import { fetchCloudProjects, saveCloudProjects } from '../services/supabase';
 
 const PROJECT_PRESET_IMAGES = [
-  { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: './road-asphalt-paver.jpg' },
+  { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: './road-paving-official.jpg' },
   { title: 'دمك الأسفلت بالمداحل الأسطوانية والمطاطية', category: 'الدمك وضبط المناسيب', src: './road-rollers-compaction.jpg' },
   { title: 'تسوية الأساس الحجري بالكاشطات الموتورية', category: 'كشط وتأسيس', src: './road-grader-earthwork.jpg' },
   { title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق', category: 'السلامة المرورية والإرشاد', src: './road-solar-lighting.jpg' },
@@ -45,7 +45,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   const [newProjectPhoto, setNewProjectPhoto] = useState({
     title: '',
     region: 'القطاع الأول (أوباري - الفيوات)',
-    image: '/road-asphalt-paver.jpg',
+    image: '/road-paving-official.jpg',
     desc: '',
     contractor: '',
     targetProject: 'new'
@@ -147,7 +147,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     e.preventDefault();
     if (!newProjectPhoto.title.trim()) return;
 
-    const finalImage = newProjectPhoto.image || '/road-asphalt-paver.jpg';
+    const finalImage = newProjectPhoto.image || '/road-paving-official.jpg';
     let currentProjects = loadAllExecutiveProjects();
 
     // 1. If user chose to create a new executive project card:
@@ -231,7 +231,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     setNewProjectPhoto({
       title: '',
       region: 'القطاع الأول (أوباري - الفيوات)',
-      image: '/road-asphalt-paver.jpg',
+      image: '/road-paving-official.jpg',
       desc: '',
       contractor: '',
       targetProject: 'new'
@@ -384,7 +384,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                 className="w-full h-full object-cover photo-hover-zoom group-hover:scale-110 transition-transform duration-700 ease-out"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                  e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-75" />
@@ -500,12 +500,12 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                   >
                     <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-black/40 border border-white/10">
                       <img
-                        src={resolveAsset(proj.image || './road-asphalt-paver.jpg')}
+                        src={resolveAsset(proj.image || './road-paving-official.jpg')}
                         alt={proj.title}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                          e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                         }}
                       />
                     </div>
@@ -562,12 +562,12 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
             <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
               <div className="w-full h-full relative transition-transform duration-500 ease-out">
                 <img 
-                  src={resolveAsset(currentMobileProject.image || './road-asphalt-paver.jpg')} 
+                  src={resolveAsset(currentMobileProject.image || './road-paving-official.jpg')} 
                   alt={currentMobileProject.title} 
                   className="w-full h-full object-cover transition-transform duration-500"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                    e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -779,7 +779,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setNewProjectPhoto(prev => ({ ...prev, image: '/road-asphalt-paver.jpg' }))}
+                          onClick={() => setNewProjectPhoto(prev => ({ ...prev, image: '/road-paving-official.jpg' }))}
                           className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs font-bold cursor-pointer"
                         >
                           إلغاء
@@ -834,7 +834,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                   type="url"
                   value={newProjectPhoto.image.startsWith('data:') ? '' : newProjectPhoto.image}
                   onChange={(e) => setNewProjectPhoto({ ...newProjectPhoto, image: e.target.value })}
-                  placeholder="https://... أو /road-asphalt-paver.jpg"
+                  placeholder="https://... أو /road-paving-official.jpg"
                   className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-white/10 outline-none focus:border-amber-500 bg-transparent text-xs"
                 />
               </div>

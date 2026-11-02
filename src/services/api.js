@@ -31,7 +31,7 @@ const initialSectors = [
     solarPolesInstalled: 640,
     activeWorkers: 115,
     notes: 'تم الانتهاء من الطبقة الرابطة وجاري استكمال الرصف النهائي للطبقة السطحية.',
-    image: './road-asphalt-paver.jpg'
+    image: './road-paving-official.jpg'
   },
   {
     id: 'SEC-02',
@@ -399,13 +399,13 @@ export const getSavedTickerNews = () => {
 export const initialNewsPosts = [
   {
     id: 'POST-01',
-    title: 'تواصل أعمال فرش ورصف الطبقة الأسفلتية الساخنة بمتابعة معملية دقيقة',
-    titleEn: 'Hot Asphalt Paving Operations Under Strict Laboratory & Field Supervision',
-    desc: 'تواصل الكوادر الفنية الميدانية لجهاز تنفيذ مشروعات المواصلات أعمال رصف الطبقة السطحية الرابطة ومتابعة درجة حرارة الخلطة الإسفلتية المعتمدة (160°C) في الموقع لضمان أعلى معايير الجودة والمتانة ومقاومة الحمولات الثقيلة على طول الشريان الصحراوي.',
-    descEn: 'Field engineering teams continue hot mix asphalt laying operations with strict temperature control (160°C) ensuring highway longevity and durability.',
+    title: 'تواصل الاعمال مع ارتفاع نسبة الانجاز',
+    titleEn: 'Ongoing Works & Accelerating Progress on Ubari - Ghat Corridor',
+    desc: 'مشروع طريق أوباري _ غات ضمن أهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق، يدخل مراحله المتقدمة بإشراف جهاز تنفيذ مشروعات المواصلات مع استمرار الأعمال الميدانية المكثفة على طول المسار لتأمين الشريان البري الحيوي.',
+    descEn: 'Ubari - Ghat strategic corridor enters advanced execution phases under Transportation Projects Execution Authority supervision.',
     category: 'رصف الأسفلت',
     categoryEn: 'Asphalt Paving',
-    image: './road-asphalt-paver.jpg',
+    image: './road-paving-official.jpg',
     timeAgo: 'منذ ساعتين',
     timeAgoEn: '2 hours ago',
     location: 'مسار طريق أوباري – غات',
@@ -839,7 +839,7 @@ export const initialHeroCard = {
   tagEn: 'Field Operations Status',
   title: 'أعمال رصف وتأهيل مسار 360 كم',
   titleEn: '360km Highway Paving Operations',
-  image: './road-asphalt-paver.jpg',
+  image: './road-paving-official.jpg',
   progress: 68.5,
   distance: '360 كيلومتراً',
   distanceEn: '360 km',

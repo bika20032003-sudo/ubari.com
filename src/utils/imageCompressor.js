@@ -210,7 +210,7 @@ export function safeStorageSet(key, value) {
         if (Array.isArray(value)) {
           const lightweight = value.map(item => {
             if (item && item.image && item.image.startsWith('data:') && item.image.length > 50000) {
-              return { ...item, image: './road-asphalt-paver.jpg', fullImageInCloud: true };
+              return { ...item, image: './road-paving-official.jpg', fullImageInCloud: true };
             }
             return item;
           });

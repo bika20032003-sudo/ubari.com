@@ -180,7 +180,7 @@ const PRESET_PROJECT_PHOTOS = [
   {
     title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة',
     category: 'رصف الأسفلت',
-    url: '/road-asphalt-paver.jpg',
+    url: '/road-paving-official.jpg',
     desc: 'عمليات مد ورصف الطبقة السطحية الرابطة ومتابعة درجة حرارة الخلطة الإسفلتية المعتمدة (160°C).'
   },
   {
@@ -279,7 +279,7 @@ export default function ExecutiveDashboard({
     title: '',
     category: 'رصف الأسفلت',
     desc: '',
-    image: '/road-asphalt-paver.jpg',
+    image: '/road-paving-official.jpg',
     author: 'المكتب الإعلامي - جهاز مشروعات المواصلات',
     location: 'مسار طريق أوباري – غات'
   });
@@ -448,7 +448,7 @@ export default function ExecutiveDashboard({
       { id: 'P-01', title: 'أعمال رصف الأسفلت بالدكاكات', sector: 'القطاع 07', category: 'رصف الأسفلت', date: '2026-08-20', img: '/road-rollers-compaction.jpg', photographer: 'م. عبد السلام الفزاني' },
       { id: 'P-02', title: 'تسوية وتمهيد الأساس الحجري بالكاشطات', sector: 'القطاع 10', category: 'الأعمال الترابية', date: '2026-08-20', img: '/road-grader-earthwork.jpg', photographer: 'م. طارق المحجوب' },
       { id: 'P-03', title: 'بناء عبّارات السيول الصندوقية المزدوجة', sector: 'القطاع 03', category: 'العبارات والجسور', date: '2026-08-20', img: '/road-qa-testing-core.jpg', photographer: 'م. سالم التواتي' },
-      { id: 'P-04', title: 'قطار الرصف الآلي المزدوج في قطاع الفيوات', sector: 'القطاع 01', category: 'رصف الأسفلت', date: '2026-08-20', img: '/road-asphalt-paver.jpg', photographer: 'فريق الإعلام الهندسي' },
+      { id: 'P-04', title: 'قطار الرصف الآلي المزدوج في قطاع الفيوات', sector: 'القطاع 01', category: 'رصف الأسفلت', date: '2026-08-20', img: '/road-paving-official.jpg', photographer: 'فريق الإعلام الهندسي' },
       { id: 'P-05', title: 'تركيب الشواخص المرورية وتخطيط المسار', sector: 'القطاع 04', category: 'السلامة المرورية', date: '2026-08-19', img: '/road-solar-lighting.jpg', photographer: 'م. منصور المهدي' },
       { id: 'P-06', title: 'مسار الطريق الصحراوي الممتد من أوباري لغات', sector: 'القطاع 02', category: 'بانوراما جوية', date: '2026-08-18', img: '/road-aerial-desert-highway.jpg', photographer: 'طائرة التصوير الميداني' }
     ];
@@ -495,8 +495,8 @@ export default function ExecutiveDashboard({
     title: '',
     sector: 'القطاع 01: أوباري - الفيوات',
     category: 'رصف الأسفلت',
-    img: '/road-asphalt-paver.jpg',
-    src: '/road-asphalt-paver.jpg',
+    img: '/road-paving-official.jpg',
+    src: '/road-paving-official.jpg',
     photographer: '',
     desc: '',
     date: new Date().toISOString().split('T')[0],
@@ -713,7 +713,7 @@ export default function ExecutiveDashboard({
               title: newsPostForm.title.trim(),
               category: newsPostForm.category,
               desc: newsPostForm.desc,
-              image: newsPostForm.image || p.image,
+              image: (newsPostForm.image !== undefined) ? newsPostForm.image.trim() : (p.image || ''),
               author: newsPostForm.author,
               location: newsPostForm.location
             }
@@ -730,7 +730,7 @@ export default function ExecutiveDashboard({
         descEn: newsPostForm.desc,
         category: newsPostForm.category,
         categoryEn: newsPostForm.category,
-        image: newsPostForm.image || '/road-asphalt-paver.jpg',
+        image: newsPostForm.image ? newsPostForm.image.trim() : '/road-paving-official.jpg',
         timeAgo: 'الآن',
         timeAgoEn: 'Just now',
         location: newsPostForm.location || 'مسار طريق أوباري – غات',
@@ -950,7 +950,7 @@ export default function ExecutiveDashboard({
       showToast('يرجى إدخال عنوان الصورة أو موضوع التوثيق');
       return;
     }
-    const finalImg = newMedia.img || newMedia.src || '/road-asphalt-paver.jpg';
+    const finalImg = newMedia.img || newMedia.src || '/road-paving-official.jpg';
     const item = {
       id: `PH-${Date.now().toString().slice(-4)}`,
       title: newMedia.title.trim(),
@@ -1030,8 +1030,8 @@ export default function ExecutiveDashboard({
       title: '',
       sector: 'القطاع 01: أوباري - الفيوات',
       category: 'رصف الأسفلت',
-      img: '/road-asphalt-paver.jpg',
-      src: '/road-asphalt-paver.jpg',
+      img: '/road-paving-official.jpg',
+      src: '/road-paving-official.jpg',
       photographer: '',
       desc: '',
       date: new Date().toISOString().split('T')[0],
@@ -1054,7 +1054,7 @@ export default function ExecutiveDashboard({
   const handleSaveEditPhoto = (e) => {
     e.preventDefault();
     if (!selectedPhotoEditModal) return;
-    const finalImg = selectedPhotoEditModal.src || selectedPhotoEditModal.img || '/road-asphalt-paver.jpg';
+    const finalImg = selectedPhotoEditModal.src || selectedPhotoEditModal.img || '/road-paving-official.jpg';
     const updatedItem = {
       ...selectedPhotoEditModal,
       img: finalImg,
@@ -1585,7 +1585,7 @@ export default function ExecutiveDashboard({
                         title: '',
                         category: 'رصف الأسفلت',
                         desc: '',
-                        image: '/road-asphalt-paver.jpg',
+                        image: '/road-paving-official.jpg',
                         author: 'المكتب الإعلامي - جهاز مشروعات المواصلات',
                         location: 'مسار طريق أوباري – غات'
                       });
@@ -2349,7 +2349,7 @@ export default function ExecutiveDashboard({
                   <div key={photo.id} className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 shadow-sm hover:border-amber-400 transition-all group flex flex-col justify-between">
                     <div>
                       <div className="relative h-44 overflow-hidden bg-black cursor-pointer" onClick={() => setSelectedPhotoModal(photo)}>
-                        <img src={photo.src || photo.img || '/road-asphalt-paver.jpg'} alt={photo.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={photo.src || photo.img || '/road-paving-official.jpg'} alt={photo.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                         <div className="absolute top-2 right-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold font-mono">
                           {photo.sector}
                         </div>
@@ -2543,7 +2543,7 @@ export default function ExecutiveDashboard({
                     <div className="w-full rounded-2xl overflow-hidden border border-white/15 bg-[#070b14] shadow-2xl text-start group">
                       <div className="h-40 relative overflow-hidden">
                         <img 
-                          src={localHeroCard.image || "/road-asphalt-paver.jpg"} 
+                          src={localHeroCard.image || "/road-paving-official.jpg"} 
                           alt="Hero Card" 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
@@ -2789,7 +2789,7 @@ export default function ExecutiveDashboard({
                           title: '',
                           category: 'رصف الأسفلت',
                           desc: '',
-                          image: '/road-asphalt-paver.jpg',
+                          image: '/road-paving-official.jpg',
                           author: 'المكتب الإعلامي - جهاز مشروعات المواصلات',
                           location: 'مسار طريق أوباري – غات'
                         });
@@ -2813,7 +2813,7 @@ export default function ExecutiveDashboard({
                         {/* Image Banner */}
                         <div className="relative h-44 bg-slate-950 overflow-hidden">
                           <img
-                            src={post.image || '/road-asphalt-paver.jpg'}
+                            src={post.image || '/road-paving-official.jpg'}
                             alt={post.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
@@ -2853,7 +2853,7 @@ export default function ExecutiveDashboard({
                                   title: post.title || '',
                                   category: post.category || 'رصف الأسفلت',
                                   desc: post.desc || '',
-                                  image: post.image || '/road-asphalt-paver.jpg',
+                                  image: post.image || '/road-paving-official.jpg',
                                   author: post.author || 'المكتب الإعلامي - جهاز مشروعات المواصلات',
                                   location: post.location || 'مسار طريق أوباري – غات'
                                 });
@@ -4109,7 +4109,7 @@ export default function ExecutiveDashboard({
                         </button>
                         <button
                           type="button"
-                          onClick={() => setNewMedia(prev => ({ ...prev, img: '/road-asphalt-paver.jpg', src: '/road-asphalt-paver.jpg' }))}
+                          onClick={() => setNewMedia(prev => ({ ...prev, img: '/road-paving-official.jpg', src: '/road-paving-official.jpg' }))}
                           className="px-3 py-1 rounded-lg bg-red-600/80 hover:bg-red-600 text-white text-xs font-bold cursor-pointer"
                         >
                           إلغاء
@@ -4190,7 +4190,7 @@ export default function ExecutiveDashboard({
                   type="url"
                   value={newMedia.img.startsWith('data:') ? '' : newMedia.img}
                   onChange={(e) => setNewMedia({ ...newMedia, img: e.target.value, src: e.target.value })}
-                  placeholder="https://... أو /road-asphalt-paver.jpg"
+                  placeholder="https://... أو /road-paving-official.jpg"
                   className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500 text-xs"
                 />
                 {newMedia.img && !newMedia.img.startsWith('data:') && (
@@ -4333,7 +4333,7 @@ export default function ExecutiveDashboard({
             {/* Current Image Preview & Change */}
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-black h-36">
               <img
-                src={selectedPhotoEditModal.src || selectedPhotoEditModal.img || '/road-asphalt-paver.jpg'}
+                src={selectedPhotoEditModal.src || selectedPhotoEditModal.img || '/road-paving-official.jpg'}
                 alt={selectedPhotoEditModal.title}
                 className="w-full h-full object-cover"
               />
@@ -4622,7 +4622,7 @@ export default function ExecutiveDashboard({
             </button>
 
             <div className="h-72 overflow-hidden bg-black">
-              <img src={selectedPhotoModal.src || selectedPhotoModal.img || '/road-asphalt-paver.jpg'} alt={selectedPhotoModal.title} className="w-full h-full object-contain" />
+              <img src={selectedPhotoModal.src || selectedPhotoModal.img || '/road-paving-official.jpg'} alt={selectedPhotoModal.title} className="w-full h-full object-contain" />
             </div>
 
             <div className="p-5 space-y-2">
@@ -5419,7 +5419,7 @@ export default function ExecutiveDashboard({
                   <span className="text-[10px] text-slate-400 block mb-1.5 font-bold">صور سريعة من الموقع:</span>
                   <div className="grid grid-cols-5 gap-2">
                     {[
-                      { src: '/road-asphalt-paver.jpg', label: 'رصف الأسفلت' },
+                      { src: '/road-paving-official.jpg', label: 'رصف الأسفلت' },
                       { src: '/road-aerial-highway.jpg', label: 'بانوراما الطريق' },
                       { src: '/road-rollers-compaction.jpg', label: 'مداحل الدمك' },
                       { src: '/road-grader-earthwork.jpg', label: 'كاشطات الأساس' },
@@ -5696,24 +5696,36 @@ export default function ExecutiveDashboard({
                 <div>
                   <div className="flex items-center justify-between mb-1">
                     <label className="font-bold text-slate-700 block text-xs">صورة الخبر الميداني:</label>
-                    <button
-                      type="button"
-                      onClick={() => newsPostImageFileInputRef.current?.click()}
-                      disabled={isCompressingNewsImage}
-                      className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] flex items-center gap-1 shadow-sm cursor-pointer"
-                    >
-                      {isCompressingNewsImage ? (
-                        <>
-                          <RefreshCw className="w-3 h-3 animate-spin" />
-                          <span>جاري الرفع...</span>
-                        </>
-                      ) : (
-                        <>
-                          <UploadCloud className="w-3 h-3" />
-                          <span>رفع من الجهاز</span>
-                        </>
+                    <div className="flex items-center gap-1.5">
+                      {newsPostForm.image && (
+                        <button
+                          type="button"
+                          onClick={() => setNewsPostForm(prev => ({ ...prev, image: '' }))}
+                          className="px-2 py-1 rounded-lg bg-rose-500/15 hover:bg-rose-500 text-rose-500 hover:text-white font-bold text-[10px] cursor-pointer transition-colors"
+                          title="حذف الصورة ونشر الخبر بدون صورة"
+                        >
+                          بدون صورة
+                        </button>
                       )}
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => newsPostImageFileInputRef.current?.click()}
+                        disabled={isCompressingNewsImage}
+                        className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-[10px] flex items-center gap-1 shadow-sm cursor-pointer"
+                      >
+                        {isCompressingNewsImage ? (
+                          <>
+                            <RefreshCw className="w-3 h-3 animate-spin" />
+                            <span>جاري الرفع...</span>
+                          </>
+                        ) : (
+                          <>
+                            <UploadCloud className="w-3 h-3" />
+                            <span>رفع من الجهاز</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                   <input
                     type="file"
@@ -5726,7 +5738,7 @@ export default function ExecutiveDashboard({
                     type="text"
                     value={newsPostForm.image}
                     onChange={(e) => setNewsPostForm({ ...newsPostForm, image: e.target.value })}
-                    placeholder="/road-asphalt-paver.jpg"
+                    placeholder="/road-paving-official.jpg"
                     className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500 text-xs"
                   />
                 </div>

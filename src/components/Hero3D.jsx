@@ -165,7 +165,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
             className="w-full h-full object-cover object-center transition-all duration-700"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+              e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
             }}
           />
         </picture>
@@ -353,12 +353,12 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                     isNewsFading ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
                   }`}>
                     <img 
-                      src={resolveAsset(currentMobileNews.image || './road-asphalt-paver.jpg')} 
+                      src={resolveAsset(currentMobileNews.image || './road-paving-official.jpg')} 
                       alt={currentMobileNews.title || 'أخبار طريق أوباري غات'} 
                       className="w-full h-full object-cover transition-transform duration-500"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                        e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -456,12 +456,12 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                 data-cursor-label={lang === 'ar' ? 'معاينة 4K ↗' : 'View 4K ↗'}
               >
                 <img 
-                  src={resolveAsset(heroCard.image || "./road-asphalt-paver.jpg")} 
+                  src={resolveAsset(heroCard.image || "./road-paving-official.jpg")} 
                   alt={heroCard.title || "أعمال رصف وتأهيل طريق أوباري غات"} 
                   className="w-full h-full object-cover photo-hover-zoom group-hover:scale-110 transition-transform duration-700 ease-out"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                    e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition-opacity duration-300 group-hover:opacity-80" />

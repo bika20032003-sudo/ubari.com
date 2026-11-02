@@ -176,7 +176,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                 decoding="async"
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                  e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent transition-opacity duration-300 group-hover:opacity-75" />

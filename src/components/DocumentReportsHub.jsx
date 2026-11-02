@@ -25,7 +25,7 @@ import { fetchCloudPhotos } from '../services/supabase';
 import { compressImageFile } from '../utils/imageCompressor';
 
 const HUB_PRESET_PHOTOS = [
-  { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: '/road-asphalt-paver.jpg' },
+  { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: '/road-paving-official.jpg' },
   { title: 'دمك الأسفلت بالمداحل الأسطوانية والمطاطية', category: 'الدمك وضبط المناسيب', src: '/road-rollers-compaction.jpg' },
   { title: 'تسوية الأساس الحجري بالكاشطات الموتورية', category: 'كشط وتأسيس', src: '/road-grader-earthwork.jpg' },
   { title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق', category: 'السلامة المرورية والإرشاد', src: '/road-solar-lighting.jpg' },
@@ -139,8 +139,8 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
     title: '',
     sector: 'القطاع الأول (أوباري - الفيوات)',
     category: 'رصف الأسفلت',
-    src: '/road-asphalt-paver.jpg',
-    img: '/road-asphalt-paver.jpg',
+    src: '/road-paving-official.jpg',
+    img: '/road-paving-official.jpg',
     author: '',
     desc: ''
   });
@@ -177,7 +177,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
     e.preventDefault();
     if (!newUploadPhoto.title.trim()) return;
 
-    const finalImage = newUploadPhoto.src || newUploadPhoto.img || '/road-asphalt-paver.jpg';
+    const finalImage = newUploadPhoto.src || newUploadPhoto.img || '/road-paving-official.jpg';
     const item = {
       id: `PH-${Date.now().toString().slice(-4)}`,
       title: newUploadPhoto.title.trim(),
@@ -203,8 +203,8 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
       title: '',
       sector: 'القطاع الأول (أوباري - الفيوات)',
       category: 'رصف الأسفلت',
-      src: '/road-asphalt-paver.jpg',
-      img: '/road-asphalt-paver.jpg',
+      src: '/road-paving-official.jpg',
+      img: '/road-paving-official.jpg',
       author: '',
       desc: ''
     });
@@ -522,7 +522,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
               >
                 <div className="h-56 overflow-hidden relative">
                   <img
-                    src={photo.src || photo.img || '/road-asphalt-paver.jpg'}
+                    src={photo.src || photo.img || '/road-paving-official.jpg'}
                     alt={photo.title}
                     loading="lazy"
                     decoding="async"
@@ -610,7 +610,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
             </button>
 
             <div className="max-h-[65vh] overflow-hidden relative bg-black flex items-center justify-center">
-              <img src={selectedPhoto.src || selectedPhoto.img || '/road-asphalt-paver.jpg'} alt={selectedPhoto.title} className="w-full h-full object-contain" />
+              <img src={selectedPhoto.src || selectedPhoto.img || '/road-paving-official.jpg'} alt={selectedPhoto.title} className="w-full h-full object-contain" />
             </div>
 
             <div className="p-6 space-y-2">
@@ -716,7 +716,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
                         </button>
                         <button
                           type="button"
-                          onClick={() => setNewUploadPhoto(prev => ({ ...prev, src: '/road-asphalt-paver.jpg', img: '/road-asphalt-paver.jpg' }))}
+                          onClick={() => setNewUploadPhoto(prev => ({ ...prev, src: '/road-paving-official.jpg', img: '/road-paving-official.jpg' }))}
                           className="px-3 py-1 rounded-lg bg-red-600 text-white text-xs font-bold cursor-pointer"
                         >
                           إلغاء
@@ -771,7 +771,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
                   type="url"
                   value={newUploadPhoto.src.startsWith('data:') ? '' : newUploadPhoto.src}
                   onChange={(e) => setNewUploadPhoto({ ...newUploadPhoto, src: e.target.value, img: e.target.value })}
-                  placeholder="https://... أو /road-asphalt-paver.jpg"
+                  placeholder="https://... أو /road-paving-official.jpg"
                   className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-white/10 outline-none focus:border-amber-500 bg-transparent text-xs"
                 />
               </div>

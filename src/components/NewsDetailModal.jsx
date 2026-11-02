@@ -183,43 +183,63 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
         {/* ── Scrollable Body Content (Optimized for Touch Momentum Scrolling) ── */}
         <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-5 text-start relative z-10 flex-1 min-h-0 overscroll-contain">
           
-          {/* Photo Box in Balanced Aspect Ratio */}
-          <div className="relative rounded-2xl overflow-hidden w-full h-48 xs:h-56 sm:h-64 bg-slate-950 border border-slate-200 dark:border-white/15 shadow-xl shrink-0 group">
-            <img 
-              src={resolveAsset(post.image || './road-asphalt-paver.jpg')} 
-              alt={post.title} 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.onerror = null;
-                e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent pointer-events-none" />
+          {/* Photo Box in Balanced Aspect Ratio - Only rendered if an actual image is attached */}
+          {Boolean(post.image && post.image !== 'none' && post.image !== 'null' && String(post.image).trim().length > 0) ? (
+            <div className="relative rounded-2xl overflow-hidden w-full h-48 xs:h-56 sm:h-64 bg-slate-950 border border-slate-200 dark:border-white/15 shadow-xl shrink-0 group">
+              <img 
+                src={resolveAsset(post.image)} 
+                alt={post.title} 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent pointer-events-none" />
 
-            {/* Top Badge: Status */}
-            <span className="absolute top-3 end-3 px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-lg border border-amber-300">
-              {post.statusLabel || (isProject ? (post.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ') : (lang === 'ar' ? 'تقرير ميداني' : 'Field Report'))}
-            </span>
-
-            {/* Bottom Photo Telemetry Badges */}
-            <div className="absolute bottom-3 start-3 end-3 flex items-center justify-between text-white text-xs gap-2 pointer-events-none flex-wrap">
-              <span className="flex items-center gap-1.5 bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-[11px] sm:text-xs font-bold min-w-0 truncate shadow-md">
-                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="truncate">{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
+              {/* Top Badge: Status */}
+              <span className="absolute top-3 end-3 px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-lg border border-amber-300">
+                {post.statusLabel || (isProject ? (post.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ') : (lang === 'ar' ? 'تقرير ميداني' : 'Field Report'))}
               </span>
 
-              {(post.startDate || post.targetDate || post.timeAgo) && (
-                <span className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10.5px] sm:text-[11.5px] font-mono text-slate-200 border border-white/15 shrink-0 whitespace-nowrap shadow-md flex items-center gap-1">
-                  <Calendar className="w-3 h-3 text-amber-400" />
-                  <span>
-                    {isProject 
-                      ? (post.startDate ? `${post.startDate} ${post.targetDate ? '— ' + post.targetDate : ''}` : '2026')
-                      : (post.timeAgo || 'محدث')}
-                  </span>
+              {/* Bottom Photo Telemetry Badges */}
+              <div className="absolute bottom-3 start-3 end-3 flex items-center justify-between text-white text-xs gap-2 pointer-events-none flex-wrap">
+                <span className="flex items-center gap-1.5 bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/20 text-[11px] sm:text-xs font-bold min-w-0 truncate shadow-md">
+                  <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span className="truncate">{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
                 </span>
-              )}
+
+                {(post.startDate || post.targetDate || post.timeAgo) && (
+                  <span className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10.5px] sm:text-[11.5px] font-mono text-slate-200 border border-white/15 shrink-0 whitespace-nowrap shadow-md flex items-center gap-1">
+                    <Calendar className="w-3 h-3 text-amber-400" />
+                    <span>
+                      {isProject 
+                        ? (post.startDate ? `${post.startDate} ${post.targetDate ? '— ' + post.targetDate : ''}` : '2026')
+                        : (post.timeAgo || 'محدث')}
+                    </span>
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Non-Photo News Header Bar */
+            <div className="flex items-center justify-between flex-wrap gap-2 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/25">
+              <span className="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-xs">
+                {post.statusLabel || (isProject ? (post.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ') : (lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'))}
+              </span>
+              <div className="flex items-center gap-2 text-xs text-slate-300">
+                <span className="flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
+                </span>
+                {(post.timeAgo || post.startDate) && (
+                  <span className="text-slate-400 font-mono text-[11px]">
+                    • {post.timeAgo || post.startDate}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Full Headline & Badges */}
           <div className="space-y-1.5">
