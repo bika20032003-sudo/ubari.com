@@ -14,6 +14,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-cyan-600 dark:text-cyan-400',
       iconColor: 'text-cyan-500',
       iconBg: 'bg-cyan-500/15 border-cyan-500/30',
+      badgeBg: 'bg-cyan-500/15 text-cyan-500 dark:text-cyan-400 border-cyan-500/30',
+      dotColor: 'bg-cyan-500 shadow-cyan-500/50',
       badge: t.ubariLakesTitle
     },
     {
@@ -24,6 +26,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-amber-600 dark:text-amber-400',
       iconColor: 'text-amber-500',
       iconBg: 'bg-amber-500/15 border-amber-500/30',
+      badgeBg: 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30',
+      dotColor: 'bg-amber-500 shadow-amber-500/50',
       badge: t.ubariTransportTitle
     },
     {
@@ -34,6 +38,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-emerald-600 dark:text-emerald-400',
       iconColor: 'text-emerald-500',
       iconBg: 'bg-emerald-500/15 border-emerald-500/30',
+      badgeBg: 'bg-emerald-500/15 text-emerald-500 dark:text-emerald-400 border-emerald-500/30',
+      dotColor: 'bg-emerald-500 shadow-emerald-500/50',
       badge: t.ubariEnergyTitle
     },
     {
@@ -44,6 +50,8 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-violet-600 dark:text-violet-400',
       iconColor: 'text-violet-500',
       iconBg: 'bg-violet-500/15 border-violet-500/30',
+      badgeBg: 'bg-violet-500/15 text-violet-500 dark:text-violet-400 border-violet-500/30',
+      dotColor: 'bg-violet-500 shadow-violet-500/50',
       badge: t.ubariHeritageTitle
     }
   ];
@@ -270,7 +278,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 <div className={`w-7 h-7 rounded-lg border flex items-center justify-center shadow-sm shrink-0 ${currentFeature.iconBg} ${currentFeature.iconColor}`}>
                   <CurrentIcon className="w-3.5 h-3.5" />
                 </div>
-                <h4 className="text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-500 dark:text-amber-400 border border-amber-500/30 truncate">
+                <h4 className={`text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-md border truncate ${currentFeature.badgeBg || 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30'}`}>
                   {currentFeature.title}
                 </h4>
               </div>
@@ -282,7 +290,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 {currentFeature.desc.includes('\n') ? (
                   currentFeature.desc.split('\n').map((point, idx) => (
                     <div key={idx} className="flex items-start gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 shadow-sm ${currentFeature.id === 0 ? 'bg-cyan-500 shadow-cyan-500/50' : 'bg-amber-500 shadow-amber-500/50'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full mt-1 shrink-0 shadow-sm ${currentFeature.dotColor || 'bg-amber-500 shadow-amber-500/50'}`} />
                       <span>{point}</span>
                     </div>
                   ))
