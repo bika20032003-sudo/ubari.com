@@ -22,6 +22,7 @@ import { nationalProjects } from '../services/api';
 import MarqueeTicker from './MarqueeTicker';
 import { compressImageFile, safeStorageSet, safeStorageGet } from '../utils/imageCompressor';
 import { resolveAsset } from '../utils/assets';
+import { fetchCloudProjects, saveCloudProjects } from '../services/supabase';
 
 const PROJECT_PRESET_IMAGES = [
   { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: './road-asphalt-paver.jpg' },
@@ -63,14 +64,38 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
   const [projectsList, setProjectsList] = useState(loadAllExecutiveProjects);
 
+  // Immediate Supabase sync on mount (works on mobile, tablet, desktop without localStorage dependency)
   useEffect(() => {
-    const handleStorageUpdate = () => {
-      setProjectsList(loadAllExecutiveProjects());
+    let isMounted = true;
+
+    // 1. Immediately fetch latest cloud projects from Supabase
+    fetchCloudProjects().then((cloudData) => {
+      if (isMounted && cloudData && Array.isArray(cloudData) && cloudData.length > 0) {
+        setProjectsList(cloudData);
+        safeStorageSet('portal-national-projects', cloudData);
+      }
+    }).catch(err => {
+      console.warn('[FeaturedProjects] تعذر الجلب المباشر من سوبابيس:', err);
+    });
+
+    // 2. Listen to real-time sync events across tabs & devices
+    const handleStorageUpdate = (e) => {
+      if (!isMounted) return;
+      if (e?.detail && Array.isArray(e.detail) && e.detail.length > 0) {
+        setProjectsList(e.detail);
+      } else {
+        const loaded = loadAllExecutiveProjects();
+        if (loaded && loaded.length > 0) {
+          setProjectsList(loaded);
+        }
+      }
     };
+
     window.addEventListener('storage', handleStorageUpdate);
     window.addEventListener('cloud_projects_updated', handleStorageUpdate);
     window.addEventListener('supabase_config_changed', handleStorageUpdate);
     return () => {
+      isMounted = false;
       window.removeEventListener('storage', handleStorageUpdate);
       window.removeEventListener('cloud_projects_updated', handleStorageUpdate);
       window.removeEventListener('supabase_config_changed', handleStorageUpdate);
@@ -138,6 +163,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
       const updated = [newCustomProject, ...currentProjects];
       safeStorageSet('portal-national-projects', updated);
       setProjectsList(updated);
+      saveCloudProjects(updated).catch(() => {});
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: updated }));
     } else {
       // 2. User chose to update an existing strategic project cover:
       const updated = currentProjects.map(p => {
@@ -148,6 +175,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
       });
       safeStorageSet('portal-national-projects', updated);
       setProjectsList(updated);
+      saveCloudProjects(updated).catch(() => {});
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: updated }));
     }
 
     // 3. Also register in field photos (portal-field-photos-v2) for the 4K media gallery:
@@ -195,6 +224,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     const updated = current.filter(p => p.id !== id);
     safeStorageSet('portal-national-projects', updated);
     setProjectsList(updated);
+    saveCloudProjects(updated).catch(() => {});
+    window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: updated }));
     if (selectedModalProject && selectedModalProject.id === id) {
       setSelectedModalProject(null);
     }

@@ -1000,6 +1000,8 @@ export default function ExecutiveDashboard({
       };
       const updatedProjects = [newProj, ...projects];
       safeStorageSet('portal-national-projects', updatedProjects);
+      saveCloudProjects(updatedProjects).catch(() => {});
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: updatedProjects }));
     } else if (newMedia.targetProject) {
       const updatedProjects = projects.map(p => {
         if (p.id === newMedia.targetProject) {
@@ -1008,8 +1010,12 @@ export default function ExecutiveDashboard({
         return p;
       });
       safeStorageSet('portal-national-projects', updatedProjects);
+      saveCloudProjects(updatedProjects).catch(() => {});
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: updatedProjects }));
     }
 
+    saveCloudPhotos(updated).catch(() => {});
+    window.dispatchEvent(new CustomEvent('cloud_photos_updated', { detail: updated }));
     window.dispatchEvent(new Event('storage'));
     setIsAddMediaModalOpen(false);
     setNewMedia({

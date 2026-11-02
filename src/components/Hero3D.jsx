@@ -20,6 +20,8 @@ import { translations } from '../i18n/translations';
 import MarqueeTicker from './MarqueeTicker';
 import NewsDetailModal from './NewsDetailModal';
 import { getSavedHeroCard, getSavedNewsPosts, getSavedHeroBackground } from '../services/api';
+import { fetchCloudNews, fetchCloudHeroCard } from '../services/supabase';
+import { safeStorageSet } from '../utils/imageCompressor';
 import { resolveAsset } from '../utils/assets';
 
 export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenGoogleAuth, lang = 'ar', tickerNews }) {
@@ -39,7 +41,23 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   const [selectedNewsPost, setSelectedNewsPost] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
+    fetchCloudNews().then(news => {
+      if (isMounted && news && Array.isArray(news) && news.length > 0) {
+        setMobileNewsList(news);
+        safeStorageSet('portal-news-posts', news);
+      }
+    }).catch(() => {});
+
+    fetchCloudHeroCard().then(card => {
+      if (isMounted && card && typeof card === 'object') {
+        setHeroCard(card);
+        safeStorageSet('portal-hero-showcase-card', card);
+      }
+    }).catch(() => {});
+
     const handleStorageChange = () => {
+      if (!isMounted) return;
       setHeroCard(getSavedHeroCard());
       setHeroBg(getSavedHeroBackground());
       const updatedNews = getSavedNewsPosts();
@@ -50,6 +68,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
     window.addEventListener('cloud_hero_updated', handleStorageChange);
     window.addEventListener('cloud_hero_bg_updated', handleStorageChange);
     return () => {
+      isMounted = false;
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('cloud_news_updated', handleStorageChange);
       window.removeEventListener('cloud_hero_updated', handleStorageChange);

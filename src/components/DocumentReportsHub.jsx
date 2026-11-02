@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { translations } from '../i18n/translations';
 import { fetchFieldPhotos, initialFieldPhotos, initialFinancialReports, saveFieldPhotos } from '../services/api';
+import { fetchCloudPhotos } from '../services/supabase';
 import { compressImageFile } from '../utils/imageCompressor';
 
 const HUB_PRESET_PHOTOS = [
@@ -238,9 +239,15 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
           const parsed = JSON.parse(savedPhotos);
           if (Array.isArray(parsed)) setFieldPhotos(parsed);
         }
+        fetchCloudPhotos().then(cloudPhotos => {
+          if (cloudPhotos && Array.isArray(cloudPhotos) && cloudPhotos.length > 0) {
+            setFieldPhotos(cloudPhotos);
+          }
+        }).catch(() => {});
       } catch (e) {}
     };
 
+    handleStorage();
     window.addEventListener('storage', handleStorage);
     window.addEventListener('cloud_photos_updated', handleStorage);
     return () => {

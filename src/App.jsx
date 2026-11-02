@@ -20,7 +20,8 @@ import {
   initialSummary,
   initialContractors,
   initialTickerNews,
-  getSavedTickerNews
+  getSavedTickerNews,
+  syncAllPortalData
 } from './services/api';
 
 const DEFAULT_DOCUMENTS = [
@@ -161,6 +162,9 @@ function App() {
   const [tickerNews, setTickerNews] = useState(getSavedTickerNews);
 
   useEffect(() => {
+    // Initial bidirectional cloud sync on app mount
+    syncAllPortalData().catch(() => {});
+
     const handleStorageChange = () => {
       setTickerNews(getSavedTickerNews());
     };

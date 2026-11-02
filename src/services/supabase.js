@@ -8,17 +8,36 @@ const DEFAULT_SUPABASE_URL = 'https://ffrycyftoyxsmsqpxkyy.supabase.co';
 const DEFAULT_SUPABASE_KEY = 'sb_publishable_I56OiPlpoC_oLX9JVRnoZg_IuyVvWSr';
 
 export const getSupabaseConfig = () => {
-  const envUrl = import.meta.env.VITE_SUPABASE_URL || '';
-  const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+  let envUrl = '';
+  let envKey = '';
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta?.env) {
+      envUrl = import.meta.env.VITE_SUPABASE_URL || '';
+      envKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+    }
+  } catch (e) {}
 
-  const localUrl = (typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEY_URL)) || '';
-  const localKey = (typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEY_ANON)) || '';
+  let localUrl = '';
+  let localKey = '';
+  try {
+    if (typeof localStorage !== 'undefined') {
+      localUrl = localStorage.getItem(STORAGE_KEY_URL) || '';
+      localKey = localStorage.getItem(STORAGE_KEY_ANON) || '';
+    }
+  } catch (e) {}
+
+  // Prioritize verified working URL & Key
+  const validLocalUrl = localUrl && localUrl.trim().startsWith('http') ? localUrl.trim() : '';
+  const validLocalKey = localKey && localKey.trim().length > 15 ? localKey.trim() : '';
+
+  const finalUrl = (validLocalUrl || envUrl || DEFAULT_SUPABASE_URL || '').trim();
+  const finalKey = (validLocalKey || envKey || DEFAULT_SUPABASE_KEY || '').trim();
 
   return {
-    url: (localUrl || envUrl || DEFAULT_SUPABASE_URL || '').trim(),
-    anonKey: (localKey || envKey || DEFAULT_SUPABASE_KEY || '').trim(),
-    isFromEnv: Boolean(!localUrl && (envUrl || DEFAULT_SUPABASE_URL)),
-    isFromStorage: Boolean(localUrl)
+    url: finalUrl,
+    anonKey: finalKey,
+    isFromEnv: Boolean(!validLocalUrl && (envUrl || DEFAULT_SUPABASE_URL)),
+    isFromStorage: Boolean(validLocalUrl)
   };
 };
 

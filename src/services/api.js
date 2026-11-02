@@ -14,6 +14,7 @@ import {
   saveCloudStoreItem,
   isSupabaseConfigured 
 } from './supabase.js';
+import { safeStorageSet, safeStorageGet } from '../utils/imageCompressor.js';
 
 
 
@@ -745,7 +746,7 @@ export const syncExecutiveProjectsFromCloud = async () => {
   try {
     const cloudProjects = await fetchCloudProjects();
     if (cloudProjects && Array.isArray(cloudProjects) && cloudProjects.length > 0) {
-      localStorage.setItem('portal-national-projects', JSON.stringify(cloudProjects));
+      safeStorageSet('portal-national-projects', cloudProjects);
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: cloudProjects }));
       return cloudProjects;
@@ -761,7 +762,7 @@ export const syncFieldPhotosFromCloud = async () => {
   try {
     const cloudPhotos = await fetchCloudPhotos();
     if (cloudPhotos && Array.isArray(cloudPhotos) && cloudPhotos.length > 0) {
-      localStorage.setItem('portal-field-photos-v2', JSON.stringify(cloudPhotos));
+      safeStorageSet('portal-field-photos-v2', cloudPhotos);
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('cloud_photos_updated', { detail: cloudPhotos }));
       return cloudPhotos;
@@ -777,7 +778,7 @@ export const syncHeroCardFromCloud = async () => {
   try {
     const cloudHero = await fetchCloudHeroCard();
     if (cloudHero && typeof cloudHero === 'object') {
-      localStorage.setItem('portal-hero-showcase-card', JSON.stringify(cloudHero));
+      safeStorageSet('portal-hero-showcase-card', cloudHero);
       window.dispatchEvent(new Event('storage'));
       return cloudHero;
     }
@@ -792,7 +793,7 @@ export const syncMapLocationsFromCloud = async () => {
   try {
     const cloudLocs = await fetchCloudStoreItem('portal-map-locations');
     if (cloudLocs && Array.isArray(cloudLocs) && cloudLocs.length > 0) {
-      localStorage.setItem('portal_map_locations', JSON.stringify(cloudLocs));
+      safeStorageSet('portal_map_locations', cloudLocs);
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('cloud_map_locations_updated', { detail: cloudLocs }));
       return cloudLocs;
@@ -808,7 +809,7 @@ export const syncSelectedWorkItemsFromCloud = async () => {
   try {
     const cloudWork = await fetchCloudStoreItem('portal-selected-work-items');
     if (cloudWork && Array.isArray(cloudWork) && cloudWork.length > 0) {
-      localStorage.setItem('portal_selected_work_items', JSON.stringify(cloudWork));
+      safeStorageSet('portal_selected_work_items', cloudWork);
       window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('cloud_road_sectors_updated', { detail: cloudWork }));
       return cloudWork;
@@ -840,28 +841,29 @@ export const syncAllPortalData = async () => {
       syncHeroBackgroundFromCloud()
     ]);
 
-    // تحقق من وجود بيانات محلية على الهاتف تحتاج إلى رفع إلى السحابة
+    // تحقق من وجود بيانات محلية تحتاج إلى رفع إلى السحابة
     try {
-      const localNews = localStorage.getItem('portal-news-posts');
-      if (localNews) {
-        const parsedNews = JSON.parse(localNews);
-        if (Array.isArray(parsedNews) && parsedNews.length > 0) {
-          // إذا كانت الأخبار المحلية أكبر أو تحتوي على منشورات جديدة غير موجودة بالسحابة
-          const cloudNewsVal = cloudNews.status === 'fulfilled' ? cloudNews.value : null;
-          if (!cloudNewsVal || parsedNews.length > cloudNewsVal.length) {
-            await saveCloudNews(parsedNews);
-          }
+      const localProjects = safeStorageGet('portal-national-projects', null);
+      if (localProjects && Array.isArray(localProjects) && localProjects.length > 0) {
+        const cloudProjectsVal = cloudProjects.status === 'fulfilled' ? cloudProjects.value : null;
+        if (!cloudProjectsVal || localProjects.length > cloudProjectsVal.length) {
+          await saveCloudProjects(localProjects);
         }
       }
 
-      const localPhotos = localStorage.getItem('portal-field-photos-v2');
-      if (localPhotos) {
-        const parsedPhotos = JSON.parse(localPhotos);
-        if (Array.isArray(parsedPhotos) && parsedPhotos.length > 0) {
-          const cloudPhotosVal = cloudPhotos.status === 'fulfilled' ? cloudPhotos.value : null;
-          if (!cloudPhotosVal || parsedPhotos.length > cloudPhotosVal.length) {
-            await saveCloudPhotos(parsedPhotos);
-          }
+      const localNews = safeStorageGet('portal-news-posts', null);
+      if (localNews && Array.isArray(localNews) && localNews.length > 0) {
+        const cloudNewsVal = cloudNews.status === 'fulfilled' ? cloudNews.value : null;
+        if (!cloudNewsVal || localNews.length > cloudNewsVal.length) {
+          await saveCloudNews(localNews);
+        }
+      }
+
+      const localPhotos = safeStorageGet('portal-field-photos-v2', null);
+      if (localPhotos && Array.isArray(localPhotos) && localPhotos.length > 0) {
+        const cloudPhotosVal = cloudPhotos.status === 'fulfilled' ? cloudPhotos.value : null;
+        if (!cloudPhotosVal || localPhotos.length > cloudPhotosVal.length) {
+          await saveCloudPhotos(localPhotos);
         }
       }
     } catch (ePush) {
@@ -875,15 +877,15 @@ export const syncAllPortalData = async () => {
   }
 };
 
-// تشغيل المزامنة السحابية التلقائية بشكل منضبط واقتصادي للموارد لتجنب تهنيج المتصفح
+// تشغيل المزامنة السحابية التلقائية فوراً وبشكل اقتصادي للموارد
 if (typeof window !== 'undefined') {
   let lastSyncTime = 0;
   let isSyncing = false;
 
   const triggerInitialSync = async (force = false) => {
     const now = Date.now();
-    // تجنب التكرار والتهنيج (فاصل 3 دقائق كحد أدنى إلا إذا تم تغيير الإعدادات يدوياً)
-    if (!force && (isSyncing || now - lastSyncTime < 180000)) {
+    // تجنب التكرار والتهنيج (فاصل دقيقتين كحد أدنى إلا إذا تم الفرض يدوياً)
+    if (!force && (isSyncing || now - lastSyncTime < 120000)) {
       return;
     }
     if (isSupabaseConfigured()) {
@@ -899,18 +901,16 @@ if (typeof window !== 'undefined') {
     }
   };
 
-  // تأخير المزامنة حتى يستقر تحميل الصفحة دون استهلاك معالج المستخدم
-  setTimeout(() => triggerInitialSync(false), 2000);
+  // إطلاق المزامنة السريعة فور تحميل المستند
+  setTimeout(() => triggerInitialSync(false), 80);
   window.addEventListener('online', () => triggerInitialSync(false));
   window.addEventListener('supabase_config_changed', () => triggerInitialSync(true));
 }
 
 export const saveExecutiveProjects = (projects) => {
-  try {
-    localStorage.setItem('portal-national-projects', JSON.stringify(projects));
-    window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: projects }));
-  } catch (e) {}
+  safeStorageSet('portal-national-projects', projects);
+  window.dispatchEvent(new Event('storage'));
+  window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: projects }));
 
   if (isSupabaseConfigured()) {
     saveCloudProjects(projects).catch(err => {

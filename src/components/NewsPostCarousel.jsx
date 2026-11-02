@@ -8,6 +8,8 @@ import {
   Newspaper
 } from 'lucide-react';
 import { getSavedNewsPosts } from '../services/api';
+import { fetchCloudNews } from '../services/supabase';
+import { safeStorageSet } from '../utils/imageCompressor';
 import { resolveAsset } from '../utils/assets';
 import NewsDetailModal from './NewsDetailModal';
 
@@ -18,22 +20,33 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
   const [isPaused, setIsPaused] = useState(false);
   const [selectedPostModal, setSelectedPostModal] = useState(null);
 
-  // Sync with localStorage updates dispatched across tabs/components
+  // Sync with Supabase on mount and across storage updates
   useEffect(() => {
-    const handleStorage = () => {
-      const updated = getSavedNewsPosts();
-      setPosts(updated);
-      if (currentIndex >= updated.length) {
-        setCurrentIndex(0);
+    let isMounted = true;
+    fetchCloudNews().then(cloudPosts => {
+      if (isMounted && cloudPosts && Array.isArray(cloudPosts) && cloudPosts.length > 0) {
+        setPosts(cloudPosts);
+        safeStorageSet('portal-news-posts', cloudPosts);
+      }
+    }).catch(() => {});
+
+    const handleStorage = (e) => {
+      if (!isMounted) return;
+      if (e?.detail && Array.isArray(e.detail) && e.detail.length > 0) {
+        setPosts(e.detail);
+      } else {
+        const updated = getSavedNewsPosts();
+        setPosts(updated);
       }
     };
     window.addEventListener('storage', handleStorage);
     window.addEventListener('cloud_news_updated', handleStorage);
     return () => {
+      isMounted = false;
       window.removeEventListener('storage', handleStorage);
       window.removeEventListener('cloud_news_updated', handleStorage);
     };
-  }, [currentIndex]);
+  }, []);
 
   // Transition handler with smooth fade animation
   const goToSlide = useCallback((newIndex) => {
