@@ -489,6 +489,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                     key={proj.id || pIdx}
                     type="button"
                     onClick={() => {
+                      setIsMobilePaused(true);
                       setActiveProjectMobileIdx(pIdx);
                     }}
                     className={`flex items-center gap-2 p-1.5 rounded-xl border shrink-0 text-start transition-all cursor-pointer ${

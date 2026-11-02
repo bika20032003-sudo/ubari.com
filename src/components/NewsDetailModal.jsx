@@ -20,7 +20,7 @@ import {
 import { resolveAsset } from '../utils/assets';
 
 export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark', lang = 'ar' }) {
-  // Lock background scrolling & handle Escape key
+  // Lock background scrolling cleanly & handle Escape key
   useEffect(() => {
     if (!isOpen) return;
 
@@ -29,21 +29,16 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
     };
 
     window.addEventListener('keydown', handleKeyDown);
-
-    // Save previous styles
-    const prevOverflow = document.body.style.overflow;
-    const prevPosition = document.body.style.position;
-    const prevWidth = document.body.style.width;
-
+    
+    // Safely lock body scroll
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = prevOverflow;
-      document.body.style.position = prevPosition;
-      document.body.style.width = prevWidth;
+      document.body.style.overflow = originalOverflow || '';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen || !post) return null;
 
@@ -132,7 +127,10 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
         />
 
         {/* ── Modal Sticky Top Bar: Agency Brand + Close & Share Buttons (With Safe-Area Padding) ── */}
-        <div className="px-4 sm:px-6 py-3.5 sm:py-3.5 flex items-center justify-between border-b border-slate-200 dark:border-white/10 relative z-20 shrink-0 gap-2 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md pt-[max(env(safe-area-inset-top,0px),0.85rem)]">
+        <div 
+          className="px-4 sm:px-6 py-3.5 flex items-center justify-between border-b border-slate-200 dark:border-white/10 relative z-20 shrink-0 gap-2 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md"
+          style={{ paddingTop: 'max(env(safe-area-inset-top, 0px), 14px)' }}
+        >
           <div className="flex items-center gap-3 min-w-0 flex-1 overflow-hidden">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-[1.5px] shadow-sm shrink-0">
               <img 
@@ -391,7 +389,10 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
         </div>
 
         {/* ── Modal Footer with Safe Area Padding ── */}
-        <div className="px-4 sm:px-6 py-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs relative z-20 shrink-0 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md pb-[max(env(safe-area-inset-bottom,0px),0.85rem)]">
+        <div 
+          className="px-4 sm:px-6 py-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between text-xs relative z-20 shrink-0 bg-white/95 dark:bg-[#080d1a]/95 backdrop-blur-md"
+          style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 14px)' }}
+        >
           <span className="text-[10px] sm:text-[11px] text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 min-w-0 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40 shrink-0" />
             <span className="truncate">{lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات - دولة ليبيا' : 'Transport Projects Execution Authority - State of Libya'}</span>
