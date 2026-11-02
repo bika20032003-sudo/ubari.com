@@ -172,11 +172,11 @@ export default function MarqueeTicker({
           <div className="flex w-full overflow-hidden select-none group-hover:[&>div]:[animation-play-state:paused]" dir="ltr">
             {/* Primary Track 1 */}
             <div 
-              className="flex shrink-0 animate-marquee items-center gap-5 sm:gap-7 pe-5 sm:pe-7 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee items-center gap-3.5 sm:gap-5 pe-3.5 sm:pe-5 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
@@ -194,7 +194,6 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
-                  <span className="text-amber-500/40 select-none text-[10px] px-1">✦</span>
                 </div>
               ))}
             </div>
@@ -202,11 +201,11 @@ export default function MarqueeTicker({
             {/* Seamless Sibling Track 2 (Cloned for 100% infinite loop with zero delay) */}
             <div 
               aria-hidden="true"
-              className="flex shrink-0 animate-marquee items-center gap-5 sm:gap-7 pe-5 sm:pe-7 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee items-center gap-3.5 sm:gap-5 pe-3.5 sm:pe-5 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2.5 sm:gap-3 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
@@ -224,7 +223,6 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
-                  <span className="text-amber-500/40 select-none text-[10px] px-1">✦</span>
                 </div>
               ))}
             </div>
