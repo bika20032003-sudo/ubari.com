@@ -169,14 +169,6 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             >
               <Share2 className="w-4 h-4" />
             </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-rose-500/30 flex items-center justify-center text-rose-400 hover:text-white hover:bg-rose-600 active:scale-95 transition-all cursor-pointer text-base font-black bg-rose-500/10 shadow-sm"
-              title={lang === 'ar' ? 'إغلاق' : 'Close'}
-            >
-              ✕
-            </button>
           </div>
         </div>
 
