@@ -61,22 +61,27 @@ export default function Header({
     return () => window.removeEventListener('device_auth_changed', handleAuthChange);
   }, []);
 
-  // Secret triple-click on authority logo to toggle/unlock login button on owner's device
+  // Secret double-click / double-tap on portal logo to open login interface
   const logoClicksRef = useRef(0);
   const logoClickTimeoutRef = useRef(null);
 
-  const handleLogoClick = () => {
+  const handleLogoTap = (e) => {
+    if (e) e.stopPropagation();
     logoClicksRef.current += 1;
     if (logoClickTimeoutRef.current) clearTimeout(logoClickTimeoutRef.current);
 
-    if (logoClicksRef.current >= 3) {
+    if (logoClicksRef.current >= 2) {
+      // 2 clicks/taps: Open login modal!
       logoClicksRef.current = 0;
-      authorizeCurrentDevice();
-      setCanShowLogin(true);
+      onOpenGoogleAuth();
     } else {
+      // 1 click/tap: Wait 350ms; if no second tap, navigate to hero section
       logoClickTimeoutRef.current = setTimeout(() => {
+        if (logoClicksRef.current === 1) {
+          handleNavClick('hero', 'hero-section');
+        }
         logoClicksRef.current = 0;
-      }, 1500);
+      }, 350);
     }
   };
 
@@ -224,16 +229,24 @@ export default function Header({
         
         {/* ── Left Side: Official Agency Logo & Title ── */}
         <div 
-          onClick={() => handleNavClick('hero', 'hero-section')}
+          onClick={handleLogoTap}
+          onDoubleClick={(e) => {
+            e.stopPropagation();
+            if (logoClickTimeoutRef.current) clearTimeout(logoClickTimeoutRef.current);
+            logoClicksRef.current = 0;
+            onOpenGoogleAuth();
+          }}
           className="flex items-center gap-2 sm:gap-3 cursor-pointer group min-w-0 flex-1 sm:flex-initial"
           data-cursor-label={lang === 'ar' ? 'الرئيسية' : 'Home'}
         >
           {/* Official Agency Emblem */}
           <div 
-            onClick={(e) => {
+            onClick={handleLogoTap}
+            onDoubleClick={(e) => {
               e.stopPropagation();
-              handleLogoClick();
-              handleNavClick('hero', 'hero-section');
+              if (logoClickTimeoutRef.current) clearTimeout(logoClickTimeoutRef.current);
+              logoClicksRef.current = 0;
+              onOpenGoogleAuth();
             }}
             className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-[1.5px] shadow-sm shadow-amber-500/20 group-hover:scale-105 transition-all duration-300 flex-shrink-0"
           >
@@ -326,22 +339,8 @@ export default function Header({
 
 
 
-          {/* ── BEFORE LOGIN: Glass "دخول" Button (Desktop/Tablet - Restricted to Authorized PC/IP) ── */}
-          {!user ? (
-            canShowLogin && (
-              <button
-                onClick={onOpenGoogleAuth}
-                className={`hidden sm:flex px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-200 items-center justify-center border shadow-sm cursor-pointer hover:scale-105 ${
-                  theme === 'light'
-                    ? 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
-                    : 'bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-amber-400/50'
-                }`}
-              >
-                <span>{lang === 'ar' ? 'دخول' : 'Sign In'}</span>
-              </button>
-            )
-          ) : (
-            /* ── AFTER LOGIN: User Avatar Dropdown (Desktop & Tablet) ── */
+          {/* ── AFTER LOGIN: User Avatar Dropdown (Desktop & Tablet) ── */}
+          {user && (
             <div className="relative hidden sm:block" ref={dropdownRef}>
               <button
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
@@ -560,20 +559,7 @@ export default function Header({
               </div>
             </a>
 
-            {!user ? (
-              canShowLogin && (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenGoogleAuth();
-                  }}
-                  className="w-full px-3.5 py-2.5 rounded-xl text-xs font-black text-start bg-amber-500 text-slate-950 flex items-center justify-center gap-2 shadow-md shadow-amber-500/20 cursor-pointer hover:bg-amber-400 transition-colors"
-                >
-                  <LogIn className="w-4 h-4" />
-                  <span>{lang === 'ar' ? 'تسجيل الدخول' : 'Sign In'}</span>
-                </button>
-              )
-            ) : (
+            {user && (
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
