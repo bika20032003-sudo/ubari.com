@@ -300,7 +300,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   const currentMobileProject = filteredProjects[activeProjectMobileIdx] || filteredProjects[0];
 
   return (
-    <section id="projects-section" className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 select-none">
+    <section id="projects-section" className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 select-none scroll-mt-20 sm:scroll-mt-24">
 
       {/* ── Section Title Header with GSAP Reveal ── */}
       <div className="text-center max-w-3xl mx-auto space-y-3 gsap-header">
@@ -395,7 +395,10 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                 <span>{project.id}</span>
                 <span>{project.startDate} {project.targetDate ? `— ${project.targetDate}` : ''}</span>
               </div>
-              <h3 className={`text-2xl font-black ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}>
+              <h3 
+                onClick={() => setSelectedModalProject(project)}
+                className={`text-2xl font-black cursor-pointer hover:text-amber-400 transition-colors ${theme === 'light' ? 'text-slate-950' : 'text-white'}`}
+              >
                 {project.title}
               </h3>
               <p className={`text-sm font-medium leading-relaxed line-clamp-2 ${theme === 'light' ? 'text-slate-600' : 'text-slate-300'
@@ -433,6 +436,16 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                   <span>{project.statusLabel || (project.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ')}</span>
                 </div>
               </div>
+
+              {/* Action Button for Details */}
+              <button
+                type="button"
+                onClick={() => setSelectedModalProject(project)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
+              >
+                <span>{lang === 'ar' ? 'عرض تفاصيل المشروع' : 'View Project Details'}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
+              </button>
             </div>
 
           </div>
@@ -636,10 +649,11 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
       <NewsDetailModal 
         post={selectedModalProject ? {
           ...selectedModalProject,
+          isProject: true,
           location: selectedModalProject.region ? `${selectedModalProject.lengthKm ? selectedModalProject.lengthKm + ' كم • ' : ''}${selectedModalProject.region}` : selectedModalProject.location,
           category: selectedModalProject.statusLabel || (lang === 'ar' ? 'المشروعات التنفيذية' : 'Executive Projects'),
           author: selectedModalProject.contractor || (lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'),
-          timeAgo: selectedModalProject.progress ? `${selectedModalProject.progress}% نسبة الإنجاز الفعلي` : (lang === 'ar' ? 'مشروع تنفيذي' : 'Executive Project')
+          timeAgo: selectedModalProject.startDate ? `${selectedModalProject.startDate} — ${selectedModalProject.targetDate || '2026'}` : (selectedModalProject.progress ? `${selectedModalProject.progress}% نسبة الإنجاز` : '')
         } : null}
         isOpen={Boolean(selectedModalProject)}
         onClose={() => setSelectedModalProject(null)}
