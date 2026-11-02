@@ -7,7 +7,6 @@ import {
   Building2, 
   ShieldCheck, 
   Layers,
-  Sparkles,
   CheckCircle2,
   FileCheck2,
   Compass
@@ -159,13 +158,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
 
-            {/* Top Category Badge */}
-            <div className="absolute top-3 start-3 pointer-events-none">
-              <span className="inline-flex items-center gap-1.5 bg-black/75 backdrop-blur-md px-3 py-1 rounded-xl border border-amber-500/30 text-[10.5px] sm:text-xs font-black text-amber-400 shadow-md">
-                <Sparkles className="w-3 h-3 text-amber-400" />
-                <span>{post.category || (lang === 'ar' ? 'توثيق ميداني' : 'Field Documentation')}</span>
-              </span>
-            </div>
+            
 
             {/* Bottom Photo Telemetry Badges */}
             <div className="absolute bottom-3 start-3 end-3 flex items-center justify-between text-white text-xs gap-2 pointer-events-none flex-wrap">
