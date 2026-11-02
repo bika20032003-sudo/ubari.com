@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Activity, ShieldCheck, Flame, Zap, Award, Radio, MapPin, CheckCircle2 } from 'lucide-react';
 import { getSavedSelectedWorkItems } from '../services/api';
 
+const cleanTickerText = (val) => typeof val === 'string' ? val.replace(/[✦★✨⭐*•]/g, '').trim() : (val || '');
+
 export default function MarqueeTicker({ 
   items = [], 
   speed = 'normal', 
@@ -183,7 +185,7 @@ export default function MarqueeTicker({
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'
                   }`}>
-                    {item.tag || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
+                    {cleanTickerText(item.tag) || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
                   </span>
 
                   {/* News Headline - High Clarity & Sharp Legibility */}
@@ -192,7 +194,7 @@ export default function MarqueeTicker({
                       ? 'text-slate-900 hover:text-amber-600' 
                       : 'text-slate-100 hover:text-amber-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]'
                   }`}>
-                    {item.text}
+                    {cleanTickerText(item.text)}
                   </span>
                 </div>
               ))}
@@ -212,7 +214,7 @@ export default function MarqueeTicker({
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'
                   }`}>
-                    {item.tag || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
+                    {cleanTickerText(item.tag) || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
                   </span>
 
                   {/* News Headline - High Clarity & Sharp Legibility */}
@@ -221,7 +223,7 @@ export default function MarqueeTicker({
                       ? 'text-slate-900 hover:text-amber-600' 
                       : 'text-slate-100 hover:text-amber-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]'
                   }`}>
-                    {item.text}
+                    {cleanTickerText(item.text)}
                   </span>
                 </div>
               ))}

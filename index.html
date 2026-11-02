@@ -3,12 +3,28 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <link rel="icon" type="image/jpeg" href="./logo-agency.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>مشروع طريق أوباري - غات | جهاز تنفيذ مشروعات المواصلات</title>
+    <!-- Automatic Cache Purge for Immediate Updates -->
+  <script>
+    try {
+      var buildId = 'build_1793613150851';
+      var lastBuild = localStorage.getItem('portal_build_id');
+      if (lastBuild !== buildId && 'caches' in window) {
+        caches.keys().then(function(names) {
+          names.forEach(function(name) { caches.delete(name); });
+        });
+      }
+      localStorage.setItem('portal_build_id', buildId);
+    } catch(e) {}
+  </script>
   <!-- Pre-render Theme Initialization (Night Mode Default) -->
   <script>
     try {
