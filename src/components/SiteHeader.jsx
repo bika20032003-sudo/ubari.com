@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { ASSETS } from '../utils/assets';
 import { useProjectData } from '../context/ProjectDataContext';
 
@@ -85,12 +85,15 @@ export default function SiteHeader() {
             );
           })}
 
-          <Link
-            to="/"
-            className="rounded-full px-4 py-2 text-[13px] font-bold text-orange-500 border border-orange-500/40 hover:bg-orange-500/10 transition-colors shadow-sm"
+          <a
+            href="https://bika20032003-sudo.github.io/yahya/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full px-4 py-2 text-[13px] font-bold text-orange-500 border border-orange-500/40 hover:bg-orange-500/10 transition-colors shadow-sm inline-flex items-center gap-1.5"
           >
-            بداية الرحلة
-          </Link>
+            <span>بداية الرحلة</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
 
           <Link
             to={isAuthenticated ? '/dashboard' : '/login'}
@@ -129,13 +132,16 @@ export default function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/"
+            <a
+              href="https://bika20032003-sudo.github.io/yahya/"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 rounded-full border border-orange-500/40 px-5 py-3 text-center text-sm font-bold text-orange-500 hover:bg-orange-500/10 transition-colors"
+              className="mt-2 rounded-full border border-orange-500/40 px-5 py-3 text-center text-sm font-bold text-orange-500 hover:bg-orange-500/10 transition-colors flex items-center justify-center gap-1.5"
             >
-              بداية الرحلة
-            </Link>
+              <span>بداية الرحلة</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
             <Link
               to={isAuthenticated ? '/dashboard' : '/login'}
               onClick={() => setMobileOpen(false)}

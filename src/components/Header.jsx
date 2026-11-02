@@ -305,12 +305,13 @@ export default function Header({
         {/* ── Right Side: Action Controls ── */}
         <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
 
-          {/* ── زر بداية الرحلة ── */}
+          {/* ── زر بداية الرحلة (الموقع التعريفي) ── */}
           {/* Desktop & Tablet: Full Button */}
-          <button
-            type="button"
-            onClick={() => handleNavClick('hero', 'hero-section')}
-            title={lang === 'ar' ? 'بداية الرحلة - الرئيسية' : 'Journey Start'}
+          <a
+            href="https://bika20032003-sudo.github.io/yahya/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title={lang === 'ar' ? 'الموقع التعريفي - طريق أوباري – غات' : 'Showcase Website'}
             className={`hidden md:flex px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-200 items-center gap-1.5 border shadow-sm cursor-pointer hover:scale-105 ${
               theme === 'light'
                 ? 'bg-orange-50 hover:bg-orange-100 border-orange-300/80 text-orange-600 shadow-orange-500/10'
@@ -321,7 +322,8 @@ export default function Header({
             <span className="font-black tracking-wide">
               {lang === 'ar' ? 'بداية الرحلة' : 'Journey Start'}
             </span>
-          </button>
+            <ArrowUpRight className="w-3 h-3 opacity-70" />
+          </a>
 
           {/* ── AFTER LOGIN: User Avatar Dropdown (Desktop & Tablet) ── */}
           {user && (
@@ -502,13 +504,12 @@ export default function Header({
 
           {/* Mobile Dashboard & Auth Options */}
           <div className="border-t border-slate-200 dark:border-white/10 pt-2 mt-1 space-y-1.5">
-            {/* زر بداية الرحلة للجوال */}
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                handleNavClick('hero', 'hero-section');
-              }}
+            {/* زر بداية الرحلة للجوال - رابط الموقع التعريفي */}
+            <a
+              href="https://bika20032003-sudo.github.io/yahya/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
               className={`group relative overflow-hidden w-full p-2.5 sm:p-3 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-2.5 shadow-md active:scale-[0.98] cursor-pointer text-start ${
                 theme === 'light'
                   ? 'bg-gradient-to-r from-amber-50 via-orange-50/90 to-amber-100/70 border-amber-300/80 hover:border-amber-400 shadow-amber-500/10'
@@ -532,16 +533,17 @@ export default function Header({
                   <span className={`text-[10px] font-semibold truncate ${
                     theme === 'light' ? 'text-amber-900/80' : 'text-amber-200/75'
                   }`}>
-                    {lang === 'ar' ? 'العودة لبداية مسار المشروع' : 'Return to Journey Start'}
+                    {lang === 'ar' ? 'الموقع التعريفي لمشروع طريق أوباري – غات' : 'Showcase Website'}
                   </span>
                 </div>
               </div>
 
               {/* الجانب الأيسر: زر تفاعلي أنيق */}
               <div className="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-black bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-sm shadow-amber-500/25 group-hover:from-amber-400 group-hover:to-orange-400 transition-all duration-200">
-                <span>{lang === 'ar' ? 'انتقال' : 'Go'}</span>
+                <span>{lang === 'ar' ? 'استكشف' : 'Explore'}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
               </div>
-            </button>
+            </a>
 
             {user && (
               <button
