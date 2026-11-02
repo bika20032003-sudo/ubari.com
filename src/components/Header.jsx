@@ -211,6 +211,25 @@ export default function Header({
     }
   };
 
+  // فتح الموقع التعريفي الميداني بشكل مضمون ومباشر
+  const openShowcaseSite = (e) => {
+    if (e) {
+      try { e.preventDefault(); e.stopPropagation(); } catch (_) {}
+    }
+    const targetUrl = 'https://bika20032003-sudo.github.io/yahya/';
+    try {
+      const win = window.open(targetUrl, '_blank');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = targetUrl;
+      }
+    } catch (_) {
+      window.location.href = targetUrl;
+    }
+    setTimeout(() => {
+      setMobileMenuOpen(false);
+    }, 350);
+  };
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 select-none ${
       isScrolled 
@@ -309,8 +328,7 @@ export default function Header({
           {/* Desktop & Tablet: Full Button */}
           <a
             href="https://bika20032003-sudo.github.io/yahya/"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={openShowcaseSite}
             title={lang === 'ar' ? 'الموقع التعريفي - طريق أوباري – غات' : 'Showcase Website'}
             className={`hidden md:flex px-3 py-1.5 rounded-xl text-xs font-black transition-all duration-200 items-center gap-1.5 border shadow-sm cursor-pointer hover:scale-105 ${
               theme === 'light'
@@ -412,6 +430,20 @@ export default function Header({
             <span className="font-mono tracking-wider">{lang === 'ar' ? 'EN' : 'عربي'}</span>
           </button>
 
+          {/* ── أيقونة بداية الرحلة للجوال في الشريط العلوي مباشرة ── */}
+          <a
+            href="https://bika20032003-sudo.github.io/yahya/"
+            onClick={openShowcaseSite}
+            title={lang === 'ar' ? 'بداية الرحلة - الموقع التعريفي' : 'Journey Start - Showcase Website'}
+            className={`md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center border shadow-sm transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
+              theme === 'light'
+                ? 'bg-orange-50 hover:bg-orange-100 border-orange-300/80 text-orange-600 shadow-orange-500/10'
+                : 'bg-orange-500/15 hover:bg-orange-500/25 border-orange-500/40 text-orange-400'
+            }`}
+          >
+            <Compass className="w-4 h-4 text-amber-500" />
+          </a>
+
           {/* ── Day / Night Toggle ── */}
           <button
             id="theme-toggle-btn"
@@ -507,9 +539,7 @@ export default function Header({
             {/* زر بداية الرحلة للجوال - رابط الموقع التعريفي */}
             <a
               href="https://bika20032003-sudo.github.io/yahya/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={openShowcaseSite}
               className={`group relative overflow-hidden w-full p-2.5 sm:p-3 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-2.5 shadow-md active:scale-[0.98] cursor-pointer text-start ${
                 theme === 'light'
                   ? 'bg-gradient-to-r from-amber-50 via-orange-50/90 to-amber-100/70 border-amber-300/80 hover:border-amber-400 shadow-amber-500/10'

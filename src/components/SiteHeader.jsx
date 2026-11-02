@@ -28,6 +28,24 @@ export default function SiteHeader() {
 
   const isTransparent = isHome && !scrolled;
 
+  const openShowcaseSite = (e) => {
+    if (e) {
+      try { e.preventDefault(); e.stopPropagation(); } catch (_) {}
+    }
+    const targetUrl = 'https://bika20032003-sudo.github.io/yahya/';
+    try {
+      const win = window.open(targetUrl, '_blank');
+      if (!win || win.closed || typeof win.closed === 'undefined') {
+        window.location.href = targetUrl;
+      }
+    } catch (_) {
+      window.location.href = targetUrl;
+    }
+    setTimeout(() => {
+      setMobileOpen(false);
+    }, 350);
+  };
+
   return (
     <header
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
@@ -87,8 +105,7 @@ export default function SiteHeader() {
 
           <a
             href="https://bika20032003-sudo.github.io/yahya/"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={openShowcaseSite}
             className="rounded-full px-4 py-2 text-[13px] font-bold text-orange-500 border border-orange-500/40 hover:bg-orange-500/10 transition-colors shadow-sm inline-flex items-center gap-1.5"
           >
             <span>بداية الرحلة</span>
@@ -134,9 +151,7 @@ export default function SiteHeader() {
             ))}
             <a
               href="https://bika20032003-sudo.github.io/yahya/"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileOpen(false)}
+              onClick={openShowcaseSite}
               className="mt-2 rounded-full border border-orange-500/40 px-5 py-3 text-center text-sm font-bold text-orange-500 hover:bg-orange-500/10 transition-colors flex items-center justify-center gap-1.5"
             >
               <span>بداية الرحلة</span>
