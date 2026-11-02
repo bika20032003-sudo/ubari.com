@@ -400,76 +400,30 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         ))}
       </div>
 
-      {/* 2. MOBILE ONLY: 5-Second Fade Animation Auto-Cycling Project Card */}
+      {/* 2. MOBILE ONLY: Seamless News-Post Style Project Card (مطابق تماماً لبوست الأخبار) */}
       <div 
         className="md:hidden text-start space-y-3"
         onTouchStart={onTouchStartProj}
         onTouchMove={onTouchMoveProj}
         onTouchEnd={onTouchEndProj}
       >
-        {/* Mobile Projects Quick Thumbnail Switcher with Soft Alpha Fade on Edges */}
-        <div 
-          className="flex items-center gap-2 overflow-x-auto pb-2 pt-0.5 scrollbar-none no-scrollbar -mx-4 px-4"
-          style={{
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 24px, black calc(100% - 24px), transparent 100%)'
-          }}
-        >
-          {filteredProjects.map((proj, idx) => (
-            <button
-              key={proj.id}
-              type="button"
-              onClick={() => {
-                setProjectFadeActive(false);
-                setTimeout(() => {
-                  setActiveProjectMobileIdx(idx);
-                  setProjectFadeActive(true);
-                }, 150);
-              }}
-              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-xl border transition-all shrink-0 cursor-pointer text-start ${
-                idx === activeProjectMobileIdx
-                  ? 'bg-amber-500/15 border-amber-500 text-amber-500 dark:text-amber-400 ring-1 ring-amber-500/30 font-bold'
-                  : 'bg-slate-100 dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400'
-              }`}
-            >
-              <div className="w-6 h-6 rounded-lg overflow-hidden shrink-0 border border-slate-200 dark:border-white/15 bg-black">
-                <img 
-                  src={resolveAsset(proj.image)} 
-                  alt={proj.title} 
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
-                  }}
-                />
-              </div>
-              <span className="text-[11px] max-w-[120px] truncate">
-                {proj.title}
-              </span>
-            </button>
-          ))}
-        </div>
-
         {currentMobileProject && (
           <div
             onClick={() => setSelectedModalProject(currentMobileProject)}
-            className={`rounded-2xl overflow-hidden border shadow-xl transition-all duration-300 ease-in-out active:scale-[0.99] cursor-pointer ${
-              projectFadeActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
-            } ${
-              currentMobileProject.isFieldDoc ? 'border-amber-500/40' : ''
-            } ${theme === 'light'
-                ? 'bg-white border-slate-200/90 text-slate-900 shadow-slate-200/80'
-                : 'bg-[#090e1a]/95 border-white/10 text-white shadow-black/80'
-              }`}
+            className={`w-full rounded-2xl overflow-hidden border shadow-xl text-start transition-all duration-300 cursor-pointer active:scale-[0.99] ${
+              theme === 'light'
+                ? 'bg-white border-amber-300/80 shadow-slate-200/90 text-slate-900'
+                : 'bg-[#090e1a]/95 border-amber-500/30 shadow-black/90 text-white'
+            }`}
           >
             {/* Post Header: Agency Brand + Tag */}
             <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-slate-100 dark:border-white/10 gap-2">
-              <div className="flex items-center gap-2 min-w-0 flex-1 overflow-hidden">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 p-[1px] shadow-sm flex-shrink-0">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 p-[1px] shadow-sm flex-shrink-0">
                   <img 
                     src={resolveAsset('./logo-agency.jpg')} 
                     alt="جهاز تنفيذ مشروعات المواصلات" 
-                    className="w-full h-full object-contain rounded-md bg-white"
+                    className="w-full h-full object-contain rounded-[10px] bg-white"
                     onError={(e) => { e.currentTarget.style.display = 'none'; }}
                   />
                 </div>
@@ -480,130 +434,109 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                   </div>
-                  <p className="text-[9.5px] text-slate-400 font-mono truncate">
-                    {currentMobileProject.id}
-                  </p>
+                  <span className="text-[10px] text-slate-400 font-medium truncate block">
+                    {currentMobileProject.contractor || (lang === 'ar' ? 'المكتب التنفيذي' : 'Executive Office')} • {currentMobileProject.id}
+                  </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg border whitespace-nowrap ${
-                  currentMobileProject.isFieldDoc
-                    ? 'bg-amber-500/15 text-amber-500 border-amber-500/30'
-                    : currentMobileProject.status === 'completed'
-                      ? 'bg-emerald-500/15 text-emerald-500 border-emerald-500/30'
-                      : 'bg-amber-500/15 text-amber-500 border-amber-500/30'
-                }`}>
-                  {currentMobileProject.statusLabel}
-                </span>
-              </div>
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 shrink-0 whitespace-nowrap">
+                {currentMobileProject.statusLabel || (lang === 'ar' ? 'المشروعات التنفيذية' : 'Executive Projects')}
+              </span>
             </div>
 
-            {/* Post Photo */}
-            <div className="h-44 relative overflow-hidden bg-slate-950">
-              <img
-                key={`proj-img-${currentMobileProject.id}-${activeProjectMobileIdx}`}
-                src={resolveAsset(currentMobileProject.image)}
-                alt={currentMobileProject.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+            {/* Post Photo with Nav Controls */}
+            <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
+              <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
+                projectFadeActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.02]'
+              }`}>
+                <img 
+                  src={resolveAsset(currentMobileProject.image || './road-asphalt-paver.jpg')} 
+                  alt={currentMobileProject.title} 
+                  className="w-full h-full object-cover transition-transform duration-500"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+              </div>
 
-              {/* Overlaid Badges on Image */}
-              <div className="absolute bottom-2 start-2.5 end-2.5 flex items-center justify-between text-white text-[10px] gap-2 pointer-events-none">
-                <span className="px-2 py-0.5 rounded-md bg-black/75 font-mono font-bold text-amber-400 border border-white/10 truncate min-w-0">
+              {/* Navigation Arrows for Mobile Projects */}
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handlePrevProject(); }}
+                className="absolute top-1/2 start-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
+                aria-label="Previous"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handleNextProject(); }}
+                className="absolute top-1/2 end-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
+                aria-label="Next"
+              >
+                ›
+              </button>
+
+              {/* Slide index & Location pill */}
+              <div className="absolute bottom-2 start-2.5 end-2.5 flex items-center justify-between text-white text-[10px] gap-2 pointer-events-none z-10">
+                <span className="px-2 py-0.5 rounded-md bg-black/70 font-mono font-bold text-amber-400 border border-white/10 truncate min-w-0">
                   {currentMobileProject.lengthKm ? `${currentMobileProject.lengthKm} كم • ` : ''}{currentMobileProject.region}
                 </span>
-                <span className="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded-md text-[10px] shrink-0 whitespace-nowrap">
-                  {currentMobileProject.progress}% منجز
+                <span className="font-mono bg-black/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap">
+                  {activeProjectMobileIdx + 1} / {filteredProjects.length}
                 </span>
               </div>
             </div>
 
-            {/* Post Content */}
+            {/* Post Text Content with Fade */}
             <div className="p-3.5 space-y-2">
-              <h3 className="text-sm font-black leading-snug">
-                {currentMobileProject.title}
-              </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2 font-normal">
-                {currentMobileProject.desc}
-              </p>
-
-              {/* Progress Bar */}
-              <div className="space-y-1 pt-1.5 border-t border-slate-100 dark:border-white/10">
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-slate-500 dark:text-slate-400 font-semibold">
-                    {lang === 'ar' ? 'نسبة الإنجاز الفعلي:' : 'Progress:'}
-                  </span>
-                  <span className="font-mono font-black text-amber-500">{currentMobileProject.progress}%</span>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-200 dark:bg-white/10">
-                  <div
-                    className="bg-amber-500 h-full rounded-full transition-all duration-700"
-                    style={{ width: `${currentMobileProject.progress}%` }}
-                  />
-                </div>
+              <div className={`space-y-2 transition-all duration-300 ease-in-out ${
+                projectFadeActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0.5'
+              }`}>
+                <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
+                  {currentMobileProject.title}
+                </h3>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
+                  {currentMobileProject.desc}
+                </p>
               </div>
 
-              {/* Navigation Dots + Arrows + Action */}
-              <div className="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-white/10 text-[10px] gap-2">
-                <div className="flex items-center gap-1 min-w-0 overflow-hidden">
+              {/* Dots Indicators + Full Story Prompt ("عرض المزيد") */}
+              <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
+                <div className="flex items-center gap-1">
                   {filteredProjects.slice(0, 6).map((_, i) => (
                     <button
                       key={i}
                       type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
+                      onClick={(e) => { 
+                        e.stopPropagation(); 
                         setProjectFadeActive(false);
                         setTimeout(() => {
                           setActiveProjectMobileIdx(i);
                           setProjectFadeActive(true);
-                        }, 200);
+                        }, 180);
                       }}
-                      className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer shrink-0 ${
+                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
                         i === activeProjectMobileIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
                       }`}
                       aria-label={`Project ${i + 1}`}
                     />
                   ))}
-                  {filteredProjects.length > 6 && (
-                    <span className="text-[9px] text-slate-400 font-mono ms-0.5 shrink-0">
-                      +{filteredProjects.length - 6}
-                    </span>
-                  )}
                 </div>
-
-                <div className="flex items-center gap-1 shrink-0 ms-auto">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrevProject();
-                    }}
-                    className="w-7 h-7 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-xs active:scale-95 text-slate-400 hover:text-white cursor-pointer"
-                    aria-label="Previous project"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextProject();
-                    }}
-                    className="w-7 h-7 rounded-lg border border-slate-200 dark:border-white/10 flex items-center justify-center text-xs active:scale-95 text-slate-400 hover:text-white cursor-pointer"
-                    aria-label="Next project"
-                  >
-                    ›
-                  </button>
-                  <span className="text-amber-500 font-bold ms-1 shrink-0 whitespace-nowrap">
-                    {lang === 'ar' ? 'التفاصيل ↗' : 'Details ↗'}
-                  </span>
-                </div>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedModalProject(currentMobileProject);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
+                >
+                  <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
+                </button>
               </div>
             </div>
 

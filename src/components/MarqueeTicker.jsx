@@ -40,10 +40,14 @@ export default function MarqueeTicker({
 
   const safeItems = candidateItems && candidateItems.length > 0 ? candidateItems : defaultHeroItems;
 
-  // Ensure base list has enough items for widescreen displays (minimum 8 items, safe from infinite loops)
-  let baseList = [...safeItems];
-  while (baseList.length < 8 && safeItems.length > 0) {
-    baseList = [...baseList, ...safeItems];
+  // Filter active items if specified
+  const validItems = safeItems.filter(item => item && (item.text || item.title) && item.active !== false);
+  const pool = validItems.length > 0 ? validItems : safeItems;
+
+  // Ensure base list has enough items for widescreen displays (minimum 12 items, safe from infinite loops)
+  let baseList = [...pool];
+  while (baseList.length < 12 && pool.length > 0) {
+    baseList = [...baseList, ...pool];
   }
 
   // Calculate speed: calm, comfortable reading velocity with continuous 0s delay
@@ -168,7 +172,7 @@ export default function MarqueeTicker({
           <div className="flex w-full overflow-hidden select-none group-hover:[&>div]:[animation-play-state:paused]" dir="ltr">
             {/* Primary Track 1 */}
             <div 
-              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-10 sm:gap-14 pe-10 sm:pe-14 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee items-center gap-5 sm:gap-7 pe-5 sm:pe-7 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
@@ -190,6 +194,7 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
+                  <span className="text-amber-500/40 select-none text-[10px] px-1">✦</span>
                 </div>
               ))}
             </div>
@@ -197,7 +202,7 @@ export default function MarqueeTicker({
             {/* Seamless Sibling Track 2 (Cloned for 100% infinite loop with zero delay) */}
             <div 
               aria-hidden="true"
-              className="flex shrink-0 animate-marquee-reverse md:animate-marquee items-center gap-10 sm:gap-14 pe-10 sm:pe-14 py-0.5 will-change-transform"
+              className="flex shrink-0 animate-marquee items-center gap-5 sm:gap-7 pe-5 sm:pe-7 py-0.5 will-change-transform"
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
@@ -219,6 +224,7 @@ export default function MarqueeTicker({
                   }`}>
                     {item.text}
                   </span>
+                  <span className="text-amber-500/40 select-none text-[10px] px-1">✦</span>
                 </div>
               ))}
             </div>
