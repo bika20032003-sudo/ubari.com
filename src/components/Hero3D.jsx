@@ -334,7 +334,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                         <span className="font-black text-xs truncate">
                           {lang === 'ar' ? 'مشروعات المواصلات' : 'Transport Projects'}
                         </span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
                       </div>
                       <span className="text-[10px] text-slate-400 font-medium truncate block">
                         {lang === 'ar' ? (currentMobileNews.author || 'المكتب الإعلامي') : (currentMobileNews.authorEn || 'Media Office')} • {lang === 'ar' ? (currentMobileNews.timeAgo || 'مباشر') : (currentMobileNews.timeAgoEn || 'Live')}

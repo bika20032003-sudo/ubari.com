@@ -145,7 +145,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
                 <span className="font-black text-xs sm:text-sm text-amber-500 truncate block">
                   {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 shadow-sm shadow-emerald-500/50" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
               </div>
               <p className="text-[10px] sm:text-[11px] text-slate-400 truncate block font-medium">
                 {isProject

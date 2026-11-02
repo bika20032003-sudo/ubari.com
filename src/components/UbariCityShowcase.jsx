@@ -14,8 +14,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-cyan-600 dark:text-cyan-400',
       iconColor: 'text-cyan-500',
       iconBg: 'bg-cyan-500/15 border-cyan-500/30',
-      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
+      badgeBg: 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border-cyan-500/30',
+      dotColor: 'bg-cyan-500 shadow-sm shadow-cyan-500/50 ring-1 ring-cyan-400/40',
+      strongColor: 'text-cyan-600 dark:text-cyan-400',
       badge: t.ubariLakesTitle
     },
     {
@@ -26,8 +27,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-amber-600 dark:text-amber-400',
       iconColor: 'text-amber-500',
       iconBg: 'bg-amber-500/15 border-amber-500/30',
-      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+      badgeBg: 'bg-amber-500/15 text-amber-500 dark:text-amber-400 border-amber-500/30',
       dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
+      strongColor: 'text-amber-500 dark:text-amber-400',
       badge: t.ubariTransportTitle
     },
     {
@@ -38,8 +40,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-emerald-600 dark:text-emerald-400',
       iconColor: 'text-emerald-500',
       iconBg: 'bg-emerald-500/15 border-emerald-500/30',
-      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
+      badgeBg: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+      dotColor: 'bg-emerald-500 shadow-sm shadow-emerald-500/50 ring-1 ring-emerald-400/40',
+      strongColor: 'text-emerald-600 dark:text-emerald-400',
       badge: t.ubariEnergyTitle
     },
     {
@@ -50,8 +53,9 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
       color: 'text-violet-600 dark:text-violet-400',
       iconColor: 'text-violet-500',
       iconBg: 'bg-violet-500/15 border-violet-500/30',
-      badgeBg: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-      dotColor: 'bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40',
+      badgeBg: 'bg-violet-500/15 text-violet-500 dark:text-violet-400 border-violet-500/30',
+      dotColor: 'bg-gradient-to-br from-violet-400 via-violet-500 to-violet-600 shadow-sm shadow-violet-500/60 ring-1 ring-violet-400/40',
+      strongColor: 'text-violet-500 dark:text-violet-400',
       badge: t.ubariHeritageTitle
     }
   ];
@@ -189,11 +193,11 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 const hasColon = colonIdx > -1;
                 return (
                   <div key={idx} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 mt-1 shrink-0 shadow-sm shadow-cyan-500/60 ring-1 ring-cyan-400/40" />
                     <span>
                       {hasColon ? (
                         <>
-                          <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <strong className="text-cyan-600 dark:text-cyan-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
                           <span>{point.slice(colonIdx + 1)}</span>
                         </>
                       ) : point}
@@ -249,9 +253,25 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
               </div>
               <h4 className="font-bold text-xs sm:text-[13px] text-emerald-600 dark:text-emerald-400 leading-tight">{t.ubariEnergyTitle}</h4>
             </div>
-            <p className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal">
-              {t.ubariEnergyDesc}
-            </p>
+            <div className="text-[10.5px] sm:text-[11px] text-slate-500 dark:text-slate-400 leading-normal font-normal space-y-1.5 text-start">
+              {t.ubariEnergyDesc.split('\n').map((point, idx) => {
+                const colonIdx = point.indexOf(':');
+                const hasColon = colonIdx > -1;
+                return (
+                  <div key={idx} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 mt-1 shrink-0 shadow-sm shadow-emerald-500/60 ring-1 ring-emerald-400/40" />
+                    <span>
+                      {hasColon ? (
+                        <>
+                          <strong className="text-emerald-600 dark:text-emerald-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <span>{point.slice(colonIdx + 1)}</span>
+                        </>
+                      ) : point}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Card 4: Road Surface Painting & Markings */}
@@ -272,11 +292,11 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                 const hasColon = colonIdx > -1;
                 return (
                   <div key={idx} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 mt-1 shrink-0 shadow-sm shadow-amber-400/60 ring-1 ring-amber-300/40" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-violet-400 via-violet-500 to-violet-600 mt-1 shrink-0 shadow-sm shadow-violet-500/60 ring-1 ring-violet-400/40" />
                     <span>
                       {hasColon ? (
                         <>
-                          <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                          <strong className="text-violet-600 dark:text-violet-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
                           <span>{point.slice(colonIdx + 1)}</span>
                         </>
                       ) : point}
@@ -330,7 +350,7 @@ export default function UbariCityShowcase({ theme, lang = 'ar' }) {
                         <span>
                           {hasColon ? (
                             <>
-                              <strong className="text-amber-500 dark:text-amber-400 font-bold">{point.slice(0, colonIdx + 1)}</strong>
+                              <strong className={`font-bold ${currentFeature.strongColor || 'text-amber-500'}`}>{point.slice(0, colonIdx + 1)}</strong>
                               <span>{point.slice(colonIdx + 1)}</span>
                             </>
                           ) : (

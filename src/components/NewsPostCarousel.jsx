@@ -127,7 +127,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                 <h4 className="font-black text-xs sm:text-sm leading-tight sm:leading-snug truncate">
                   {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'}
                 </h4>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
                 <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
                   {lang === 'ar' ? 'معتمد' : 'Verified'}
                 </span>

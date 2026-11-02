@@ -545,7 +545,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                     <span className="font-black text-xs truncate">
                       {lang === 'ar' ? 'مشروعات المواصلات' : 'Transport Projects'}
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
                   </div>
                   <span className="text-[10px] text-slate-400 font-medium truncate block">
                     {currentMobileProject.contractor || (lang === 'ar' ? 'المكتب التنفيذي' : 'Executive Office')} • {currentMobileProject.id}

@@ -59,7 +59,7 @@ export const translations = {
     ubariTransportTitle: 'الأعمال الإرشادية والسلامة',
     ubariTransportDesc: '1. علامات الإرشاد: توريد وتركيب اللوحات المرورية والإرشادية بالأعمدة والقواعد الخرسانية.\n2. علامات تخفيف السرعة: تركيب عواكس أرضية لتخفيف السرعة وتنبيه السائقين بوسط وجوانب الطريق.\n3. السياج المعدني الواقي: تركيب حواجز حماية معدنية جديدة واستبدال التالف وتنظيف الموقع.',
     ubariEnergyTitle: 'العبّارات وتصريف السيول',
-    ubariEnergyDesc: 'رفع كفاءة وتأهيل العبارات الموجودة (الخرسانية الصندوقية والأنبوبية) في تقاطعات الأودية لحماية جسم الطريق من الانجراف الموسمي.',
+    ubariEnergyDesc: '1. تأهيل العبارات: رفع كفاءة العبارات الخرسانية الصندوقية والأنبوبية لحماية جسم الطريق.\n2. مخرات السيول: تنظيف وتوسيع مسارات تصريف مياه الأمطار في تقاطعات الأودية.\n3. حماية الأكتاف: إنشاء جدران استنادية ورصف حجري لمنع الانجراف الموسمي.',
     ubariHeritageTitle: 'أعمال طلاء وتخطيط الطريق',
     ubariHeritageDesc: '1. خطوط جانبية صفراء: طلاء خطوط صفراء على جانبي الطريق بعرض 15 سم.\n2. خطوط بيضاء متقطعة: تخطيط خطوط متقطعة بمحور الطريق بعرض 15 سم.\n3. خطوط بيضاء مستمرة: تخطيط خطوط مستمرة بمحور الطريق بعرض 15 سم وتنظيف السطح.',
 
@@ -159,7 +159,7 @@ export const translations = {
     ubariTransportTitle: 'Guidance & Road Safety Works',
     ubariTransportDesc: '1. Guide Signage: Installing traffic and directional signs with concrete foundation posts.\n2. Speed Calming Markers: Raised road reflectors along center and road edges.\n3. Metal Guardrails: Installing new safety barrier guardrails and replacing damaged sections.',
     ubariEnergyTitle: 'Hydraulic Culverts & Drainage',
-    ubariEnergyDesc: 'Rehabilitation and efficiency upgrade of existing concrete box and pipe culverts across wadi crossings to protect the roadway from seasonal flood erosion.',
+    ubariEnergyDesc: '1. Culverts Upgrade: Rehabilitation of concrete box and pipe culverts across wadi crossings.\n2. Flood Channels: Cleaning and expanding flood drainage channels along the corridor.\n3. Shoulder Protection: Retaining walls and riprap to prevent seasonal roadbed erosion.',
     ubariHeritageTitle: 'Road Surface Marking & Painting',
     ubariHeritageDesc: '1. Yellow Edge Lines: Continuous yellow paint lines along road edges (15 cm width).\n2. Broken Center Lines: Dashed white paint lines along road centerline (15 cm width).\n3. Continuous Center Lines: Solid white paint lines along road centerline with surface cleaning (15 cm width).',
 
