@@ -732,10 +732,11 @@ export const syncTickerNewsFromCloud = async () => {
 
 export const getSavedExecutiveProjects = () => {
   try {
-    const saved = localStorage.getItem('portal-national-projects');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    const saved = safeStorageGet('portal-national-projects', null);
+    if (saved && Array.isArray(saved) && saved.length > 0) {
+      const savedIds = new Set(saved.map(p => p.id));
+      const remainingDefaults = nationalProjects.filter(p => !savedIds.has(p.id));
+      return [...saved, ...remainingDefaults];
     }
   } catch (e) {}
   return nationalProjects;
@@ -751,7 +752,6 @@ export const syncExecutiveProjectsFromCloud = async () => {
       const mergedProjects = [...cloudProjects, ...remainingDefaults];
 
       safeStorageSet('portal-national-projects', mergedProjects);
-      window.dispatchEvent(new Event('storage'));
       window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: mergedProjects }));
       return mergedProjects;
     }
@@ -917,7 +917,6 @@ if (typeof window !== 'undefined') {
 
 export const saveExecutiveProjects = (projects) => {
   safeStorageSet('portal-national-projects', projects);
-  window.dispatchEvent(new Event('storage'));
   window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: projects }));
 
   if (isSupabaseConfigured()) {

@@ -323,8 +323,12 @@ export default function ExecutiveDashboard({
 
   // Synchronize across components via storage event
   useEffect(() => {
-    const handleStorageUpdate = () => {
-      setLocalExecutiveProjects(getSavedExecutiveProjects());
+    const handleStorageUpdate = (e) => {
+      if (e?.detail && Array.isArray(e.detail) && e.detail.length > 0) {
+        setLocalExecutiveProjects(e.detail);
+      } else {
+        setLocalExecutiveProjects(getSavedExecutiveProjects());
+      }
       setLocalNewsPosts(getSavedNewsPosts());
       setLocalHeroCard(getSavedHeroCard());
       setLocalPhotos(safeStorageGet('portal-field-photos-v2', initialFieldPhotos));

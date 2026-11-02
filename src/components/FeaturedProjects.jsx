@@ -51,17 +51,34 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     targetProject: 'new'
   });
 
+  const mergeProjectsResiliently = (incoming, existing = []) => {
+    const map = new Map();
+    // 1. Defaults first
+    nationalProjects.forEach(p => map.set(p.id, p));
+    // 2. Existing items in memory
+    if (Array.isArray(existing)) {
+      existing.forEach(p => {
+        if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
+      });
+    }
+    // 3. Incoming items override
+    if (Array.isArray(incoming)) {
+      incoming.forEach(p => {
+        if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
+      });
+    }
+    const result = Array.from(map.values());
+    return result.length > 0 ? result : nationalProjects;
+  };
+
   const loadAllExecutiveProjects = () => {
-    let baseProjects = [...nationalProjects];
     try {
       const savedCustom = safeStorageGet('portal-national-projects', null);
       if (savedCustom && Array.isArray(savedCustom) && savedCustom.length > 0) {
-        const savedIds = new Set(savedCustom.map(p => p.id));
-        const remainingDefaults = nationalProjects.filter(p => !savedIds.has(p.id));
-        baseProjects = [...savedCustom, ...remainingDefaults];
+        return mergeProjectsResiliently(savedCustom, nationalProjects);
       }
     } catch (e) {}
-    return baseProjects;
+    return nationalProjects;
   };
 
   const [projectsList, setProjectsList] = useState(loadAllExecutiveProjects);
@@ -73,11 +90,11 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     // 1. Immediately fetch latest cloud projects from Supabase
     fetchCloudProjects().then((cloudData) => {
       if (isMounted && cloudData && Array.isArray(cloudData) && cloudData.length > 0) {
-        const cloudIds = new Set(cloudData.map(p => p.id));
-        const remainingDefaults = nationalProjects.filter(p => !cloudIds.has(p.id));
-        const merged = [...cloudData, ...remainingDefaults];
-        setProjectsList(merged);
-        safeStorageSet('portal-national-projects', merged);
+        setProjectsList(prev => {
+          const merged = mergeProjectsResiliently(cloudData, prev);
+          safeStorageSet('portal-national-projects', merged);
+          return merged;
+        });
       }
     }).catch(err => {
       console.warn('[FeaturedProjects] تعذر الجلب المباشر من سوبابيس:', err);
@@ -87,23 +104,19 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     const handleStorageUpdate = (e) => {
       if (!isMounted) return;
       if (e?.detail && Array.isArray(e.detail) && e.detail.length > 0) {
-        const detailIds = new Set(e.detail.map(p => p.id));
-        const remainingDefaults = nationalProjects.filter(p => !detailIds.has(p.id));
-        setProjectsList([...e.detail, ...remainingDefaults]);
+        setProjectsList(prev => mergeProjectsResiliently(e.detail, prev));
       } else {
-        const loaded = loadAllExecutiveProjects();
-        if (loaded && loaded.length > 0) {
-          setProjectsList(loaded);
+        const loaded = safeStorageGet('portal-national-projects', null);
+        if (loaded && Array.isArray(loaded) && loaded.length > 0) {
+          setProjectsList(prev => mergeProjectsResiliently(loaded, prev));
         }
       }
     };
 
-    window.addEventListener('storage', handleStorageUpdate);
     window.addEventListener('cloud_projects_updated', handleStorageUpdate);
     window.addEventListener('supabase_config_changed', handleStorageUpdate);
     return () => {
       isMounted = false;
-      window.removeEventListener('storage', handleStorageUpdate);
       window.removeEventListener('cloud_projects_updated', handleStorageUpdate);
       window.removeEventListener('supabase_config_changed', handleStorageUpdate);
     };
@@ -245,31 +258,32 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     return true;
   });
 
-  // Mobile Projects 5-Second Fade Auto-Cycle State (المشروعات فوق بعضها البعض وتتحرك تلقائياً كل 5 ثواني بانميشن تلاشي)
+  // Ironclad non-empty display array (Guarantees projects NEVER disappear)
+  const displayProjects = (filteredProjects && filteredProjects.length > 0)
+    ? filteredProjects
+    : (projectsList.length > 0 ? projectsList : nationalProjects);
+
+  // Mobile Projects Navigation State with pause protection (Never disappears or drops opacity to 0)
   const [activeProjectMobileIdx, setActiveProjectMobileIdx] = useState(0);
-  const [projectFadeActive, setProjectFadeActive] = useState(true);
+  const [isMobilePaused, setIsMobilePaused] = useState(false);
   const [touchStartProj, setTouchStartProj] = useState(null);
   const [touchEndProj, setTouchEndProj] = useState(null);
 
+  const safeMobileIdx = Math.min(Math.max(0, activeProjectMobileIdx), Math.max(0, displayProjects.length - 1));
+  const currentMobileProject = displayProjects[safeMobileIdx] || displayProjects[0];
+
   const handleNextProject = () => {
-    if (!filteredProjects || filteredProjects.length <= 1) return;
-    setProjectFadeActive(false);
-    setTimeout(() => {
-      setActiveProjectMobileIdx(prev => (prev + 1) % filteredProjects.length);
-      setProjectFadeActive(true);
-    }, 200);
+    if (!displayProjects || displayProjects.length <= 1) return;
+    setActiveProjectMobileIdx(prev => (prev + 1) % displayProjects.length);
   };
 
   const handlePrevProject = () => {
-    if (!filteredProjects || filteredProjects.length <= 1) return;
-    setProjectFadeActive(false);
-    setTimeout(() => {
-      setActiveProjectMobileIdx(prev => (prev - 1 + filteredProjects.length) % filteredProjects.length);
-      setProjectFadeActive(true);
-    }, 200);
+    if (!displayProjects || displayProjects.length <= 1) return;
+    setActiveProjectMobileIdx(prev => (prev - 1 + displayProjects.length) % displayProjects.length);
   };
 
   const onTouchStartProj = (e) => {
+    setIsMobilePaused(true);
     setTouchEndProj(null);
     setTouchStartProj(e.targetTouches[0].clientX);
   };
@@ -286,21 +300,21 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
     } else if (distance < -45) {
       handlePrevProject();
     }
+    // Resume auto-progression after 10s of user inactivity
+    setTimeout(() => setIsMobilePaused(false), 10000);
   };
 
   useEffect(() => {
-    if (!filteredProjects || filteredProjects.length <= 1) return;
+    if (isMobilePaused || !displayProjects || displayProjects.length <= 1) return;
     const interval = setInterval(() => {
       if (document.hidden) return;
       handleNextProject();
-    }, 6000);
+    }, 7000);
     return () => clearInterval(interval);
-  }, [filteredProjects.length]);
-
-  const currentMobileProject = filteredProjects[activeProjectMobileIdx] || filteredProjects[0];
+  }, [isMobilePaused, displayProjects.length]);
 
   return (
-    <section id="projects-section" className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 select-none scroll-mt-20 sm:scroll-mt-24">
+    <section className="py-4 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 select-none scroll-mt-20 sm:scroll-mt-24">
 
       {/* ── Section Title Header with GSAP Reveal ── */}
       <div className="text-center max-w-3xl mx-auto space-y-3 gsap-header">
@@ -340,7 +354,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
       {/* 1. DESKTOP ONLY: Luxury Cards Grid (Ubari - Ghat Projects) with GSAP Stagger (100% Preserved) */}
       <div className="hidden md:grid grid-cols-2 gap-6 sm:gap-8 gsap-stagger-container">
-        {filteredProjects.map((project) => (
+        {displayProjects.map((project) => (
           <div
             key={project.id}
             className={`p-6 sm:p-8 rounded-[36px] border shadow-2xl space-y-4 sm:space-y-6 text-start relative overflow-hidden glass-card-hover gsap-stagger-item ${
@@ -499,9 +513,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
             {/* Post Photo with Nav Controls */}
             <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
-              <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
-                projectFadeActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.02]'
-              }`}>
+              <div className="w-full h-full relative transition-transform duration-500 ease-out">
                 <img 
                   src={resolveAsset(currentMobileProject.image || './road-asphalt-paver.jpg')} 
                   alt={currentMobileProject.title} 
@@ -538,16 +550,14 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                   {currentMobileProject.lengthKm ? `${currentMobileProject.lengthKm} كم • ` : ''}{currentMobileProject.region}
                 </span>
                 <span className="font-mono bg-black/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap">
-                  {activeProjectMobileIdx + 1} / {filteredProjects.length}
+                  {safeMobileIdx + 1} / {displayProjects.length}
                 </span>
               </div>
             </div>
 
-            {/* Post Text Content with Fade */}
+            {/* Post Text Content */}
             <div className="p-3.5 space-y-2">
-              <div className={`space-y-2 transition-all duration-300 ease-in-out ${
-                projectFadeActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0.5'
-              }`}>
+              <div className="space-y-1.5 transition-all duration-300">
                 <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
                   {currentMobileProject.title}
                 </h3>
@@ -559,20 +569,16 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
               {/* Dots Indicators + Full Story Prompt ("عرض المزيد") */}
               <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
                 <div className="flex items-center gap-1 flex-wrap">
-                  {filteredProjects.map((_, i) => (
+                  {displayProjects.map((_, i) => (
                     <button
                       key={i}
                       type="button"
                       onClick={(e) => { 
                         e.stopPropagation(); 
-                        setProjectFadeActive(false);
-                        setTimeout(() => {
-                          setActiveProjectMobileIdx(i);
-                          setProjectFadeActive(true);
-                        }, 180);
+                        setActiveProjectMobileIdx(i);
                       }}
                       className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                        i === activeProjectMobileIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
+                        i === safeMobileIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
                       }`}
                       aria-label={`Project ${i + 1}`}
                     />
@@ -596,25 +602,21 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         )}
 
         {/* Mobile Horizontal Quick-Switch Track for all projects */}
-        {filteredProjects && filteredProjects.length > 1 && (
+        {displayProjects && displayProjects.length > 1 && (
           <div className="pt-1 space-y-1.5">
             <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
-              <span>{lang === 'ar' ? `جميع المشروعات المنفذة (${filteredProjects.length})` : `All Corridor Projects (${filteredProjects.length})`}</span>
+              <span>{lang === 'ar' ? `جميع المشروعات المنفذة (${displayProjects.length})` : `All Corridor Projects (${displayProjects.length})`}</span>
               <span className="text-[10px] text-amber-500 font-normal">{lang === 'ar' ? 'اضغط للتبديل والتصفح' : 'Tap to view'}</span>
             </div>
             <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar -mx-1 px-1">
-              {filteredProjects.map((proj, pIdx) => {
-                const isSelected = pIdx === activeProjectMobileIdx;
+              {displayProjects.map((proj, pIdx) => {
+                const isSelected = pIdx === safeMobileIdx;
                 return (
                   <button
                     key={proj.id || pIdx}
                     type="button"
                     onClick={() => {
-                      setProjectFadeActive(false);
-                      setTimeout(() => {
-                        setActiveProjectMobileIdx(pIdx);
-                        setProjectFadeActive(true);
-                      }, 180);
+                      setActiveProjectMobileIdx(pIdx);
                     }}
                     className={`flex items-center gap-2 p-1.5 rounded-xl border shrink-0 text-start transition-all cursor-pointer ${
                       isSelected

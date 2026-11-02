@@ -181,32 +181,52 @@ export function compressHighResImageFile(file, maxWidth = 2560, maxHeight = 1600
   });
 }
 
+// In-memory runtime cache: prevents data loss when localStorage quota is exceeded
+const memoryStore = new Map();
+
 /**
- * Safe localStorage setter with quota protection
+ * Safe localStorage setter with quota protection & in-memory guarantee
  */
 export function safeStorageSet(key, value) {
+  // Always update in-memory cache first
+  memoryStore.set(key, value);
   let savedOk = false;
+
   try {
     const serialized = typeof value === 'string' ? value : JSON.stringify(value);
     localStorage.setItem(key, serialized);
     savedOk = true;
   } catch (err) {
     console.warn(`[SafeStorage] Quota exceeded or storage error on ${key}:`, err);
-    // If quota exceeded, try to clean old large temporary items
+    // If quota exceeded, clean non-critical keys and attempt saving
     try {
       localStorage.removeItem('portal-field-photos');
       const serialized = typeof value === 'string' ? value : JSON.stringify(value);
       localStorage.setItem(key, serialized);
       savedOk = true;
     } catch (e2) {
-      console.error('[SafeStorage] Unable to save to localStorage:', e2);
+      // If still exceeding, create a lightweight version without giant base64 payloads for localStorage
+      try {
+        if (Array.isArray(value)) {
+          const lightweight = value.map(item => {
+            if (item && item.image && item.image.startsWith('data:') && item.image.length > 50000) {
+              return { ...item, image: './road-asphalt-paver.jpg', fullImageInCloud: true };
+            }
+            return item;
+          });
+          localStorage.setItem(key, JSON.stringify(lightweight));
+          savedOk = true;
+        }
+      } catch (e3) {
+        console.error('[SafeStorage] Memory-only fallback active for', key);
+      }
     }
   }
 
-  // Dispatch local window event so UI updates immediately
+  // Dispatch custom storage update event with payload
   if (typeof window !== 'undefined') {
     try {
-      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new CustomEvent('safe_storage_updated', { detail: { key, value } }));
     } catch (e) {}
   }
 
@@ -220,15 +240,20 @@ export function safeStorageSet(key, value) {
   return savedOk;
 }
 
-
 /**
- * Safe localStorage getter with fallback
+ * Safe localStorage getter with in-memory fallback
  */
 export function safeStorageGet(key, fallback = null) {
+  if (memoryStore.has(key)) {
+    const memVal = memoryStore.get(key);
+    if (memVal !== undefined && memVal !== null) return memVal;
+  }
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return fallback;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    memoryStore.set(key, parsed);
+    return parsed;
   } catch (err) {
     return fallback;
   }
