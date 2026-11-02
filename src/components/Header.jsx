@@ -430,20 +430,6 @@ export default function Header({
             <span className="font-mono tracking-wider">{lang === 'ar' ? 'EN' : 'عربي'}</span>
           </button>
 
-          {/* ── أيقونة بداية الرحلة للجوال في الشريط العلوي مباشرة ── */}
-          <a
-            href="https://bika20032003-sudo.github.io/yahya/"
-            onClick={openShowcaseSite}
-            title={lang === 'ar' ? 'بداية الرحلة - الموقع التعريفي' : 'Journey Start - Showcase Website'}
-            className={`md:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center border shadow-sm transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
-              theme === 'light'
-                ? 'bg-orange-50 hover:bg-orange-100 border-orange-300/80 text-orange-600 shadow-orange-500/10'
-                : 'bg-orange-500/15 hover:bg-orange-500/25 border-orange-500/40 text-orange-400'
-            }`}
-          >
-            <Compass className="w-4 h-4 text-amber-500" />
-          </a>
-
           {/* ── Day / Night Toggle ── */}
           <button
             id="theme-toggle-btn"
