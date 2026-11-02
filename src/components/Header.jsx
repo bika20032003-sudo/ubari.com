@@ -325,20 +325,6 @@ export default function Header({
             <ArrowUpRight className="w-3 h-3 opacity-70" />
           </a>
 
-          {/* ── زر الانتقال السريع للوحة التحكم للمدير العام ── */}
-          {(user?.isAdmin || user?.username === 'admin_ubari') && (
-            <button
-              onClick={() => setActiveTab(activeTab === 'dashboard' ? 'hero' : 'dashboard')}
-              className="px-3 py-1.5 rounded-xl text-xs font-black transition-all items-center gap-1.5 border shadow-sm cursor-pointer flex bg-amber-500 hover:bg-amber-400 text-slate-950 border-amber-400 shadow-amber-500/25 active:scale-95 animate-fadeIn"
-              title="التبديل بين لوحة التحكم التنفيذية وعرض البوابة"
-            >
-              <LayoutDashboard className="w-3.5 h-3.5" />
-              <span>{activeTab === 'dashboard' ? 'عرض البوابة' : 'لوحة التحكم'}</span>
-            </button>
-          )}
-
-
-
           {/* ── AFTER LOGIN: User Avatar Dropdown (Desktop & Tablet) ── */}
           {user && (
             <div className="relative hidden sm:block" ref={dropdownRef}>

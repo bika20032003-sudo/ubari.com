@@ -283,16 +283,6 @@ export default function GoogleAuthModal({ isOpen, onClose, onLoginSuccess, theme
               <UserCheck className="w-4 h-4" />
               <span>دخول</span>
             </button>
-
-            {/* Quick Admin Access Action */}
-            <button
-              type="button"
-              onClick={() => triggerAdminSuccess()}
-              className="w-full py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-amber-300 hover:text-amber-200 border border-amber-500/25 text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 mt-2"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span>دخول مباشر ومعتمد للمدير العام (admin_ubari)</span>
-            </button>
           </form>
         )}
 

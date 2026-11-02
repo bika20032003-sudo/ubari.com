@@ -176,68 +176,13 @@ export const fetchContractors = async () => {
 
 const initialFieldPhotos = [
   {
-    id: 'PH-01',
-    title: 'آليات رصف الأسفلت الساخن Vögele ومتابعة درجات الحرارة',
-    titleEn: 'Vögele Hot Asphalt Paver Fleet & Bitumen Temperature Control',
-    sector: 'القطاع الأول (أوباري - الفيوات)',
-    desc: 'عمليات مد ورصف الطبقة السطحية الرابطة ومتابعة درجة حرارة الخلطة الإسفلتية المعتمدة (160°C) في الموقع لضمان أعلى جودة.',
-    src: './road-asphalt-paver.jpg',
-    category: 'رصف الأسفلت',
-    date: '2026-08-16',
-    author: 'م. عبد السلام الفزاني'
-  },
-  {
-    id: 'PH-02',
-    title: 'دمك الأسفلت بالمداحل الأسطوانية والمطاطية مع الرفع المساحي',
-    titleEn: 'Heavy Steel & Pneumatic Rollers Compaction with Survey Station',
-    sector: 'القطاع الثاني (الفيوات - العوينات)',
-    desc: 'تشغيل أسطول المداحل الاهتزازية Dynapac & CAT للدمك النهائي وتحديد المناسيب عبر المحطة المساحية التوتال ستيشن.',
-    src: './road-rollers-compaction.jpg',
-    category: 'الدمك وضبط المناسيب',
-    date: '2026-08-14',
-    author: 'م. طارق المحجوب'
-  },
-  {
-    id: 'PH-03',
-    title: 'تسوية الأساس الحجري بالكاشطات الموتورية وصهاريج الرش',
-    titleEn: 'Aggregate Sub-base Grading, Compaction & Water Spraying',
-    sector: 'القطاع الثالث (العوينات - تهالة)',
-    desc: 'تسوية وضبط سمك طبقة الأساس الحجرية المكسورة وتوزيع الشاحنات وصهاريج رش المياه قبل الرصف.',
-    src: './road-grader-earthwork.jpg',
-    category: 'كشط وتأسيس',
-    date: '2026-08-11',
-    author: 'م. سالم التواتي'
-  },
-  {
-    id: 'PH-04',
-    title: 'تركيب الشواخص المرورية وتخطيط المسار وعواكس السرعة',
-    titleEn: 'Traffic Signage, Route Markings & Speed Calming Markers',
-    sector: 'القطاع الرابع (البركت - غات)',
-    desc: 'تثبيت اللوحات والشواخص الإرشادية وعواكس السرعة وتخطيط مسارات الطريق بالدهان الحراري العاكس.',
-    src: './road-solar-lighting.jpg',
-    category: 'السلامة المرورية والإرشاد',
-    date: '2026-08-09',
-    author: 'م. علي الغاتي'
-  },
-  {
-    id: 'PH-05',
-    title: 'فحص عينات الكور الإسفلتي واختبارات الدمك ومطابقة الجودة',
-    titleEn: 'Marshall Asphalt Core QA Inspection & Density Testing',
-    sector: 'مختبر الجودة الميداني - أوباري',
-    desc: 'سحب وفحص عينات الكور الإسفلتي باستخدام أجهزة القياس الرقمية والمختبر الميداني المتنقل للتأكد من مطابقة المواصفات.',
-    src: './road-qa-testing-core.jpg',
-    category: 'ضبط الجودة المعملي',
-    date: '2026-08-07',
-    author: 'المختبر المركزي'
-  },
-  {
     id: 'PH-06',
-    title: 'مشهد جوي بانورامي لمسار الطريق الصحراوي المعبد وأسطول الآليات',
-    titleEn: 'Aerial Drone View of Desert Highway Paving Train Corridor',
+    title: 'مشهد جوي لمسار الطريق الصحراوي المعبد وأسطول الآليات',
+    titleEn: 'Aerial View of Desert Highway Paving Corridor',
     sector: 'مسار طريق أوباري – غات الدولي (360 كم)',
-    desc: 'توثيق جوي شامل لحركة قطار الرصف والآليات والشاحنات على امتداد الطريق المخترق للكثبان الرملية الذهبية بالجنوب الليبي.',
+    desc: 'توثيق جوي شامل لحركة قطار الرصف والآليات والشاحنات على امتداد الطريق بالجنوب الليبي.',
     src: './road-aerial-highway.jpg',
-    category: 'توثيق جوي بانورامي',
+    category: 'توثيق جوي',
     date: '2026-08-05',
     author: 'ديوان جهاز المواصلات'
   }
@@ -326,90 +271,6 @@ export const nationalProjects = [
       solarPoles: 140,
       fleet: 35,
       qualityScore: '97.8%'
-    }
-  },
-  {
-    id: 'PRJ-UBG-DUN-120',
-    title: 'مشروع تثبيت الكثبان الرملية وتوسعة أكتاف مسار أوباري',
-    titleEn: 'Ubari Sand Dune Stabilization & Shoulder Widening',
-    region: 'قطاع الفيوات – العوينات',
-    regionEn: 'Alfyoat – Al Uwaynat',
-    lengthKm: 120,
-    progress: 58.0,
-    status: 'in_progress',
-    statusLabel: 'أعمال تسوية وتثبيت',
-    statusLabelEn: 'In Progress',
-    statusColor: 'amber',
-    budget: '18,500,000 د.ل',
-    contractor: 'شركة السهل الصحراوي للمقاولات العامة',
-    startDate: 'مايو 2025',
-    targetDate: 'يناير 2027',
-    image: './road-grader-earthwork.jpg',
-    coords: { x: 26, y: 70 },
-    realCoords: '26.4500,12.3500',
-    desc: 'توسعة أكتاف الطريق بعرض 2.5 متر لكل جانب مع تركيب حواجز مصدات الرمال البيئية وتسوية التموجات الرملية المتاخمة.',
-    specs: {
-      thickness: 'أكتاف مدموكة 15 سم',
-      paved: '69.6 كم',
-      solarPoles: 180,
-      fleet: 40,
-      qualityScore: '96.2%'
-    }
-  },
-  {
-    id: 'PRJ-GHT-ENT-045',
-    title: 'مشروع تطوير وتحديث مداخل غات التاريخية والبركت',
-    titleEn: 'Ghat Historical Entrances & Al Barkat Corridor Upgrade',
-    region: 'مدخل غات والبركت',
-    regionEn: 'Ghat & Al Barkat',
-    lengthKm: 45,
-    progress: 55.0,
-    status: 'in_progress',
-    statusLabel: 'جاري الرصف',
-    statusLabelEn: 'In Progress',
-    statusColor: 'blue',
-    budget: '28,000,000 د.ل',
-    contractor: 'شركة الجنوب للمشاريع الكبرى',
-    startDate: 'يونيو 2025',
-    targetDate: 'مارس 2027',
-    image: './road-asphalt-paver.jpg',
-    coords: { x: 16, y: 82 },
-    realCoords: '24.9600,10.1800',
-    desc: 'ازدواج وتطوير المدخل الشمالي لغات وربطه بمحور البركت والمنفذ الجنوبي بتصاميم تراثية تعكس الطابع المعماري للمنطقة.',
-    specs: {
-      thickness: '12 سم طبقتين',
-      paved: '24.8 كم',
-      solarPoles: 260,
-      fleet: 28,
-      qualityScore: '98.0%'
-    }
-  },
-  {
-    id: 'PRJ-UBG-RST-004',
-    title: 'مشروع نقاط الاستراحة والطوارئ والإسعاف بمسار أوباري – غات',
-    titleEn: 'Ubari – Ghat Highway Emergency & Rest Service Stations',
-    region: 'على طول المسار (4 محطات)',
-    regionEn: '4 Rest Stations on Route',
-    lengthKm: 360,
-    progress: 42.0,
-    status: 'in_progress',
-    statusLabel: 'أعمال التشييد والإنشاء',
-    statusLabelEn: 'Construction Stage',
-    statusColor: 'amber',
-    budget: '16,000,000 د.ل',
-    contractor: 'ائتلاف الشركات الوطنية للخدمات المساندة',
-    startDate: 'أغسطس 2025',
-    targetDate: 'فبراير 2027',
-    image: './road-qa-testing-core.jpg',
-    coords: { x: 23, y: 75 },
-    realCoords: '25.9500,11.8500',
-    desc: 'إنشاء 4 محطات استراحة متكاملة تتضمن مراكز إسعاف طارئ، ونقاط صيانة سريعة، ومهابط مروحيات طوارئ لخدمة المسافرين والشاحنات.',
-    specs: {
-      thickness: 'مبانٍ خرسانية ومواقف',
-      paved: 'محطتان قيد الإنجاز',
-      solarPoles: 80,
-      fleet: 18,
-      qualityScore: '97.0%'
     }
   }
 ];
@@ -730,30 +591,66 @@ export const syncTickerNewsFromCloud = async () => {
   return null;
 };
 
+export const getDeletedProjectIds = () => {
+  return safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004']);
+};
+
+export const addDeletedProjectId = (id) => {
+  if (!id) return;
+  const current = getDeletedProjectIds();
+  if (!current.includes(id)) {
+    const updated = [...current, id];
+    safeStorageSet('portal-deleted-project-ids', updated);
+    if (isSupabaseConfigured()) {
+      saveCloudStoreItem('portal-deleted-project-ids', updated).catch(() => {});
+    }
+  }
+};
+
+export const getDeletedPhotoIds = () => {
+  return safeStorageGet('portal-deleted-photo-ids', ['PH-01', 'PH-02', 'PH-03', 'PH-04', 'PH-05']);
+};
+
+export const addDeletedPhotoId = (id) => {
+  if (!id) return;
+  const current = getDeletedPhotoIds();
+  if (!current.includes(id)) {
+    const updated = [...current, id];
+    safeStorageSet('portal-deleted-photo-ids', updated);
+    if (isSupabaseConfigured()) {
+      saveCloudStoreItem('portal-deleted-photo-ids', updated).catch(() => {});
+    }
+  }
+};
+
 export const getSavedExecutiveProjects = () => {
+  const deletedIds = new Set(getDeletedProjectIds());
   try {
     const saved = safeStorageGet('portal-national-projects', null);
     if (saved && Array.isArray(saved) && saved.length > 0) {
-      const savedIds = new Set(saved.map(p => p.id));
-      const remainingDefaults = nationalProjects.filter(p => !savedIds.has(p.id));
-      return [...saved, ...remainingDefaults];
+      return saved.filter(p => !deletedIds.has(p.id));
     }
   } catch (e) {}
-  return nationalProjects;
+  return nationalProjects.filter(p => !deletedIds.has(p.id));
 };
 
 export const syncExecutiveProjectsFromCloud = async () => {
   if (!isSupabaseConfigured()) return null;
   try {
+    const cloudDeleted = await fetchCloudStoreItem('portal-deleted-project-ids');
+    if (Array.isArray(cloudDeleted) && cloudDeleted.length > 0) {
+      const current = getDeletedProjectIds();
+      const mergedDeleted = Array.from(new Set([...current, ...cloudDeleted]));
+      safeStorageSet('portal-deleted-project-ids', mergedDeleted);
+    }
+
+    const deletedIds = new Set(getDeletedProjectIds());
     const cloudProjects = await fetchCloudProjects();
     if (cloudProjects && Array.isArray(cloudProjects) && cloudProjects.length > 0) {
-      const cloudIds = new Set(cloudProjects.map(p => p.id));
-      const remainingDefaults = nationalProjects.filter(p => !cloudIds.has(p.id));
-      const mergedProjects = [...cloudProjects, ...remainingDefaults];
-
-      safeStorageSet('portal-national-projects', mergedProjects);
-      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: mergedProjects }));
-      return mergedProjects;
+      const filtered = cloudProjects.filter(p => !deletedIds.has(p.id));
+      safeStorageSet('portal-national-projects', filtered);
+      window.dispatchEvent(new CustomEvent('cloud_projects_updated', { detail: filtered }));
+      return filtered;
     }
   } catch (e) {
     console.warn('[Supabase Sync] خطأ في مزامنة المشروعات:', e);
@@ -764,12 +661,21 @@ export const syncExecutiveProjectsFromCloud = async () => {
 export const syncFieldPhotosFromCloud = async () => {
   if (!isSupabaseConfigured()) return null;
   try {
+    const cloudDeleted = await fetchCloudStoreItem('portal-deleted-photo-ids');
+    if (Array.isArray(cloudDeleted) && cloudDeleted.length > 0) {
+      const current = getDeletedPhotoIds();
+      const mergedDeleted = Array.from(new Set([...current, ...cloudDeleted]));
+      safeStorageSet('portal-deleted-photo-ids', mergedDeleted);
+    }
+
+    const deletedPhotoIds = new Set(getDeletedPhotoIds());
     const cloudPhotos = await fetchCloudPhotos();
     if (cloudPhotos && Array.isArray(cloudPhotos) && cloudPhotos.length > 0) {
-      safeStorageSet('portal-field-photos-v2', cloudPhotos);
+      const filtered = cloudPhotos.filter(p => !deletedPhotoIds.has(p.id));
+      safeStorageSet('portal-field-photos-v2', filtered);
       window.dispatchEvent(new Event('storage'));
-      window.dispatchEvent(new CustomEvent('cloud_photos_updated', { detail: cloudPhotos }));
-      return cloudPhotos;
+      window.dispatchEvent(new CustomEvent('cloud_photos_updated', { detail: filtered }));
+      return filtered;
     }
   } catch (e) {
     console.warn('[Supabase Sync] خطأ في مزامنة الصور:', e);
@@ -851,10 +757,11 @@ export const syncAllPortalData = async () => {
       if (localProjects && Array.isArray(localProjects) && localProjects.length > 0) {
         const cloudProjectsVal = cloudProjects.status === 'fulfilled' ? cloudProjects.value : null;
         if (!cloudProjectsVal || localProjects.length > cloudProjectsVal.length) {
+          const deletedIds = new Set(getDeletedProjectIds());
           const cloudArr = Array.isArray(cloudProjectsVal) ? cloudProjectsVal : [];
           const mergedMap = new Map();
-          cloudArr.forEach(p => mergedMap.set(p.id, p));
-          localProjects.forEach(p => mergedMap.set(p.id, p));
+          cloudArr.filter(p => !deletedIds.has(p.id)).forEach(p => mergedMap.set(p.id, p));
+          localProjects.filter(p => !deletedIds.has(p.id)).forEach(p => mergedMap.set(p.id, p));
           await saveCloudProjects(Array.from(mergedMap.values()));
         }
       }

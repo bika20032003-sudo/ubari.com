@@ -52,23 +52,24 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   });
 
   const mergeProjectsResiliently = (incoming, existing = []) => {
+    const deletedIds = new Set(safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004']));
     const map = new Map();
-    // 1. Defaults first
-    nationalProjects.forEach(p => map.set(p.id, p));
-    // 2. Existing items in memory
+    // 1. Defaults first (excluding deleted)
+    nationalProjects.filter(p => !deletedIds.has(p.id)).forEach(p => map.set(p.id, p));
+    // 2. Existing items in memory (excluding deleted)
     if (Array.isArray(existing)) {
-      existing.forEach(p => {
+      existing.filter(p => !deletedIds.has(p.id)).forEach(p => {
         if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
       });
     }
-    // 3. Incoming items override
+    // 3. Incoming items override (excluding deleted)
     if (Array.isArray(incoming)) {
-      incoming.forEach(p => {
+      incoming.filter(p => !deletedIds.has(p.id)).forEach(p => {
         if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
       });
     }
-    const result = Array.from(map.values());
-    return result.length > 0 ? result : nationalProjects;
+    const result = Array.from(map.values()).filter(p => !deletedIds.has(p.id));
+    return result.length > 0 ? result : nationalProjects.filter(p => !deletedIds.has(p.id));
   };
 
   const loadAllExecutiveProjects = () => {
@@ -240,6 +241,10 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   const handleDeleteCustomProject = (id, e) => {
     if (e) e.stopPropagation();
     if (!window.confirm('هل تريد بالتأكيد حذف هذا المشروع التنفيذي المرفوع؟')) return;
+    const deletedIds = safeStorageGet('portal-deleted-project-ids', []);
+    if (!deletedIds.includes(id)) {
+      safeStorageSet('portal-deleted-project-ids', [...deletedIds, id]);
+    }
     const current = loadAllExecutiveProjects();
     const updated = current.filter(p => p.id !== id);
     safeStorageSet('portal-national-projects', updated);
@@ -473,6 +478,52 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         onTouchMove={onTouchMoveProj}
         onTouchEnd={onTouchEndProj}
       >
+        {/* Mobile Horizontal Quick-Switch Track for all projects (موضوع فوق المشروعات مباشرة) */}
+        {displayProjects && displayProjects.length > 1 && (
+          <div className="space-y-1.5 pb-1">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
+              <span className="text-amber-500 dark:text-amber-400 font-black">
+                {lang === 'ar' ? `جميع المشروعات المنفذة (${displayProjects.length})` : `All Corridor Projects (${displayProjects.length})`}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar -mx-1 px-1">
+              {displayProjects.map((proj, pIdx) => {
+                const isSelected = pIdx === safeMobileIdx;
+                return (
+                  <button
+                    key={proj.id || pIdx}
+                    type="button"
+                    onClick={() => {
+                      setActiveProjectMobileIdx(pIdx);
+                    }}
+                    className={`flex items-center gap-2 p-1.5 rounded-xl border shrink-0 text-start transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-amber-500/15 border-amber-500/50 text-amber-400 shadow-sm ring-1 ring-amber-500/30'
+                        : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/20'
+                    }`}
+                  >
+                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-black/40 border border-white/10">
+                      <img
+                        src={resolveAsset(proj.image || './road-asphalt-paver.jpg')}
+                        alt={proj.title}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
+                        }}
+                      />
+                    </div>
+                    <div className="max-w-[125px] leading-tight">
+                      <div className="text-[10px] font-bold truncate">{proj.title}</div>
+                      <div className="text-[9px] text-slate-400 font-mono truncate">{proj.id}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {currentMobileProject && (
           <div
             onClick={() => setSelectedModalProject(currentMobileProject)}
@@ -555,16 +606,29 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
               </div>
             </div>
 
-            {/* Post Text Content */}
-            <div className="p-3.5 space-y-2">
-              <div className="space-y-1.5 transition-all duration-300">
+            {/* Post Text & Actions (بدون وصف مطول - عنوان ونسبة إنجاز وأزرار فقط) */}
+            <div className="p-3.5 space-y-2.5">
+              <div className="space-y-1.5">
                 <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
                   {currentMobileProject.title}
                 </h3>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
-                  {currentMobileProject.desc}
-                </p>
               </div>
+
+              {/* Live Progress Bar on Mobile Card */}
+              {currentMobileProject.progress !== undefined && (
+                <div className="space-y-1 pt-1 border-t border-slate-100 dark:border-white/10">
+                  <div className="flex items-center justify-between text-[11px] font-bold">
+                    <span className="text-slate-500 dark:text-slate-400">نسبة الإنجاز:</span>
+                    <span className="font-mono font-black text-amber-500">{currentMobileProject.progress}%</span>
+                  </div>
+                  <div className="w-full h-2 rounded-full overflow-hidden bg-slate-200 dark:bg-slate-800">
+                    <div 
+                      className="bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300 h-full rounded-full transition-all duration-500"
+                      style={{ width: `${currentMobileProject.progress}%` }}
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Dots Indicators + Full Story Prompt ("عرض المزيد") */}
               <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
@@ -592,57 +656,12 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer shrink-0"
                 >
-                  <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
+                  <span>{lang === 'ar' ? 'عرض تفاصيل المشروع' : 'View Details'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
                 </button>
               </div>
             </div>
 
-          </div>
-        )}
-
-        {/* Mobile Horizontal Quick-Switch Track for all projects */}
-        {displayProjects && displayProjects.length > 1 && (
-          <div className="pt-1 space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 px-1">
-              <span>{lang === 'ar' ? `جميع المشروعات المنفذة (${displayProjects.length})` : `All Corridor Projects (${displayProjects.length})`}</span>
-              <span className="text-[10px] text-amber-500 font-normal">{lang === 'ar' ? 'اضغط للتبديل والتصفح' : 'Tap to view'}</span>
-            </div>
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none no-scrollbar -mx-1 px-1">
-              {displayProjects.map((proj, pIdx) => {
-                const isSelected = pIdx === safeMobileIdx;
-                return (
-                  <button
-                    key={proj.id || pIdx}
-                    type="button"
-                    onClick={() => {
-                      setActiveProjectMobileIdx(pIdx);
-                    }}
-                    className={`flex items-center gap-2 p-1.5 rounded-xl border shrink-0 text-start transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-amber-500/15 border-amber-500/50 text-amber-400 shadow-sm ring-1 ring-amber-500/30'
-                        : 'bg-white/5 border-white/10 text-slate-300 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-black/40 border border-white/10">
-                      <img
-                        src={resolveAsset(proj.image || './road-asphalt-paver.jpg')}
-                        alt={proj.title}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
-                        }}
-                      />
-                    </div>
-                    <div className="max-w-[125px] leading-tight">
-                      <div className="text-[10px] font-bold truncate">{proj.title}</div>
-                      <div className="text-[9px] text-slate-400 font-mono truncate">{proj.id}</div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
           </div>
         )}
       </div>

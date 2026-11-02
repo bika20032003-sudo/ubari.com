@@ -86,6 +86,8 @@ import {
   initialTickerNews,
   getSavedExecutiveProjects,
   saveExecutiveProjects,
+  addDeletedProjectId,
+  addDeletedPhotoId,
   getSavedNewsPosts,
   saveNewsPosts,
   saveFieldPhotos,
@@ -655,7 +657,9 @@ export default function ExecutiveDashboard({
 
   const handleDeleteExecutiveProject = () => {
     if (!executiveProjectToDelete) return;
-    const updated = localExecutiveProjects.filter(p => p.id !== executiveProjectToDelete.id);
+    const deletedId = executiveProjectToDelete.id;
+    addDeletedProjectId(deletedId);
+    const updated = localExecutiveProjects.filter(p => p.id !== deletedId);
     setLocalExecutiveProjects(updated);
     saveExecutiveProjects(updated);
     showToast(`تم حذف مشروع "${executiveProjectToDelete.title}" بنجاح`);
@@ -1038,7 +1042,9 @@ export default function ExecutiveDashboard({
 
   const handleConfirmDeletePhoto = () => {
     if (!photoToDelete) return;
-    const updated = localPhotos.filter(p => p.id !== photoToDelete.id);
+    const deletedId = photoToDelete.id;
+    addDeletedPhotoId(deletedId);
+    const updated = localPhotos.filter(p => p.id !== deletedId);
     setLocalPhotos(updated);
     saveFieldPhotos(updated);
     showToast(`تم حذف الصورة (${photoToDelete.title}) من المعرض`);
