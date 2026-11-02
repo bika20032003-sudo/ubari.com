@@ -1,3 +1,4 @@
+import NewsDetailModal from './NewsDetailModal';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Layers, 
@@ -544,101 +545,20 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         )}
       </div>
 
-      {/* ── Full Specifications Modal Dialog ── */}
-      {selectedModalProject && (
-        <div 
-          onClick={() => setSelectedModalProject(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-fadeIn cursor-pointer"
-        >
-          <div 
-            onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-2xl rounded-3xl p-4 xs:p-6 sm:p-8 space-y-4 sm:space-y-5 border shadow-2xl text-start relative animate-scaleUp max-h-[92vh] overflow-y-auto cursor-default ${theme === 'light' ? 'bg-white border-slate-300 text-slate-900' : 'bg-[#090e1a] border-amber-500/30 text-white'
-            }`}>
-
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedModalProject(null)}
-              className="absolute top-3.5 sm:top-5 end-3.5 sm:end-5 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-500/15 hover:bg-slate-500/25 flex items-center justify-center transition-colors cursor-pointer z-10"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-
-            {/* Photo preview in Modal */}
-            <div className="h-48 xs:h-56 sm:h-64 rounded-2xl overflow-hidden bg-black border border-slate-200 dark:border-white/10 relative">
-              <img 
-                src={resolveAsset(selectedModalProject.image)} 
-                alt={selectedModalProject.title} 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = resolveAsset('./road-asphalt-paver.jpg');
-                }}
-              />
-              <div className="absolute bottom-2.5 end-2.5 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md text-amber-400 text-[11px] sm:text-xs font-bold font-mono">
-                {selectedModalProject.region}
-              </div>
-            </div>
-
-            {/* Modal Header */}
-            <div className="space-y-1.5 pe-10">
-              <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-500">
-                <span>{selectedModalProject.id}</span>
-                <span>•</span>
-                <span>{selectedModalProject.region}</span>
-              </div>
-              <h3 className="text-lg sm:text-2xl font-black leading-snug">
-                {selectedModalProject.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">
-                {selectedModalProject.desc}
-              </p>
-            </div>
-
-            {/* Key Specs Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 space-y-0.5 sm:space-y-1">
-                <span className="text-[10px] text-slate-400 block">{lang === 'ar' ? 'الطول الإجمالي:' : 'Total Length:'}</span>
-                <strong className="text-amber-500 font-mono text-sm sm:text-base">{selectedModalProject.lengthKm} كم</strong>
-              </div>
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 space-y-0.5 sm:space-y-1">
-                <span className="text-[10px] text-slate-400 block">{lang === 'ar' ? 'نسبة الإنجاز:' : 'Progress:'}</span>
-                <strong className="text-emerald-400 font-mono text-sm sm:text-base">{selectedModalProject.progress}%</strong>
-              </div>
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 space-y-0.5 sm:space-y-1">
-                <span className="text-[10px] text-slate-400 block">{lang === 'ar' ? 'الجهة المشرفة:' : 'Authority:'}</span>
-                <strong className="text-amber-300 text-[11px] sm:text-xs">جهاز مشروعات المواصلات</strong>
-              </div>
-              <div className="p-2.5 sm:p-3 rounded-2xl bg-white/5 border border-white/10 space-y-0.5 sm:space-y-1">
-                <span className="text-[10px] text-slate-400 block">{lang === 'ar' ? 'الحالة:' : 'Status:'}</span>
-                <strong className="text-cyan-400 text-[11px] sm:text-xs">{selectedModalProject.statusLabel}</strong>
-              </div>
-            </div>
-
-            {/* Scope of Work Points */}
-            <div className="space-y-2 p-3.5 sm:p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20">
-              <h4 className="text-xs font-black text-amber-400 flex items-center gap-1.5">
-                <Wrench className="w-4 h-4" />
-                <span>{lang === 'ar' ? 'بنود ونطاق الأعمال الهندسية المعتمدة:' : 'Approved Scope of Engineering Work:'}</span>
-              </h4>
-              <ul className="text-xs space-y-1.5 text-slate-300 list-disc list-inside leading-relaxed">
-                <li>قشط الطبقات الأسفلتية المتهالكة وإعادة تدويرها وتسوية طبقة الأساس الحبيبي (Sub-base).</li>
-                <li>رصف طبقة أسفلتية سطحية معززة بمادة البوليمر بسماكة 7 سم وفق معايير AASHTO.</li>
-                <li>إنشاء عبّارات خرسانية هيدروليكية لتصريف مياه السيول وحماية أكتاف الطريق.</li>
-                <li>تركيب اللوحات المرورية والشواخص الفسفورية العاكسة وعواكس المسار الليلية.</li>
-              </ul>
-            </div>
-
-            {/* Modal Footer */}
-            <div className="pt-3 border-t border-slate-200 dark:border-white/10 text-xs">
-              <div className="text-slate-400 font-medium">
-                {lang === 'ar' ? 'المقاول المنفذ:' : 'Contractor:'} <strong className="text-white">{selectedModalProject.contractor}</strong>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
+      {/* ── News-Style Project Detail Modal (عرض المشروع بالكامل بنفس طريقة عرض الأخبار) ── */}
+      <NewsDetailModal 
+        post={selectedModalProject ? {
+          ...selectedModalProject,
+          location: selectedModalProject.region ? `${selectedModalProject.lengthKm ? selectedModalProject.lengthKm + ' كم • ' : ''}${selectedModalProject.region}` : selectedModalProject.location,
+          category: selectedModalProject.statusLabel || (lang === 'ar' ? 'المشروعات التنفيذية' : 'Executive Projects'),
+          author: selectedModalProject.contractor || (lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'),
+          timeAgo: selectedModalProject.progress ? `${selectedModalProject.progress}% نسبة الإنجاز الفعلي` : (lang === 'ar' ? 'مشروع تنفيذي' : 'Executive Project')
+        } : null}
+        isOpen={Boolean(selectedModalProject)}
+        onClose={() => setSelectedModalProject(null)}
+        theme={theme}
+        lang={lang}
+      />
 
       {/* ── Direct Upload Modal for Featured Projects ── */}
       {isUploadModalOpen && (

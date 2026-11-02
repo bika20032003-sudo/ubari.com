@@ -237,6 +237,18 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               <span>{lang === 'ar' ? 'المعايير الفنية والتقنية المرتبطة بالعمل:' : 'Technical Specifications:'}</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] sm:text-xs">
+              {post.lengthKm && (
+                <div className="flex items-center gap-2 p-2 rounded-xl bg-white/5 border border-white/5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0 shadow-sm shadow-amber-500/50" />
+                  <span className="text-slate-300">{lang === 'ar' ? `الطول الإجمالي: ${post.lengthKm} كم` : `Length: ${post.lengthKm} km`}</span>
+                </div>
+              )}
+              {post.progress !== undefined && (
+                <div className="flex items-center gap-2 p-2 rounded-xl bg-white/5 border border-white/5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 shadow-sm shadow-emerald-500/50" />
+                  <span className="text-slate-300">{lang === 'ar' ? `نسبة الإنجاز الفعلي: ${post.progress}%` : `Progress: ${post.progress}%`}</span>
+                </div>
+              )}
               <div className="flex items-center gap-2 p-2 rounded-xl bg-white/5 border border-white/5">
                 <span className="w-2 h-2 rounded-full bg-amber-500 shrink-0 shadow-sm shadow-amber-500/50" />
                 <span className="text-slate-300">{lang === 'ar' ? 'المواصفات: كود الطرق الدولي AASHTO' : 'Code: AASHTO Standards'}</span>
