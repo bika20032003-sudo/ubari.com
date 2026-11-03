@@ -14,8 +14,7 @@ export const ASSETS = {
  * or hosted in subfolders like GitHub Pages (/-/portal/ or /-/ubari-portal/).
  */
 export const resolveAsset = (path) => {
-  if (!path) return './road-paving-official.jpg';
-  if (typeof path !== 'string') return path;
+  if (!path || typeof path !== 'string' || !path.trim()) return '';
   if (path.startsWith('data:') || path.startsWith('blob:') || path.startsWith('http://') || path.startsWith('https://')) {
     return path;
   }

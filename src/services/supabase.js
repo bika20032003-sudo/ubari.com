@@ -243,7 +243,22 @@ export const saveCloudPhotos = async (photos) => {
  * جلب مركز الأخبار المصورة من سوبابيس
  */
 export const fetchCloudNews = async () => {
-  return await fetchCloudStoreItem('portal-news-posts');
+  const data = await fetchCloudStoreItem('portal-news-posts');
+  if (Array.isArray(data)) {
+    return data.map(p => {
+      let img = p.image || '';
+      if (
+        p.id === 'POST-01' ||
+        (p.title && (p.title.includes('تواصل الاعمال') || p.title.includes('تواصل الأعمال'))) ||
+        (p.desc && p.desc.includes('الائتلاف الشركات المصرية')) ||
+        (typeof img === 'string' && (img.includes('road-asphalt-paver') || img.includes('paver')))
+      ) {
+        img = '';
+      }
+      return { ...p, image: img };
+    });
+  }
+  return data;
 };
 
 /**

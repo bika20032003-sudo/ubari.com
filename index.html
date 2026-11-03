@@ -15,7 +15,7 @@
     <!-- Automatic Cache Purge for Immediate Updates -->
   <script>
     try {
-      var buildId = 'build_1793644000000';
+      var buildId = 'build_1793649500000';
       var lastBuild = localStorage.getItem('portal_build_id');
       if (lastBuild !== buildId && 'caches' in window) {
         caches.keys().then(function(names) {
@@ -23,6 +23,36 @@
         });
       }
       localStorage.setItem('portal_build_id', buildId);
+    } catch(e) {}
+  </script>
+  <!-- Immediate Self-Healing Purge for Stale Client News Post Image -->
+  <script>
+    try {
+      var nKey = 'portal-news-posts';
+      var nRaw = localStorage.getItem(nKey);
+      if (nRaw) {
+        var nParsed = JSON.parse(nRaw);
+        if (Array.isArray(nParsed)) {
+          var nChanged = false;
+          var nCleaned = nParsed.map(function(item) {
+            if (!item) return item;
+            var img = item.image || '';
+            if (
+              item.id === 'POST-01' ||
+              (item.title && (item.title.indexOf('تواصل الاعمال') !== -1 || item.title.indexOf('تواصل الأعمال') !== -1)) ||
+              (item.desc && item.desc.indexOf('الائتلاف الشركات المصرية') !== -1) ||
+              (typeof img === 'string' && (img.indexOf('road-asphalt-paver') !== -1 || img.indexOf('paver') !== -1))
+            ) {
+              item.image = '';
+              nChanged = true;
+            }
+            return item;
+          });
+          if (nChanged) {
+            localStorage.setItem(nKey, JSON.stringify(nCleaned));
+          }
+        }
+      }
     } catch(e) {}
   </script>
   <!-- Pre-render Theme Initialization (Night Mode Default) -->

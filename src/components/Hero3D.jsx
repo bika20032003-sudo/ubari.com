@@ -303,6 +303,22 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
           >
             
             {/* 1. MOBILE ONLY: News Post Card (تبديل البطاقة بالهاتف إلى نظام بوست الأخبار الميدانية) */}
+            {(() => {
+              const hasMobileNewsImage = Boolean(
+                currentMobileNews &&
+                currentMobileNews.image &&
+                currentMobileNews.image !== 'none' &&
+                currentMobileNews.image !== 'null' &&
+                String(currentMobileNews.image).trim().length > 0 &&
+                currentMobileNews.id !== 'POST-01' &&
+                !String(currentMobileNews.title || '').includes('تواصل الاعمال') &&
+                !String(currentMobileNews.title || '').includes('تواصل الأعمال') &&
+                !String(currentMobileNews.desc || '').includes('الائتلاف الشركات المصرية') &&
+                !String(currentMobileNews.image || '').includes('road-asphalt-paver') &&
+                !String(currentMobileNews.image || '').includes('paver')
+              );
+
+              return (
             <div 
               className="w-full max-w-md block lg:hidden"
               onTouchStart={onTouchStartHero}
@@ -349,20 +365,39 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
 
                 {/* Mobile Post Photo with Controls */}
                 <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
-                  <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
-                    isNewsFading ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
-                  }`}>
-                    <img 
-                      src={resolveAsset(currentMobileNews.image || './road-paving-official.jpg')} 
-                      alt={currentMobileNews.title || 'أخبار طريق أوباري غات'} 
-                      className="w-full h-full object-cover transition-transform duration-500"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                  </div>
+                  {hasMobileNewsImage ? (
+                    <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
+                      isNewsFading ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
+                    }`}>
+                      <img 
+                        src={resolveAsset(currentMobileNews.image)} 
+                        alt={currentMobileNews.title || 'أخبار طريق أوباري غات'} 
+                        className="w-full h-full object-cover transition-transform duration-500"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                    </div>
+                  ) : (
+                    <div className={`w-full h-full p-4 flex flex-col justify-between relative bg-gradient-to-br from-[#0c1220] via-[#090d18] to-[#05070d] transition-all duration-300 ease-in-out ${
+                      isNewsFading ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'
+                    }`}>
+                      <div className="flex items-center justify-between">
+                        <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-black">
+                          {lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'}
+                        </span>
+                        <span className="text-[10px] font-mono text-slate-400">{currentMobileNews.id}</span>
+                      </div>
+                      <p className="text-xs text-slate-200 line-clamp-3 leading-relaxed border-s-2 border-amber-500 ps-2 my-2">
+                        {currentMobileNews.desc}
+                      </p>
+                      <span className="text-[10px] text-amber-400 font-bold">
+                        {lang === 'ar' ? 'انقر لعرض كامل التفاصيل ↗' : 'View Full Details ↗'}
+                      </span>
+                    </div>
+                  )}
 
 
 
@@ -439,6 +474,8 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
 
               </div>
             </div>
+              );
+            })()}
 
             {/* 2. DESKTOP ONLY: Preserved 100% of Desktop Technical Showcase Card */}
             <div 

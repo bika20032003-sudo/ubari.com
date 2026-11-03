@@ -401,11 +401,11 @@ export const initialNewsPosts = [
     id: 'POST-01',
     title: 'تواصل الاعمال مع ارتفاع نسبة الانجاز',
     titleEn: 'Ongoing Works & Accelerating Progress on Ubari - Ghat Corridor',
-    desc: 'مشروع طريق أوباري _ غات ضمن أهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق، يدخل مراحله المتقدمة بإشراف جهاز تنفيذ مشروعات المواصلات مع استمرار الأعمال الميدانية المكثفة على طول المسار لتأمين الشريان البري الحيوي.',
+    desc: 'مشروع طريق اوباري _ غات.\nضمن اهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق.\nيدخل في المراحل الاخيرة من المشروع الذي تنفذه - الائتلاف الشركات المصرية ).\nولا زالت الاعمال مستمرة على طول الطريق رغم نقص الحاد في الوقود الديزل...',
     descEn: 'Ubari - Ghat strategic corridor enters advanced execution phases under Transportation Projects Execution Authority supervision.',
-    category: 'رصف الأسفلت',
-    categoryEn: 'Asphalt Paving',
-    image: './road-paving-official.jpg',
+    category: 'تقرير ميداني معتمد',
+    categoryEn: 'Official Field Report',
+    image: '',
     timeAgo: 'منذ ساعتين',
     timeAgoEn: '2 hours ago',
     location: 'مسار طريق أوباري – غات',
@@ -501,16 +501,38 @@ export const initialNewsPosts = [
   }
 ];
 
+export const sanitizeNewsItem = (p) => {
+  if (!p) return p;
+  let img = p.image || '';
+  if (
+    p.id === 'POST-01' || 
+    (p.title && (p.title.includes('تواصل الاعمال') || p.title.includes('تواصل الأعمال'))) ||
+    (p.desc && p.desc.includes('الائتلاف الشركات المصرية')) ||
+    (typeof img === 'string' && (img.includes('road-asphalt-paver') || img.includes('paver')))
+  ) {
+    img = '';
+  } else if (typeof img === 'string' && img.startsWith('/') && !img.startsWith('//')) {
+    img = '.' + img;
+  }
+  return {
+    ...p,
+    image: img
+  };
+};
+
 export const getSavedNewsPosts = () => {
   try {
     const saved = localStorage.getItem('portal-news-posts');
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed.map(p => ({
-          ...p,
-          image: (p.image && p.image.startsWith('/') && !p.image.startsWith('//')) ? '.' + p.image : p.image
-        }));
+        const cleaned = parsed.map(sanitizeNewsItem);
+        if (JSON.stringify(cleaned) !== saved) {
+          try {
+            localStorage.setItem('portal-news-posts', JSON.stringify(cleaned));
+          } catch (_) {}
+        }
+        return cleaned;
       }
     }
   } catch (e) {}

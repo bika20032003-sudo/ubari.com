@@ -730,7 +730,7 @@ export default function ExecutiveDashboard({
         descEn: newsPostForm.desc,
         category: newsPostForm.category,
         categoryEn: newsPostForm.category,
-        image: newsPostForm.image ? newsPostForm.image.trim() : '/road-paving-official.jpg',
+        image: newsPostForm.image ? newsPostForm.image.trim() : '',
         timeAgo: 'الآن',
         timeAgoEn: 'Just now',
         location: newsPostForm.location || 'مسار طريق أوباري – غات',
@@ -2787,9 +2787,9 @@ export default function ExecutiveDashboard({
                       onClick={() => {
                         setNewsPostForm({
                           title: '',
-                          category: 'رصف الأسفلت',
+                          category: 'تقرير ميداني معتمد',
                           desc: '',
-                          image: '/road-paving-official.jpg',
+                          image: '',
                           author: 'المكتب الإعلامي - جهاز مشروعات المواصلات',
                           location: 'مسار طريق أوباري – غات'
                         });
@@ -2853,7 +2853,7 @@ export default function ExecutiveDashboard({
                                   title: post.title || '',
                                   category: post.category || 'رصف الأسفلت',
                                   desc: post.desc || '',
-                                  image: post.image || '/road-paving-official.jpg',
+                                  image: post.image || '',
                                   author: post.author || 'المكتب الإعلامي - جهاز مشروعات المواصلات',
                                   location: post.location || 'مسار طريق أوباري – غات'
                                 });
@@ -5746,8 +5746,16 @@ export default function ExecutiveDashboard({
 
               {/* Quick Image Presets Selector */}
               <div>
-                <span className="text-[11px] font-bold text-slate-600 block mb-1.5">اختر صورة توثيقية معتمدة للخبر:</span>
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                <span className="text-[11px] font-bold text-slate-600 block mb-1.5">اختر صورة توثيقية معتمدة للخبر (أو اتركه بدون صورة كبيان رسمي):</span>
+                <div className="grid grid-cols-3 sm:grid-cols-7 gap-2">
+                  <div
+                    onClick={() => setNewsPostForm({ ...newsPostForm, image: '' })}
+                    className={`relative rounded-xl border-2 border-dashed cursor-pointer h-16 flex flex-col items-center justify-center p-1 transition-all ${
+                      !newsPostForm.image ? 'border-amber-500 bg-amber-50 text-amber-800 ring-2 ring-amber-500/30' : 'border-slate-300 hover:border-slate-400 text-slate-600 bg-slate-50'
+                    }`}
+                  >
+                    <span className="text-[10px] font-black leading-tight text-center">بدون صورة (تقرير نصي)</span>
+                  </div>
                   {PRESET_PROJECT_PHOTOS.map((p) => {
                     const isSelected = newsPostForm.image === p.url;
                     return (

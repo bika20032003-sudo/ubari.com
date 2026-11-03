@@ -106,6 +106,20 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
   // Specs extraction
   const projectSpecs = post.specs || {};
 
+  // Strict check to ensure text reports never render forced images
+  const hasValidImage = Boolean(
+    post.image &&
+    post.image !== 'none' &&
+    post.image !== 'null' &&
+    String(post.image).trim().length > 0 &&
+    post.id !== 'POST-01' &&
+    !String(post.title || '').includes('تواصل الاعمال') &&
+    !String(post.title || '').includes('تواصل الأعمال') &&
+    !String(post.desc || '').includes('الائتلاف الشركات المصرية') &&
+    !String(post.image || '').includes('road-asphalt-paver') &&
+    !String(post.image || '').includes('paver')
+  );
+
   const modalJSX = (
     <div 
       className="fixed inset-0 z-[999999] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/95 backdrop-blur-2xl animate-fadeIn select-none"
@@ -184,7 +198,7 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
         <div className="overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-5 text-start relative z-10 flex-1 min-h-0 overscroll-contain">
           
           {/* Photo Box in Balanced Aspect Ratio - Only rendered if an actual image is attached */}
-          {Boolean(post.image && post.image !== 'none' && post.image !== 'null' && String(post.image).trim().length > 0) ? (
+          {hasValidImage ? (
             <div className="relative rounded-2xl overflow-hidden w-full h-48 xs:h-56 sm:h-64 bg-slate-950 border border-slate-200 dark:border-white/15 shadow-xl shrink-0 group">
               <img 
                 src={resolveAsset(post.image)} 
@@ -222,21 +236,33 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               </div>
             </div>
           ) : (
-            /* Non-Photo News Header Bar */
-            <div className="flex items-center justify-between flex-wrap gap-2 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/25">
-              <span className="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-xs">
-                {post.statusLabel || (isProject ? (post.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ') : (lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'))}
-              </span>
-              <div className="flex items-center gap-2 text-xs text-slate-300">
-                <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
-                </span>
-                {(post.timeAgo || post.startDate) && (
-                  <span className="text-slate-400 font-mono text-[11px]">
-                    • {post.timeAgo || post.startDate}
+            /* Non-Photo News Header Bar: Official Press Release Header */
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/25 space-y-3">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-xs shadow-sm">
+                    {post.statusLabel || (isProject ? (post.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ') : (lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'))}
                   </span>
-                )}
+                  <span className="px-2.5 py-0.5 rounded-lg bg-amber-500/15 text-amber-400 font-mono text-[11px] font-bold border border-amber-500/30">
+                    {post.id || 'NEWS'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-slate-400 font-medium">
+                  <span className="flex items-center gap-1.5 text-slate-300">
+                    <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
+                  </span>
+                  {(post.timeAgo || post.startDate) && (
+                    <span className="flex items-center gap-1 font-mono text-[11px] text-amber-400/90">
+                      <Calendar className="w-3 h-3 text-amber-400/70" />
+                      <span>{post.timeAgo || post.startDate}</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="pt-2 border-t border-amber-500/15 flex items-center justify-between text-[11px] text-slate-400">
+                <span className="text-amber-500 font-semibold">{post.author || (lang === 'ar' ? 'المكتب الإعلامي - جهاز مشروعات المواصلات' : 'Media Office')}</span>
+                <span className="text-slate-500 font-mono">بيان رسمي موثق</span>
               </div>
             </div>
           )}
