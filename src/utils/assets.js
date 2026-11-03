@@ -25,7 +25,7 @@ export const resolveAsset = (path) => {
     const pathname = window.location.pathname || '';
     const last = pathname.split('/').pop();
     // If the last segment is not a file (no dot), ensure base ends with trailing slash
-    const baseDir = (last && last.includes('.')) 
+    const baseDir = (last && last.includes('.'))
       ? pathname.substring(0, pathname.lastIndexOf('/') + 1)
       : (pathname.endsWith('/') ? pathname : pathname + '/');
 

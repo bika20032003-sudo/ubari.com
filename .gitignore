@@ -4,7 +4,7 @@ node_modules/
 .pnp.js
 
 # Production build
-dist/
+# dist/ is included for cPanel automated git deployment
 build/
 
 # Environment files & secrets

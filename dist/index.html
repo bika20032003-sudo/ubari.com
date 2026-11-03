@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="icon" type="image/jpeg" href="./logo-agency.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>مشروع طريق أوباري - غات | جهاز تنفيذ مشروعات المواصلات</title>
+    <!-- Automatic Cache Purge for Immediate Updates -->
+  <script>
+    try {
+      var buildId = 'build_1793649500000';
+      var lastBuild = localStorage.getItem('portal_build_id');
+      if (lastBuild !== buildId && 'caches' in window) {
+        caches.keys().then(function(names) {
+          names.forEach(function(name) { caches.delete(name); });
+        });
+      }
+      localStorage.setItem('portal_build_id', buildId);
+    } catch(e) {}
+  </script>
+  <!-- Immediate Self-Healing Purge for Stale Client News Post Image -->
+  <script>
+    try {
+      var nKey = 'portal-news-posts';
+      var nRaw = localStorage.getItem(nKey);
+      if (nRaw) {
+        var nParsed = JSON.parse(nRaw);
+        if (Array.isArray(nParsed)) {
+          var nChanged = false;
+          var nCleaned = nParsed.map(function(item) {
+            if (!item) return item;
+            var img = item.image || '';
+            if (
+              item.id === 'POST-01' ||
+              (item.title && (item.title.indexOf('تواصل الاعمال') !== -1 || item.title.indexOf('تواصل الأعمال') !== -1)) ||
+              (item.desc && item.desc.indexOf('الائتلاف الشركات المصرية') !== -1) ||
+              (typeof img === 'string' && (img.indexOf('road-asphalt-paver') !== -1 || img.indexOf('paver') !== -1))
+            ) {
+              item.image = '';
+              nChanged = true;
+            }
+            return item;
+          });
+          if (nChanged) {
+            localStorage.setItem(nKey, JSON.stringify(nCleaned));
+          }
+        }
+      }
+    } catch(e) {}
+  </script>
+  <!-- Pre-render Theme Initialization (Night Mode Default) -->
+  <script>
+    try {
+      var saved = localStorage.getItem('portal_theme_v2');
+      var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch(e) {}
+  </script>
+  <!-- Google Fonts Optimized (Tajawal, Almarai & Noto Sans Arabic with swap) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Almarai:wght@400;700;800&family=Noto+Sans+Arabic:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- GitHub Pages & Mobile WebKit Universal Asset Rescue -->
+  <script>
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        var img = e.target;
+        if (img.dataset.rescued) return;
+        img.dataset.rescued = '1';
+        var rawSrc = img.getAttribute('src') || img.src || '';
+        if (rawSrc.startsWith('data:') || rawSrc.startsWith('blob:')) return;
+        var cleanUrl = rawSrc.split('?')[0].split('#')[0];
+        var filename = cleanUrl.split('/').pop();
+        if (filename && filename.indexOf('.') !== -1) {
+          var p = window.location.pathname || '';
+          var last = p.split('/').pop();
+          var base = (last && last.indexOf('.') !== -1) ? p.substring(0, p.lastIndexOf('/') + 1) : (p.endsWith('/') ? p : p + '/');
+          img.src = base + filename;
+        }
+      }
+    }, true);
+  </script>
+  <script type="module" crossorigin src="./assets/index-BUbgARcO.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/vendor-icons-BXXgBNzy.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-charts-CUIPfDf-.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-DP2j6yn6.css">
+</head>
+
+<body class="bg-[#06080E] text-slate-100 overflow-x-hidden selection:bg-amber-500 selection:text-black">
+  <div id="root"></div>
+</body>
+
+</html>
