@@ -288,7 +288,7 @@ export const initialFinancialReports = [
     title: 'تقرير الموقف المالي والمستخلصات الربع سنوي – Q2 2026',
     category: 'التقارير المالية',
     date: '2026-07-30',
-    allocatedLyd: '145,000,000 د.ل',
+    allocatedLyd: 'معتمد وموثق',
     disbursedLyd: '99,325,000 د.ل',
     rate: '68.5%',
     author: 'الإدارة المالية – جهاز تنفيذ مشروعات المواصلات',
