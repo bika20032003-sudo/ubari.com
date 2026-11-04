@@ -73,7 +73,7 @@ const initialSectors = [
     solarPolesInstalled: 290,
     activeWorkers: 85,
     notes: 'تركيب الشواخص الإرشادية واللوحات المرورية واستكمال رصف المسارات المزدوجة بمدخل غات.',
-    image: './road-solar-lighting.jpg'
+    image: './road-grader-earthwork.jpg'
   }
 ];
 
@@ -201,21 +201,11 @@ export const nationalProjects = [
     statusLabel: 'جاري التنفيذ',
     statusLabelEn: 'In Progress',
     statusColor: 'emerald',
-    budget: '145,000,000 د.ل',
     contractor: 'ائتلاف شركات الطرق الوطنية وفزان',
-    startDate: 'يناير 2025',
-    targetDate: 'ديسمبر 2026',
     image: './road-aerial-highway.jpg',
     coords: { x: 22, y: 72 },
     realCoords: '26.5925,12.7803',
-    desc: 'إعادة إعمار وتوسعة الشريان البري الاستراتيجي بطول 360 كم مقسم إلى 4 قطاعات رئيسية مع تطبيق أحدث معايير الرصف ومقاومة درجات الحرارة.',
-    specs: {
-      thickness: '10-12 سم',
-      paved: '246.6 كم',
-      solarPoles: 760,
-      fleet: 142,
-      qualityScore: '98.4%'
-    }
+    desc: 'إعادة إعمار وتوسعة الشريان البري الاستراتيجي بطول 360 كم مقسم إلى 4 قطاعات رئيسية مع تطبيق أحدث معايير الرصف ومقاومة درجات الحرارة.'
   },
   {
     id: 'PRJ-UBG-SOL-1100',
@@ -229,21 +219,11 @@ export const nationalProjects = [
     statusLabel: 'متقدم جداً',
     statusLabelEn: 'Advanced Stage',
     statusColor: 'emerald',
-    budget: '24,500,000 د.ل',
     contractor: 'الشركة الوطنية للسلامة المرورية والمقاولات',
-    startDate: 'أبريل 2025',
-    targetDate: 'أكتوبر 2026',
-    image: './road-solar-lighting.jpg',
+    image: './road-grader-earthwork.jpg',
     coords: { x: 24, y: 74 },
     realCoords: '26.1200,12.1100',
-    desc: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية وتخطيط المسارات والعواكس الأرضية لتأمين أعلى معايير السلامة عند المنحنيات ومداخل الواحات.',
-    specs: {
-      thickness: 'شواخص فسفورية عاكسة',
-      paved: '760 شاخصة مركبة',
-      solarPoles: 1100,
-      fleet: 22,
-      qualityScore: '99.5%'
-    }
+    desc: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية وتخطيط المسارات والعواكس الأرضية لتأمين أعلى معايير السلامة عند المنحنيات ومداخل الواحات.'
   },
   {
     id: 'PRJ-UBG-CUL-028',
@@ -257,21 +237,11 @@ export const nationalProjects = [
     statusLabel: 'جاري التنفيذ',
     statusLabelEn: 'In Progress',
     statusColor: 'amber',
-    budget: '32,000,000 د.ل',
     contractor: 'شركة الهضبة للإنشاءات المائية والجسور',
-    startDate: 'فبراير 2025',
-    targetDate: 'نوفمبر 2026',
     image: './road-rollers-compaction.jpg',
     coords: { x: 20, y: 76 },
     realCoords: '25.6800,11.5500',
-    desc: 'إنشاء 28 عبارة خرسانية صندوقية وأنفاق تصريف هيدروليكية لحماية جسم الطريق من الانجراف والسيول الموسمية في حوض العوينات.',
-    specs: {
-      thickness: 'خرسانة مسلحة C35',
-      paved: '21 عبارة منجزة',
-      solarPoles: 140,
-      fleet: 35,
-      qualityScore: '97.8%'
-    }
+    desc: 'إنشاء 28 عبارة خرسانية صندوقية وأنفاق تصريف هيدروليكية لحماية جسم الطريق من الانجراف والسيول الموسمية في حوض العوينات.'
   }
 ];
 
@@ -504,7 +474,7 @@ export const initialNewsPosts = [
     descEn: 'Installation of smart solar-powered LED lighting poles ensuring night driving safety along desert highway curves and oasis entrances.',
     category: 'الإنارة والسلامة',
     categoryEn: 'Lighting & Safety',
-    image: './road-solar-lighting.jpg',
+    image: './road-grader-earthwork.jpg',
     timeAgo: 'منذ يومين',
     timeAgoEn: '2 days ago',
     location: 'المدخل الجنوبي للمسار',

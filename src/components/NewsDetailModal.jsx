@@ -218,14 +218,10 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
                   <span className="truncate">{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
                 </span>
 
-                {(post.startDate || post.targetDate || post.timeAgo) && (
+                {(!isProject && post.timeAgo) && (
                   <span className="bg-black/85 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10.5px] sm:text-[11.5px] font-mono text-slate-200 border border-white/15 shrink-0 whitespace-nowrap shadow-md flex items-center gap-1">
                     <Calendar className="w-3 h-3 text-amber-400" />
-                    <span>
-                      {isProject 
-                        ? (post.startDate ? `${post.startDate} ${post.targetDate ? '— ' + post.targetDate : ''}` : '2026')
-                        : (post.timeAgo || 'محدث')}
-                    </span>
+                    <span>{post.timeAgo}</span>
                   </span>
                 )}
               </div>
@@ -247,10 +243,10 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
                     <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>{post.location || post.region || (lang === 'ar' ? 'مسار أوباري - غات' : 'Ubari - Ghat Route')}</span>
                   </span>
-                  {(post.timeAgo || post.startDate) && (
+                  {(!isProject && post.timeAgo) && (
                     <span className="flex items-center gap-1 font-mono text-[11px] text-amber-400/90">
                       <Calendar className="w-3 h-3 text-amber-400/70" />
-                      <span>{post.timeAgo || post.startDate}</span>
+                      <span>{post.timeAgo}</span>
                     </span>
                   )}
                 </div>
@@ -298,9 +294,9 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             </div>
           )}
 
-          {/* Project Details Grid (3 Key Metric Cards) */}
+          {/* Project Details Grid (Contractor & Sector Distance Only - Budget & Timeline Removed) */}
           {isProject && (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-2 gap-2.5">
               <div className={`p-3 rounded-2xl border space-y-1 ${
                 theme === 'light' ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'
               }`}>
@@ -312,14 +308,6 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               }`}>
                 <span className="text-[10px] text-slate-400 block font-medium">{lang === 'ar' ? 'الطول والقطاع:' : 'Distance:'}</span>
                 <strong className="text-xs text-emerald-400 block truncate font-bold">{post.lengthKm ? `${post.lengthKm} كم` : (post.region || '360 كم')}</strong>
-              </div>
-              <div className={`p-3 rounded-2xl border space-y-1 ${
-                theme === 'light' ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'
-              }`}>
-                <span className="text-[10px] text-slate-400 block font-medium">{lang === 'ar' ? 'الجدول الزمني:' : 'Timeline:'}</span>
-                <strong className="text-xs text-cyan-400 block truncate font-bold">
-                  {post.startDate ? `${post.startDate} — ${post.targetDate || '2026'}` : (post.statusLabel || 'معتمد')}
-                </strong>
               </div>
             </div>
           )}

@@ -2,7 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home2/ubarigha/public_html
-    - /bin/cp -rf dist/* $DEPLOYPATH/
-    - /bin/cp -f dist/.htaccess $DEPLOYPATH/
-    - /bin/cp -f dist/.nojekyll $DEPLOYPATH/
-    - /bin/cp -f dist/_redirects $DEPLOYPATH/
+    - /bin/cp -rf dist/* $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/cp -f dist/.htaccess $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/cp -f dist/.nojekyll $DEPLOYPATH/ 2>/dev/null || true
+    - /bin/cp -f dist/_redirects $DEPLOYPATH/ 2>/dev/null || true

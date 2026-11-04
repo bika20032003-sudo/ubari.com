@@ -105,8 +105,8 @@ export default function HeroMediaControlStudio({ showToast = () => {}, setActive
       id: 'solar-lighting',
       title: 'إنارة الطاقة الشمسية الذكية للمسار',
       badge: 'سلامة مرورية',
-      image: './road-solar-lighting.jpg',
-      mobileImage: './road-solar-lighting.jpg',
+      image: './road-grader-earthwork.jpg',
+      mobileImage: './road-grader-earthwork.jpg',
       desc: 'أعمدة الإنارة الموفرة بالطاقة الشمسية الممتدة على طول التقاطعات والمحطات'
     }
   ];

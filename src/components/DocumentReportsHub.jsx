@@ -28,7 +28,7 @@ const HUB_PRESET_PHOTOS = [
   { title: 'آليات رصف الأسفلت الساخن ومتابعة درجات الحرارة', category: 'رصف الأسفلت', src: '/road-paving-official.jpg' },
   { title: 'دمك الأسفلت بالمداحل الأسطوانية والمطاطية', category: 'الدمك وضبط المناسيب', src: '/road-rollers-compaction.jpg' },
   { title: 'تسوية الأساس الحجري بالكاشطات الموتورية', category: 'كشط وتأسيس', src: '/road-grader-earthwork.jpg' },
-  { title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق', category: 'السلامة المرورية والإرشاد', src: '/road-solar-lighting.jpg' },
+  { title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق', category: 'السلامة المرورية والإرشاد', src: '/road-grader-earthwork.jpg' },
   { title: 'فحص عينات الكور الإسفلتي ومطابقة الجودة المعملية', category: 'ضبط الجودة المعملي', src: '/road-qa-testing-core.jpg' },
   { title: 'مشهد جوي بانورامي لمسار الطريق الصحراوي (360 كم)', category: 'بانوراما جوية', src: '/road-aerial-desert-highway.jpg' }
 ];

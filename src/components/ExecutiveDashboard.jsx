@@ -199,7 +199,7 @@ const PRESET_PROJECT_PHOTOS = [
   {
     title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق',
     category: 'السلامة المرورية والإرشاد',
-    url: '/road-solar-lighting.jpg',
+    url: '/road-grader-earthwork.jpg',
     desc: 'تثبيت اللوحات والشواخص الإرشادية وعواكس السرعة وتخطيط مسارات الطريق بالدهان الحراري العاكس.'
   },
   {
@@ -450,7 +450,7 @@ export default function ExecutiveDashboard({
       { id: 'P-02', title: 'تسوية وتمهيد الأساس الحجري بالكاشطات', sector: 'القطاع 10', category: 'الأعمال الترابية', date: '2026-08-20', img: '/road-grader-earthwork.jpg', photographer: 'م. طارق المحجوب' },
       { id: 'P-03', title: 'بناء عبّارات السيول الصندوقية المزدوجة', sector: 'القطاع 03', category: 'العبارات والجسور', date: '2026-08-20', img: '/road-qa-testing-core.jpg', photographer: 'م. سالم التواتي' },
       { id: 'P-04', title: 'قطار الرصف الآلي المزدوج في قطاع الفيوات', sector: 'القطاع 01', category: 'رصف الأسفلت', date: '2026-08-20', img: '/road-paving-official.jpg', photographer: 'فريق الإعلام الهندسي' },
-      { id: 'P-05', title: 'تركيب الشواخص المرورية وتخطيط المسار', sector: 'القطاع 04', category: 'السلامة المرورية', date: '2026-08-19', img: '/road-solar-lighting.jpg', photographer: 'م. منصور المهدي' },
+      { id: 'P-05', title: 'تركيب الشواخص المرورية وتخطيط المسار', sector: 'القطاع 04', category: 'السلامة المرورية', date: '2026-08-19', img: '/road-grader-earthwork.jpg', photographer: 'م. منصور المهدي' },
       { id: 'P-06', title: 'مسار الطريق الصحراوي الممتد من أوباري لغات', sector: 'القطاع 02', category: 'بانوراما جوية', date: '2026-08-18', img: '/road-aerial-desert-highway.jpg', photographer: 'طائرة التصوير الميداني' }
     ];
   });
@@ -5425,7 +5425,7 @@ export default function ExecutiveDashboard({
                       { src: '/road-aerial-highway.jpg', label: 'بانوراما الطريق' },
                       { src: '/road-rollers-compaction.jpg', label: 'مداحل الدمك' },
                       { src: '/road-grader-earthwork.jpg', label: 'كاشطات الأساس' },
-                      { src: '/road-solar-lighting.jpg', label: 'الشواخص والسلامة' }
+                      { src: '/road-grader-earthwork.jpg', label: 'الشواخص والسلامة' }
                     ].map((opt, i) => (
                       <button
                         key={i}
