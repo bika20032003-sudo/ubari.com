@@ -275,7 +275,7 @@ export default function InteractiveLibyaMap({ theme, lang = 'ar' }) {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <span className="absolute bottom-2 right-2 text-xs font-mono font-black text-amber-300">
-                    {selectedProject.lengthKm} {lang === 'ar' ? 'كم' : 'km'} • {selectedProject.budget}
+                    {selectedProject.lengthKm} {lang === 'ar' ? 'كم' : 'km'}
                   </span>
                 </div>
 

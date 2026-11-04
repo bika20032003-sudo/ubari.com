@@ -19,7 +19,7 @@ export const resolveAsset = (path) => {
     return path;
   }
   const clean = path.replace(/^(\.\/|\/)/, '');
-  const versionParam = '?v=20261104_bg_restored';
+  const versionParam = '?v=20261104_nobudget';
 
   if (typeof window !== 'undefined' && window.location) {
     const pathname = window.location.pathname || '';

@@ -303,9 +303,9 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             </div>
           )}
 
-          {/* Project Details Grid (4 Key Metric Cards) */}
+          {/* Project Details Grid (3 Key Metric Cards) */}
           {isProject && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <div className={`p-3 rounded-2xl border space-y-1 ${
                 theme === 'light' ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'
               }`}>
@@ -317,12 +317,6 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
               }`}>
                 <span className="text-[10px] text-slate-400 block font-medium">{lang === 'ar' ? 'الطول والقطاع:' : 'Distance:'}</span>
                 <strong className="text-xs text-emerald-400 block truncate font-bold">{post.lengthKm ? `${post.lengthKm} كم` : (post.region || '360 كم')}</strong>
-              </div>
-              <div className={`p-3 rounded-2xl border space-y-1 ${
-                theme === 'light' ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'
-              }`}>
-                <span className="text-[10px] text-slate-400 block font-medium">{lang === 'ar' ? 'الميزانية / المخصص:' : 'Budget:'}</span>
-                <strong className="text-xs text-slate-200 block truncate font-bold">{post.budget || 'معتمد وموثق'}</strong>
               </div>
               <div className={`p-3 rounded-2xl border space-y-1 ${
                 theme === 'light' ? 'bg-white border-slate-200' : 'bg-white/5 border-white/10'
