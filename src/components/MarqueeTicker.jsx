@@ -4,7 +4,7 @@ import { getSavedSelectedWorkItems } from '../services/api';
 
 const cleanTickerText = (val) => typeof val === 'string' ? val.replace(/[✦★✨⭐*•]/g, '').trim() : (val || '');
 
-export default function MarqueeTicker({ 
+function MarqueeTicker({ 
   items = [], 
   speed = 'normal', 
   theme = 'dark', 
@@ -235,3 +235,25 @@ export default function MarqueeTicker({
     </div>
   );
 }
+function areTickerPropsEqual(prevProps, nextProps) {
+  if (prevProps.theme !== nextProps.theme) return false;
+  if (prevProps.lang !== nextProps.lang) return false;
+  if (prevProps.variant !== nextProps.variant) return false;
+  if (prevProps.speed !== nextProps.speed) return false;
+  if (prevProps.direction !== nextProps.direction) return false;
+  const pItems = prevProps.items || [];
+  const nItems = nextProps.items || [];
+  if (pItems.length !== nItems.length) return false;
+  for (let i = 0; i < pItems.length; i++) {
+    if (pItems[i]?.id !== nItems[i]?.id ||
+        pItems[i]?.text !== nItems[i]?.text ||
+        pItems[i]?.textEn !== nItems[i]?.textEn ||
+        pItems[i]?.tag !== nItems[i]?.tag ||
+        pItems[i]?.active !== nItems[i]?.active) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export default React.memo(MarqueeTicker, areTickerPropsEqual);

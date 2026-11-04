@@ -590,7 +590,6 @@ export default function ExecutiveDashboard({
     { id: 'hero-media-control', label: 'التحكم في صور وخلفيات البوابة', icon: Sparkles, badge: 'دقة 4K ✨' },
     { id: 'map-sectors-control', label: 'محطات الخريطة والقطاعات', icon: MapPin, badge: 'تحكم مباشر 🗺️' },
     { id: 'news-center', label: 'مركز الأخبار والمستجدات', icon: Newspaper, badge: 'مركز الأخبار' },
-    { id: 'media', label: 'الصور والفيديو', icon: ImageIcon },
     { id: 'supabase-cloud', label: 'مزامنة سوبابيس السحابية', icon: Database, badge: 'سحابي ⚡' }
   ];
 
@@ -1456,17 +1455,17 @@ export default function ExecutiveDashboard({
             <div className="text-start space-y-0.5">
               <div className="flex items-center gap-2 text-slate-800">
                 <h2 className="text-xl sm:text-2xl font-black">
-                  {sidebarNavItems.find(i => i.id === activeSidebarItem)?.label || 'الصور والفيديو'}
+                  {sidebarNavItems.find(i => i.id === activeSidebarItem)?.label || 'المشروعات التنفيذية للمسار'}
                 </h2>
                 <div className="w-7 h-7 rounded-lg bg-[#0A1128] text-white flex items-center justify-center">
-                  {activeSidebarItem === 'news' ? <Newspaper className="w-4 h-4 text-amber-400" /> : <ImageIcon className="w-4 h-4 text-amber-400" />}
+                  <Building2 className="w-4 h-4 text-amber-400" />
                 </div>
               </div>
               <div className="text-xs text-slate-500 font-medium flex items-center gap-1">
                 <span>لوحة التحكم</span>
                 <ChevronLeft className="w-3 h-3 text-slate-400" />
                 <span className="text-slate-800 font-bold">
-                  {sidebarNavItems.find(i => i.id === activeSidebarItem)?.label || 'الصور والفيديو'}
+                  {sidebarNavItems.find(i => i.id === activeSidebarItem)?.label || 'المشروعات التنفيذية للمسار'}
                 </span>
               </div>
             </div>
@@ -1605,15 +1604,7 @@ export default function ExecutiveDashboard({
                   <span>{newsCenterSubTab === 'posts' ? 'إضافة خبر مصور جديد' : 'إضافة خبر للشريط العلوي'}</span>
                 </button>
               )}
-              {activeSidebarItem === 'media' && (
-                <button
-                  onClick={() => setIsAddMediaModalOpen(true)}
-                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-sm cursor-pointer"
-                >
-                  <ImagePlus className="w-4 h-4" />
-                  <span>إضافة صورة جديدة</span>
-                </button>
-              )}
+
 
               {/* Quick Live Clock / Date */}
               <div className="text-xs font-mono font-bold text-slate-600 bg-white px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
@@ -1929,41 +1920,8 @@ export default function ExecutiveDashboard({
               {/* ── ROW 4: BOTTOM 3 WIDGETS ── */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                 
-                {/* Widget 1 (4 Cols): آخر الصور الميدانية */}
-                <div className="lg:col-span-4 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 text-start">
-                  <div className="flex items-center justify-between border-b pb-2 border-slate-100">
-                    <h3 className="font-black text-sm text-slate-800 flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-amber-500" />
-                      <span>آخر الصور الميدانية</span>
-                    </h3>
-                    <button
-                      onClick={() => setActiveSidebarItem('media')}
-                      className="text-[10px] font-bold text-slate-500 hover:text-slate-800 bg-slate-100 px-2 py-0.5 rounded cursor-pointer"
-                    >
-                      عرض الكل
-                    </button>
-                  </div>
-
-                  {/* 4 Photo Thumbnails Grid */}
-                  <div className="grid grid-cols-2 gap-2.5">
-                    {localPhotos.slice(0, 4).map((photo) => (
-                      <div
-                        key={photo.id}
-                        onClick={() => setSelectedPhotoModal(photo)}
-                        className="rounded-xl overflow-hidden border border-slate-200 relative group cursor-pointer h-24 shadow-sm"
-                      >
-                        <img src={photo.img} alt={photo.title} className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-between p-1.5 text-[9px] text-white font-mono">
-                          <span className="font-bold text-amber-300">{photo.sector}</span>
-                          <span className="text-slate-300">{photo.date}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Widget 2 (4 Cols): حالة القطاعات */}
-                <div className="lg:col-span-4 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 text-start">
+                {/* Widget 1 (6 Cols): حالة القطاعات */}
+                <div className="lg:col-span-6 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 text-start">
                   <div className="flex items-center justify-between border-b pb-2 border-slate-100">
                     <h3 className="font-black text-sm text-slate-800">حالة القطاعات</h3>
                     <button
@@ -2034,8 +1992,8 @@ export default function ExecutiveDashboard({
                   </div>
                 </div>
 
-                {/* Widget 3 (4 Cols): الشركات - نسب الإنجاز */}
-                <div className="lg:col-span-4 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 text-start">
+                {/* Widget 2 (6 Cols): الشركات - نسب الإنجاز */}
+                <div className="lg:col-span-6 bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-3 text-start">
                   <div className="flex items-center justify-between border-b pb-2 border-slate-100">
                     <h3 className="font-black text-sm text-slate-800">الشركات – نسب الإنجاز</h3>
                     <button
@@ -2324,79 +2282,6 @@ export default function ExecutiveDashboard({
 
               </div>
             )
-          )}
-
-          {/* ══════════════════════════════════════════════════════════════════════════════
-              VIEW 4: MEDIA & PHOTOS (الصور والفيديو مع العرض والتعديل والرفع والحذف)
-          ══════════════════════════════════════════════════════════════════════════════ */}
-          {activeSidebarItem === 'media' && (
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-6 animate-fadeIn text-start">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 border-slate-100">
-                <div>
-                  <h3 className="text-lg font-black text-slate-900">معرض التوثيق البصري الميداني (4K Media Gallery)</h3>
-                  <p className="text-xs text-slate-500">إدارة وعرض وتعديل وحذف الصور الفوتوغرافية عالية الدقة للمشروع</p>
-                </div>
-                <button
-                  onClick={() => setIsAddMediaModalOpen(true)}
-                  className="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center gap-2 shadow-sm cursor-pointer self-start"
-                >
-                  <ImagePlus className="w-4 h-4" />
-                  <span>إضافة صورة جديدة</span>
-                </button>
-              </div>
-
-              {/* Photo Cards Grid with Full Actions */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {localPhotos.map((photo) => (
-                  <div key={photo.id} className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50 shadow-sm hover:border-amber-400 transition-all group flex flex-col justify-between">
-                    <div>
-                      <div className="relative h-44 overflow-hidden bg-black cursor-pointer" onClick={() => setSelectedPhotoModal(photo)}>
-                        <img src={photo.src || photo.img || '/road-paving-official.jpg'} alt={photo.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute top-2 right-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-md text-amber-300 text-[10px] font-bold font-mono">
-                          {photo.sector}
-                        </div>
-                        <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-black/60 backdrop-blur-md text-white text-[10px]">
-                          {photo.category}
-                        </div>
-                      </div>
-
-                      <div className="p-4 space-y-1.5 text-start">
-                        <h4 className="font-black text-xs text-slate-900 line-clamp-1">{photo.title}</h4>
-                        <div className="text-[10px] text-slate-500 flex items-center justify-between">
-                          <span>المصور: {photo.photographer || photo.author || 'م. الموقع'}</span>
-                          <span className="font-mono">{photo.date}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Actions Bar */}
-                    <div className="p-3 bg-white border-t border-slate-100 flex items-center justify-between gap-2">
-                      <button
-                        onClick={() => setSelectedPhotoModal(photo)}
-                        className="flex-1 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 font-bold text-[11px] flex items-center justify-center gap-1 cursor-pointer"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>عرض 4K</span>
-                      </button>
-                      <button
-                        onClick={() => setSelectedPhotoEditModal({ ...photo })}
-                        className="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 cursor-pointer"
-                        title="تعديل الصورة"
-                      >
-                        <Edit2 className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => setPhotoToDelete(photo)}
-                        className="p-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 cursor-pointer"
-                        title="حذف الصورة"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           )}
 
           {/* ══════════════════════════════════════════════════════════════════════════════

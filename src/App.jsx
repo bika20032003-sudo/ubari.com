@@ -336,7 +336,7 @@ function App() {
             </div>
 
             {/* Section: News Post Carousel (بوست أخبار المشروع المصور مع التنقل ونقاط العرض - للكمبيوتر) */}
-            <div className="hidden lg:block">
+            <div className="w-full">
               <NewsPostCarousel theme={theme} lang={lang} />
             </div>
 

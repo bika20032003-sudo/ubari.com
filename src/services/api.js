@@ -416,89 +416,38 @@ export const getSavedTickerNews = () => {
 
 export const initialNewsPosts = [
   {
-    id: 'POST-01',
-    title: 'تواصل الاعمال مع ارتفاع نسبة الانجاز',
-    titleEn: 'Ongoing Works & Accelerating Progress on Ubari - Ghat Corridor',
-    desc: 'مشروع طريق اوباري _ غات.\nضمن اهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق.\nيدخل في المراحل الاخيرة من المشروع الذي تنفذه - الائتلاف الشركات المصرية ).\nولا زالت الاعمال مستمرة على طول الطريق رغم نقص الحاد في الوقود الديزل .\nوصلت نسبة الانجاز 230 كيلو مترا طريق مفتوح من اصل 360 كيلو مترا من قلعة اوباري الي 230 كيلوا طريق مفتوح امام المواطنين ومع استمرار عملية طلاء الطريق\nعملية تجهيز الموقع في تهالا مستمرة من اجل استكمال الجزء الاخير من المشروع والمتبقى 130 كيلو مترا.\nالجنوب يستحق الافضل .',
-    descEn: 'Ubari - Ghat Highway Project: One of the most strategic corridors in Southern Libya connecting regions. Entering advanced execution phases executed by the Egyptian Contracting Consortium. Works continue across the route despite acute diesel fuel shortages. Over 230 km out of 360 km from Ubari Fortress are now paved and open to traffic, with road line markings actively proceeding. Site preparation in Tahala is ongoing for the final 130 km segment. The South deserves the best.',
-    category: 'رصف الأسفلت',
-    categoryEn: 'Asphalt Paving',
-    image: './road-asphalt-paver.jpg',
-    timeAgo: 'منذ ساعتين',
-    timeAgoEn: '2 hours ago',
+    id: 'POST-5458',
+    title: 'دخول اعمال الرصف طريق اوباري-غات الي بلدية العوينات.',
+    titleEn: 'Asphalt Paving Operations on Ubari - Ghat Corridor Reach Al-Awaynat Municipality',
+    desc: 'من خلال المتابعة المستمرة لطريق منذو الانطلاق من مدينة أوباري في إتجاه منطقة غات_الكبري بفضل من الله عز وجل اليوم أعمال رصف طبقة الأسفلت تدخل الي بلدية #العوينات ومن ثم باقي المناطق #نطمن أهلنا في جميع مناطق غات بأن الأعمال جارية علي قدم وساق من قبل الإئتلاف الشركات المصرية تستمر أعمالها في جميع المراحل الأخيرة من الطريق تحت إشراف جهاز تنفيذ المشروعات والمواصلات الليبيةلم يتبقى إلا القليل من المشروع الضخم والإستراتيجي في الجنوب بطول 360 كيلوا متر يعتبر من أطول الطرق في الجنوب الليبي والذي يخفف من معاناة المواطنين .\nمكتب المتابعة لمشروع طريق اوباري غات',
+    descEn: 'Through ongoing field monitoring of the Ubari - Ghat strategic highway project since its launch from Ubari Fortress towards Greater Ghat, asphalt paving layers have officially entered the Municipality of Al-Awaynat, progressing towards remaining sectors. We reassure our citizens across Ghat that operations are proceeding at full speed by the Egyptian Contracting Consortium in the final project phases under direct supervision of the Libyan Transport Projects Implementation Authority. Over 360 km of this vital corridor are being completed to alleviate travel hardships and connect southern communities.',
+    category: 'تقرير ميداني معتمد',
+    categoryEn: 'Official Field Report',
+    image: './post-5458-alawaynat.jpg',
+    timeAgo: 'الآن',
+    timeAgoEn: 'Just now',
+    location: 'طريق أوباري – غات',
+    locationEn: 'Ubari – Ghat Highway Route',
+    author: 'المكتب الإعلامي لمتابعة لمشروع طريق اوباري غات',
+    authorEn: 'Media Office – Transport Projects Authority',
+    viewsCount: '1,200'
+  },
+  {
+    id: 'POST-5474',
+    title: 'متابعة ميدانية',
+    titleEn: 'Field Inspection & Operational Progress Update',
+    desc: 'في إطار المتابعة الميدانية المستمرة لتنفيذ مشروع طريق أوباري–غات، تتواصل أعمال التنفيذ بوتيرة متقدمة، حيث بلغت نسبة الإنجاز الإجمالية للمشروع 68.5%، ووصلت أعمال تنفيذ المسار إلى مشارف مدينة العوينات.\n\nوتأتي هذه النسبة نتيجة الجهود المبذولة من الشركات المنفذة والفرق الفنية، رغم التحديات والصعوبات التي تواجه سير العمل في بعض مواقع المشروع، والتي تتطلب مواصلة التنسيق وتوفير الإمكانيات اللازمة لضمان استمرار الأعمال.\n\nويواصل جهاز مشروعات المواصلات متابعة مراحل التنفيذ ميدانياً، والوقوف على معدلات الإنجاز ومعالجة المعوقات، بهدف استكمال المشروع وفق المواصفات الفنية المعتمدة.',
+    descEn: 'Within continuous field oversight of the Ubari - Ghat corridor execution, works continue at an accelerated pace, with total project progress reaching 68.5% and pavement operations reaching the outskirts of Al-Awaynat city. This achievement reflects intensive efforts by contracting firms and technical teams to overcome field challenges and maintain momentum. The Transportation Projects Implementation Authority continues close daily on-site supervision to guarantee adherence to certified engineering specifications.',
+    category: 'بيانات صحفية',
+    categoryEn: 'Press Statements',
+    image: './post-5474-field-followup.jpg',
+    timeAgo: 'الآن',
+    timeAgoEn: 'Just now',
     location: 'مسار طريق أوباري – غات',
     locationEn: 'Ubari – Ghat Highway Corridor',
     author: 'المكتب الإعلامي - جهاز مشروعات المواصلات',
     authorEn: 'Media Office – Transportation Projects Authority',
-    viewsCount: '1,420'
-  },
-  {
-    id: 'POST-02',
-    title: 'انطلاق أعمال رصف الطريق',
-    titleEn: 'Commencement of Highway Paving Works from Ubari Fortress',
-    desc: 'أوباري | جهاز المواصلات طريق أوباري – غات\n\nتتواصل أعمال تنفيذ ورصف الطريق ضمن مسار أوباري – غات، حيث انطلقت الأعمال من بداية المسار بجوار قلعة أوباري، في إطار الجهود الرامية إلى تطوير البنية التحتية وتحسين شبكة الطرق بالمنطقة.\n\nوتشمل الأعمال فرش طبقات الإسفلت وتجهيز الطريق وفق مراحل التنفيذ، بما يسهم في تحسين جودة الطريق ورفع مستوى السلامة المرورية، وتسهيل حركة تنقل المواطنين، ودعم انسيابية الحركة بين المناطق.\n\nويأتي هذا العمل ضمن الجهود المبذولة للارتقاء بقطاع الطرق والمواصلات، وتعزيز كفاءة البنية التحتية بما يخدم المواطنين ويدعم التنمية بالمنطقة.\n\nجهاز المواصلات طريق أوباري – غات\nنحو طرق أفضل وخدمات أكثر كفاءة.',
-    descEn: 'Ubari | Transportation Authority - Ubari – Ghat Highway:\nPaving and execution works continue along the Ubari – Ghat corridor, launched from the start of the route next to Ubari Fortress as part of infrastructure modernization.\n\nWorks include hot asphalt laying and subgrade preparation according to strict execution stages, enhancing traffic safety and citizen transit.\n\nTransportation Projects Authority: Towards better roads and higher efficiency.',
-    category: 'الدمك والمساحة',
-    categoryEn: 'Compaction & Survey',
-    image: './road-rollers-compaction.jpg',
-    timeAgo: 'منذ 5 ساعات',
-    timeAgoEn: '5 hours ago',
-    location: 'بداية المسار بجوار قلعة أوباري',
-    locationEn: 'Route Start Near Ubari Fortress',
-    author: 'إدارة المشروعات بالمنطقة الجنوبية',
-    authorEn: 'Southern Region Projects Administration',
-    viewsCount: '1,180'
-  },
-  {
-    id: 'POST-03',
-    title: 'تواصل الاعمال',
-    titleEn: 'Ongoing Road Maintenance & Paving Works Over 360km',
-    desc: 'تواصل اعمال مشروع صيانة طريق - اوباري / غات بطول 360كم بحيث بلغت نسبة انجاز المشروع 68%🚧',
-    descEn: 'Ongoing maintenance and paving works on the 360km Ubari - Ghat highway project, with overall project progress reaching 68%.',
-    category: 'جولات ميدانية',
-    categoryEn: 'Field Inspections',
-    image: './road-grader-earthwork.jpg',
-    timeAgo: 'أمس',
-    timeAgoEn: 'Yesterday',
-    location: 'مسار طريق اوباري -غات',
-    locationEn: 'Ubari – Ghat Highway Route',
-    author: 'جهاز مشروعات المواصلات',
-    authorEn: 'Transportation Projects Authority',
-    viewsCount: '960'
-  },
-  {
-    id: 'POST-04',
-    title: 'تركيب أعمدة الإنارة الشمسية الذكية',
-    titleEn: 'Installation of Smart Solar Lighting Poles Along the Highway',
-    desc: 'توريد وتركيب أعمدة الإنارة الذكية بالطاقة الشمسية مع كشافات LED عالية الكفاءة لتأمين السلامة المرورية والرؤية الليلية على المنحنيات ومداخل المدن.',
-    descEn: 'Installation of smart solar-powered LED lighting poles ensuring night driving safety along desert highway curves and oasis entrances.',
-    category: 'الإنارة والسلامة',
-    categoryEn: 'Lighting & Safety',
-    image: './road-grader-earthwork.jpg',
-    timeAgo: 'منذ يومين',
-    timeAgoEn: '2 days ago',
-    location: 'المدخل الجنوبي للمسار',
-    locationEn: 'Southern Corridor Entrance',
-    author: 'وحدة الطاقة المتجددة والسلامة',
-    authorEn: 'Renewable Energy & Safety Unit',
-    viewsCount: '1,850'
-  },
-  {
-    id: 'POST-05',
-    title: 'فحص عينات الكور الإسفلتي واختبارات الكثافة بالمختبر الميداني المتنقل',
-    titleEn: 'Field Asphalt Core Sampling & Mobile Laboratory Density Verification',
-    desc: 'سحب واختبار عينات الكور الإسفلتي دورياً بأجهزة القياس المعملية المتقدمة للتأكد من مطابقة نسب الدمك، والسمك الفعلي، ومقاومة الضغط لأعلى معايير الجودة العالمية المعتمدة.',
-    descEn: 'Regular core sampling and geotechnical density tests conducted at the mobile field lab to ensure asphalt layer compliance with international highway engineering standards.',
-    category: 'ضبط الجودة المعملي',
-    categoryEn: 'Quality Control',
-    image: './road-qa-testing-core.jpg',
-    timeAgo: 'منذ 3 أيام',
-    timeAgoEn: '3 days ago',
-    location: 'المختبر الميداني المركزي',
-    locationEn: 'Central Field Laboratory',
-    author: 'قسم ضبط الجودة والمختبرات',
-    authorEn: 'Quality Control & Labs Dept.',
-    viewsCount: '1,340'
+    viewsCount: '1,200'
   },
   {
     id: 'POST-06',
@@ -556,30 +505,31 @@ export const addDeletedNewsId = async (id) => {
 
 export const mergeNewsPostsResiliently = (incoming = [], existing = []) => {
   const deletedIds = new Set(getDeletedNewsIds());
-  const map = new Map();
 
-  // 1. Initial defaults (excluding deleted)
+  // 1. Authoritative Cloud Priority: If incoming cloud items exist, use them directly
+  if (Array.isArray(incoming) && incoming.length > 0) {
+    const validCloud = incoming
+      .filter(p => p && p.id && !deletedIds.has(p.id))
+      .map(sanitizeNewsItem);
+    if (validCloud.length > 0) {
+      return validCloud;
+    }
+  }
+
+  // 2. Fallback to existing or default initial posts
+  const map = new Map();
   (Array.isArray(initialNewsPosts) ? initialNewsPosts : [])
     .filter(p => p && p.id && !deletedIds.has(p.id))
     .forEach(p => map.set(p.id, sanitizeNewsItem(p)));
 
-  // 2. Existing items in memory / localStorage (excluding deleted)
   if (Array.isArray(existing)) {
     existing
       .filter(p => p && p.id && !deletedIds.has(p.id))
       .forEach(p => {
-        const prev = map.get(p.id) || {};
-        map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
-      });
-  }
-
-  // 3. Incoming cloud items (excluding deleted)
-  if (Array.isArray(incoming)) {
-    incoming
-      .filter(p => p && p.id && !deletedIds.has(p.id))
-      .forEach(p => {
-        const prev = map.get(p.id) || {};
-        map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
+        if (p && p.id) {
+          const prev = map.get(p.id) || {};
+          map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
+        }
       });
   }
 

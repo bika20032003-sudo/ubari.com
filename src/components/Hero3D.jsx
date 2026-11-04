@@ -79,58 +79,10 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
     };
   }, []);
 
-  // Smooth fade transition between news
-  const goToMobileNews = useCallback((newIdx) => {
-    if (isNewsFading || !mobileNewsList || mobileNewsList.length <= 1) return;
-    setIsNewsFading(true);
-    setTimeout(() => {
-      setMobileNewsIdx(newIdx);
-      setIsNewsFading(false);
-    }, 220);
-  }, [isNewsFading, mobileNewsList]);
-
-  const nextMobileNews = useCallback(() => {
-    if (!mobileNewsList || mobileNewsList.length === 0) return;
-    const nextIdx = (mobileNewsIdx + 1) % mobileNewsList.length;
-    goToMobileNews(nextIdx);
-  }, [mobileNewsIdx, mobileNewsList, goToMobileNews]);
-
-  const prevMobileNews = useCallback(() => {
-    if (!mobileNewsList || mobileNewsList.length === 0) return;
-    const prevIdx = (mobileNewsIdx - 1 + mobileNewsList.length) % mobileNewsList.length;
-    goToMobileNews(prevIdx);
-  }, [mobileNewsIdx, mobileNewsList, goToMobileNews]);
-
-  // 6-second mobile news carousel auto progression with fade (pauses when tab is hidden)
-  useEffect(() => {
-    if (!mobileNewsList || mobileNewsList.length <= 1) return;
-    const interval = setInterval(() => {
-      if (document.hidden) return;
-      nextMobileNews();
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [mobileNewsList, nextMobileNews]);
-
-  const currentMobileNews = mobileNewsList[mobileNewsIdx] || mobileNewsList[0] || {};
-
-  const onTouchStartHero = (e) => {
-    setTouchEndHero(null);
-    setTouchStartHero(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMoveHero = (e) => {
-    setTouchEndHero(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEndHero = () => {
-    if (!touchStartHero || !touchEndHero) return;
-    const distance = touchStartHero - touchEndHero;
-    if (distance > 45) {
-      nextMobileNews();
-    } else if (distance < -45) {
-      prevMobileNews();
-    }
-  };
+  // Stabilized Memoized Ticker Items to prevent animation restarts
+  const activeTickerItems = useMemo(() => {
+    return Array.isArray(tickerNews) ? tickerNews.filter(n => n && n.active !== false) : [];
+  }, [tickerNews]);
 
   // Circular progress calculation for SVG
   const radius = 38;
@@ -233,7 +185,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
           theme={theme} 
           lang={lang}
           direction={lang === 'ar' ? 'rtl' : 'ltr'} 
-          items={tickerNews?.filter(n => n.active !== false)}
+          items={activeTickerItems}
         />
       </div>
 
@@ -305,185 +257,10 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
             className="w-full lg:w-5/12 flex flex-col items-center lg:items-end animate-scaleUp gsap-scale-in"
           >
             
-            {/* 1. MOBILE ONLY: News Post Card (تبديل البطاقة بالهاتف إلى نظام بوست الأخبار الميدانية) */}
-            {(() => {
-              const hasMobileNewsImage = Boolean(
-                currentMobileNews &&
-                currentMobileNews.image &&
-                currentMobileNews.image !== 'none' &&
-                currentMobileNews.image !== 'null' &&
-                String(currentMobileNews.image).trim().length > 0 &&
-                currentMobileNews.id !== 'POST-01' &&
-                !String(currentMobileNews.title || '').includes('تواصل الاعمال') &&
-                !String(currentMobileNews.title || '').includes('تواصل الأعمال') &&
-                !String(currentMobileNews.desc || '').includes('الائتلاف الشركات المصرية') &&
-                !String(currentMobileNews.image || '').includes('road-asphalt-paver') &&
-                !String(currentMobileNews.image || '').includes('paver')
-              );
-
-              return (
+            
             <div 
-              className="w-full max-w-md block lg:hidden"
-              onTouchStart={onTouchStartHero}
-              onTouchMove={onTouchMoveHero}
-              onTouchEnd={onTouchEndHero}
-            >
-              <div 
-                onClick={() => setSelectedNewsPost(currentMobileNews)}
-                className={`w-full rounded-2xl overflow-hidden border shadow-xl text-start transition-all duration-300 cursor-pointer active:scale-[0.99] ${
-                  theme === 'light'
-                    ? 'bg-white border-amber-300/80 shadow-slate-200/90 text-slate-900'
-                    : 'bg-[#090e1a]/95 border-amber-500/30 shadow-black/90 text-white'
-                }`}
-              >
-                
-                {/* Mobile Post Header: Agency Brand + Tag */}
-                <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-slate-100 dark:border-white/10 gap-2">
-                  <div className="flex items-center gap-2 min-w-0 flex-1">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 p-[1px] shadow-sm flex-shrink-0">
-                      <img 
-                        src={resolveAsset('./logo-agency.jpg')} 
-                        alt="جهاز تنفيذ مشروعات المواصلات" 
-                        className="w-full h-full object-contain rounded-[10px] bg-white"
-                        onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      />
-                    </div>
-                    <div className="text-start leading-tight min-w-0 flex-1 overflow-hidden">
-                      <div className="flex items-center gap-1 min-w-0">
-                        <span className="font-black text-xs truncate">
-                          {lang === 'ar' ? 'مشروعات المواصلات' : 'Transport Projects'}
-                        </span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
-                      </div>
-                      <span className="text-[10px] text-slate-400 font-medium truncate block">
-                        {lang === 'ar' ? (currentMobileNews.author || 'المكتب الإعلامي') : (currentMobileNews.authorEn || 'Media Office')} • {lang === 'ar' ? (currentMobileNews.timeAgo || 'مباشر') : (currentMobileNews.timeAgoEn || 'Live')}
-                      </span>
-                    </div>
-                  </div>
-
-                  <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 shrink-0 whitespace-nowrap">
-                    {lang === 'ar' ? 'المستجدات الميدانية' : 'Field News'}
-                  </span>
-                </div>
-
-                {/* Mobile Post Photo with Controls */}
-                <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
-                  {hasMobileNewsImage ? (
-                    <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
-                      isNewsFading ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
-                    }`}>
-                      <img 
-                        src={resolveAsset(currentMobileNews.image)} 
-                        alt={currentMobileNews.title || 'أخبار طريق أوباري غات'} 
-                        className="w-full h-full object-cover transition-transform duration-500"
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
-                        }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                    </div>
-                  ) : (
-                    <div className={`w-full h-full p-4 flex flex-col justify-between relative bg-gradient-to-br from-[#0c1220] via-[#090d18] to-[#05070d] transition-all duration-300 ease-in-out ${
-                      isNewsFading ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'
-                    }`}>
-                      <div className="flex items-center justify-between">
-                        <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-black">
-                          {lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'}
-                        </span>
-                        <span className="text-[10px] font-mono text-slate-400">{currentMobileNews.id}</span>
-                      </div>
-                      <p className="text-xs text-slate-200 line-clamp-3 leading-relaxed border-s-2 border-amber-500 ps-2 my-2">
-                        {lang === 'ar' ? currentMobileNews.desc : (currentMobileNews.descEn || currentMobileNews.desc)}
-                      </p>
-                      <span className="text-[10px] text-amber-400 font-bold">
-                        {lang === 'ar' ? 'انقر لعرض كامل التفاصيل ↗' : 'View Full Details ↗'}
-                      </span>
-                    </div>
-                  )}
-
-
-
-                  {/* Navigation Arrows for Mobile News */}
-                  <button
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); prevMobileNews(); }}
-                    className="absolute top-1/2 start-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
-                    aria-label="Previous"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={(e) => { e.stopPropagation(); nextMobileNews(); }}
-                    className="absolute top-1/2 end-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
-                    aria-label="Next"
-                  >
-                    ›
-                  </button>
-
-                  {/* Slide index & Location pill */}
-                  <div className="absolute bottom-2 start-2.5 end-2.5 flex items-center justify-between text-white text-[10px] gap-2 pointer-events-none z-10">
-                    <span className="px-2 py-0.5 rounded-md bg-black/70 font-mono font-bold text-amber-400 border border-white/10 truncate min-w-0">
-                      {lang === 'ar' ? (currentMobileNews.location || 'طريق أوباري - غات') : (currentMobileNews.locationEn || 'Ubari - Ghat Highway')}
-                    </span>
-                    <span className="font-mono bg-black/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap">
-                      {mobileNewsIdx + 1} / {mobileNewsList.length}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Mobile Post Text Content with Fade */}
-                <div className="p-3.5 space-y-2">
-                  <div className={`space-y-2 transition-all duration-300 ease-in-out ${
-                    isNewsFading ? 'opacity-0 translate-y-0.5' : 'opacity-100 translate-y-0'
-                  }`}>
-                    <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
-                      {lang === 'ar' ? currentMobileNews.title : (currentMobileNews.titleEn || currentMobileNews.title)}
-                    </h3>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
-                      {lang === 'ar' ? currentMobileNews.desc : (currentMobileNews.descEn || currentMobileNews.desc)}
-                    </p>
-                  </div>
-
-                  {/* Dots Indicators + Full Story Prompt */}
-                  <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
-                    <div className="flex items-center gap-1">
-                      {mobileNewsList.slice(0, 6).map((_, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={(e) => { e.stopPropagation(); goToMobileNews(i); }}
-                          className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                            i === mobileNewsIdx ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
-                          }`}
-                          aria-label={`News ${i + 1}`}
-                        />
-                      ))}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedNewsPost(currentMobileNews);
-                      }}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
-                    >
-                      <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-              );
-            })()}
-
-            {/* 2. DESKTOP ONLY: Preserved 100% of Desktop Technical Showcase Card */}
-            <div 
-              onClick={() => setSelectedNewsPost(currentMobileNews || heroCard)}
-              className={`hidden lg:block w-full max-w-md rounded-2xl sm:rounded-3xl overflow-hidden border shadow-2xl text-start glass-card-hover cursor-pointer ${
+              onClick={() => setSelectedNewsPost(heroCard)}
+              className={`w-full max-w-md rounded-2xl sm:rounded-3xl overflow-hidden border shadow-2xl text-start glass-card-hover cursor-pointer ${
               theme === 'light' 
                 ? 'bg-white/95 border-slate-200/90 text-slate-900 shadow-slate-200/80' 
                 : 'bg-[#0b101e]/95 border-white/15 text-white shadow-black/80'

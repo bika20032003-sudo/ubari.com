@@ -19,6 +19,27 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
   const [isFading, setIsFading] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedPostModal, setSelectedPostModal] = useState(null);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > 45) {
+      if (lang === 'ar') prevSlide(); else nextSlide();
+    } else if (distance < -45) {
+      if (lang === 'ar') nextSlide(); else prevSlide();
+    }
+  };
 
   // Sync with Supabase on mount and across storage updates
   useEffect(() => {
@@ -103,7 +124,11 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* ── Standalone Post Card (زي البوست بروحها اخبار معا الصور) ── */}
-      <div className={`relative overflow-hidden rounded-[32px] border shadow-2xl transition-all duration-500 glass-card-hover ${
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className={`relative overflow-hidden rounded-[32px] border shadow-2xl transition-all duration-500 glass-card-hover ${
         theme === 'light'
           ? 'bg-white border-amber-300/80 shadow-slate-200/90 text-slate-900'
           : 'bg-[#090e1a]/95 border-amber-500/25 shadow-black/80 text-white'
