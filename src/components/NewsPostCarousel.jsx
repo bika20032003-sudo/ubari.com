@@ -91,13 +91,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
     currentPost.image &&
     currentPost.image !== 'none' &&
     currentPost.image !== 'null' &&
-    String(currentPost.image).trim().length > 0 &&
-    currentPost.id !== 'POST-01' &&
-    !String(currentPost.title || '').includes('تواصل الاعمال') &&
-    !String(currentPost.title || '').includes('تواصل الأعمال') &&
-    !String(currentPost.desc || '').includes('الائتلاف الشركات المصرية') &&
-    !String(currentPost.image || '').includes('road-asphalt-paver') &&
-    !String(currentPost.image || '').includes('paver')
+    String(currentPost.image).trim().length > 0
   );
 
 
@@ -233,7 +227,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                     {lang === 'ar' ? 'بيان صحفي وموقف تنفيذي' : 'Executive Field Dispatch'}
                   </span>
                   <p className="text-sm sm:text-base text-slate-200 font-medium line-clamp-3 leading-relaxed border-s-2 border-amber-500/60 ps-3">
-                    {currentPost.desc}
+                    {lang === 'ar' ? currentPost.desc : (currentPost.descEn || currentPost.desc)}
                   </p>
                 </div>
 

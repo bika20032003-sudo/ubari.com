@@ -394,7 +394,7 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                         <span className="text-[10px] font-mono text-slate-400">{currentMobileNews.id}</span>
                       </div>
                       <p className="text-xs text-slate-200 line-clamp-3 leading-relaxed border-s-2 border-amber-500 ps-2 my-2">
-                        {currentMobileNews.desc}
+                        {lang === 'ar' ? currentMobileNews.desc : (currentMobileNews.descEn || currentMobileNews.desc)}
                       </p>
                       <span className="text-[10px] text-amber-400 font-bold">
                         {lang === 'ar' ? 'انقر لعرض كامل التفاصيل ↗' : 'View Full Details ↗'}

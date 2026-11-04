@@ -380,12 +380,60 @@ export const fetchMonthlyProgressHistory = async () => {
 };
 
 export const initialTickerNews = [
-  { id: 'NEWS-01', text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', tag: 'مشروع وطني', active: true, date: '2026-08-20' },
-  { id: 'NEWS-02', text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', tag: 'متابعة دورية', active: true, date: '2026-08-19' },
-  { id: 'NEWS-03', text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', tag: 'سير الأعمال', active: true, date: '2026-08-18' },
-  { id: 'NEWS-04', text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', tag: 'السلامة المرورية', active: true, date: '2026-08-17' },
-  { id: 'NEWS-05', text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', tag: 'ضبط الجودة', active: true, date: '2026-08-16' },
-  { id: 'NEWS-06', text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', tag: 'الإشراف الهندسي', active: true, date: '2026-08-15' }
+  { 
+    id: 'NEWS-01', 
+    text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', 
+    textEn: 'Maintenance & Paving of the Strategic 360km Ubari – Ghat Highway',
+    tag: 'مشروع وطني', 
+    tagEn: 'National Project',
+    active: true, 
+    date: '2026-08-20' 
+  },
+  { 
+    id: 'NEWS-02', 
+    text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', 
+    textEn: 'Overall project execution progress surpasses 68.5% across corridor',
+    tag: 'متابعة دورية', 
+    tagEn: 'Progress Update',
+    active: true, 
+    date: '2026-08-19' 
+  },
+  { 
+    id: 'NEWS-03', 
+    text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', 
+    textEn: 'Ongoing asphalt paving works adhering to certified quality standards',
+    tag: 'سير الأعمال', 
+    tagEn: 'Operations',
+    active: true, 
+    date: '2026-08-18' 
+  },
+  { 
+    id: 'NEWS-04', 
+    text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', 
+    textEn: 'Supplying and installing traffic safety signs, guideboards and guardrails',
+    tag: 'السلامة المرورية', 
+    tagEn: 'Road Safety',
+    active: true, 
+    date: '2026-08-17' 
+  },
+  { 
+    id: 'NEWS-05', 
+    text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', 
+    textEn: 'Testing asphalt mix quality and compaction density at certified labs',
+    tag: 'ضبط الجودة', 
+    tagEn: 'Quality Control',
+    active: true, 
+    date: '2026-08-16' 
+  },
+  { 
+    id: 'NEWS-06', 
+    text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', 
+    textEn: 'Continuous on-site engineering supervision and traffic safety monitoring',
+    tag: 'الإشراف الهندسي', 
+    tagEn: 'Site Supervision',
+    active: true, 
+    date: '2026-08-15' 
+  }
 ];
 
 export const getSavedTickerNews = () => {
@@ -401,11 +449,11 @@ export const initialNewsPosts = [
     id: 'POST-01',
     title: 'تواصل الاعمال مع ارتفاع نسبة الانجاز',
     titleEn: 'Ongoing Works & Accelerating Progress on Ubari - Ghat Corridor',
-    desc: 'مشروع طريق اوباري _ غات.\nضمن اهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق.\nيدخل في المراحل الاخيرة من المشروع الذي تنفذه - الائتلاف الشركات المصرية ).\nولا زالت الاعمال مستمرة على طول الطريق رغم نقص الحاد في الوقود الديزل...',
-    descEn: 'Ubari - Ghat strategic corridor enters advanced execution phases under Transportation Projects Execution Authority supervision.',
-    category: 'تقرير ميداني معتمد',
-    categoryEn: 'Official Field Report',
-    image: '',
+    desc: 'مشروع طريق اوباري _ غات.\nضمن اهم المشاريع الاستراتيجية في الجنوب الليبي والرابط بين المناطق.\nيدخل في المراحل الاخيرة من المشروع الذي تنفذه - الائتلاف الشركات المصرية ).\nولا زالت الاعمال مستمرة على طول الطريق رغم نقص الحاد في الوقود الديزل .\nوصلت نسبة الانجاز 230 كيلو مترا طريق مفتوح من اصل 360 كيلو مترا من قلعة اوباري الي 230 كيلوا طريق مفتوح امام المواطنين ومع استمرار عملية طلاء الطريق\nعملية تجهيز الموقع في تهالا مستمرة من اجل استكمال الجزء الاخير من المشروع والمتبقى 130 كيلو مترا.\nالجنوب يستحق الافضل .',
+    descEn: 'Ubari - Ghat Highway Project: One of the most strategic corridors in Southern Libya connecting regions. Entering advanced execution phases executed by the Egyptian Contracting Consortium. Works continue across the route despite acute diesel fuel shortages. Over 230 km out of 360 km from Ubari Fortress are now paved and open to traffic, with road line markings actively proceeding. Site preparation in Tahala is ongoing for the final 130 km segment. The South deserves the best.',
+    category: 'رصف الأسفلت',
+    categoryEn: 'Asphalt Paving',
+    image: './road-asphalt-paver.jpg',
     timeAgo: 'منذ ساعتين',
     timeAgoEn: '2 hours ago',
     location: 'مسار طريق أوباري – غات',
@@ -416,53 +464,53 @@ export const initialNewsPosts = [
   },
   {
     id: 'POST-02',
-    title: 'تشغيل أسطول المداحل الاهتزازية وضبط المناسيب عبر الأجهزة المساحية الرقمية',
-    titleEn: 'Heavy Rollers Compaction & Total Station Survey Slope Verification',
-    desc: 'تنفيذ أعمال الدمك النهائي لطبقات الرصف باستخدام أسطول المداحل الأسطوانية والمطاطية الحديثة، مع استمرار أعمال الرفع الطبوغرافي لضبط المناسيب الهندسية وميول تصريف مياه الأمطار بدقة عالية.',
-    descEn: 'Deploying heavy vibratory & pneumatic rollers for final compaction and surveying slope verification.',
+    title: 'انطلاق أعمال رصف الطريق',
+    titleEn: 'Commencement of Highway Paving Works from Ubari Fortress',
+    desc: 'أوباري | جهاز المواصلات طريق أوباري – غات\n\nتتواصل أعمال تنفيذ ورصف الطريق ضمن مسار أوباري – غات، حيث انطلقت الأعمال من بداية المسار بجوار قلعة أوباري، في إطار الجهود الرامية إلى تطوير البنية التحتية وتحسين شبكة الطرق بالمنطقة.\n\nوتشمل الأعمال فرش طبقات الإسفلت وتجهيز الطريق وفق مراحل التنفيذ، بما يسهم في تحسين جودة الطريق ورفع مستوى السلامة المرورية، وتسهيل حركة تنقل المواطنين، ودعم انسيابية الحركة بين المناطق.\n\nويأتي هذا العمل ضمن الجهود المبذولة للارتقاء بقطاع الطرق والمواصلات، وتعزيز كفاءة البنية التحتية بما يخدم المواطنين ويدعم التنمية بالمنطقة.\n\nجهاز المواصلات طريق أوباري – غات\nنحو طرق أفضل وخدمات أكثر كفاءة.',
+    descEn: 'Ubari | Transportation Authority - Ubari – Ghat Highway:\nPaving and execution works continue along the Ubari – Ghat corridor, launched from the start of the route next to Ubari Fortress as part of infrastructure modernization.\n\nWorks include hot asphalt laying and subgrade preparation according to strict execution stages, enhancing traffic safety and citizen transit.\n\nTransportation Projects Authority: Towards better roads and higher efficiency.',
     category: 'الدمك والمساحة',
     categoryEn: 'Compaction & Survey',
     image: './road-rollers-compaction.jpg',
     timeAgo: 'منذ 5 ساعات',
     timeAgoEn: '5 hours ago',
-    location: 'القطاع الميداني الثاني',
-    locationEn: 'Second Field Sector',
+    location: 'بداية المسار بجوار قلعة أوباري',
+    locationEn: 'Route Start Near Ubari Fortress',
     author: 'إدارة المشروعات بالمنطقة الجنوبية',
     authorEn: 'Southern Region Projects Administration',
     viewsCount: '1,180'
   },
   {
     id: 'POST-03',
-    title: 'تسوية الأساس الحجري بالكاشطات الموتورية وتجهيز مسارات حماية الطريق',
-    titleEn: 'Motor Grader Sub-base Grading & Sand Drift Protection Berms',
-    desc: 'أعمال تسوية وضبط سمك طبقة الأساس الحجرية المكسورة بالكاشطات الموتورية الثقيلة وتوزيع صهاريج رش المياه، بالتزامن مع إزالة الرمال الزاحفة وتثبيت الحواجز الترابية الجانبية.',
-    descEn: 'Motor graders leveling sub-base crushed aggregate while clearing desert sanddrifts and setting up road stabilization.',
-    category: 'كشط وتأسيس',
-    categoryEn: 'Earthwork & Grading',
+    title: 'تواصل الاعمال',
+    titleEn: 'Ongoing Road Maintenance & Paving Works Over 360km',
+    desc: 'تواصل اعمال مشروع صيانة طريق - اوباري / غات بطول 360كم بحيث بلغت نسبة انجاز المشروع 68%🚧',
+    descEn: 'Ongoing maintenance and paving works on the 360km Ubari - Ghat highway project, with overall project progress reaching 68%.',
+    category: 'جولات ميدانية',
+    categoryEn: 'Field Inspections',
     image: './road-grader-earthwork.jpg',
     timeAgo: 'أمس',
     timeAgoEn: 'Yesterday',
-    location: 'حوض وادي الحياة',
-    locationEn: 'Wadi Al-Haya Basin',
-    author: 'فريق الإشراف الموقعي',
-    authorEn: 'Site Supervision Team',
+    location: 'مسار طريق اوباري -غات',
+    locationEn: 'Ubari – Ghat Highway Route',
+    author: 'جهاز مشروعات المواصلات',
+    authorEn: 'Transportation Projects Authority',
     viewsCount: '960'
   },
   {
     id: 'POST-04',
-    title: 'تركيب الشواخص المرورية وتخطيط مسارات الطريق بالدهان الحراري العاكس',
-    titleEn: 'Installation of Traffic Signage & Reflective Road Markings Along Highway Curves',
-    desc: 'استكمال تثبيت اللوحات والشواخص الإرشادية الفسفورية وتخطيط المسارات بدهان حراري عاكس عالي الجودة، لضمان أعلى مستويات الأمان المروري والرؤية الواضحة لسائقي الشاحنات والمسافرين.',
-    descEn: 'Installing reflective traffic signs and thermo-plastic road markings with smart cat-eye markers for driver safety.',
-    category: 'السلامة المرورية والإرشاد',
-    categoryEn: 'Road Safety & Signage',
+    title: 'تركيب أعمدة الإنارة الشمسية الذكية',
+    titleEn: 'Installation of Smart Solar Lighting Poles Along the Highway',
+    desc: 'توريد وتركيب أعمدة الإنارة الذكية بالطاقة الشمسية مع كشافات LED عالية الكفاءة لتأمين السلامة المرورية والرؤية الليلية على المنحنيات ومداخل المدن.',
+    descEn: 'Installation of smart solar-powered LED lighting poles ensuring night driving safety along desert highway curves and oasis entrances.',
+    category: 'الإنارة والسلامة',
+    categoryEn: 'Lighting & Safety',
     image: './road-solar-lighting.jpg',
     timeAgo: 'منذ يومين',
     timeAgoEn: '2 days ago',
     location: 'المدخل الجنوبي للمسار',
     locationEn: 'Southern Corridor Entrance',
-    author: 'وحدة السلامة المرورية والإرشاد',
-    authorEn: 'Traffic Safety & Signage Unit',
+    author: 'وحدة الطاقة المتجددة والسلامة',
+    authorEn: 'Renewable Energy & Safety Unit',
     viewsCount: '1,850'
   },
   {
@@ -470,7 +518,7 @@ export const initialNewsPosts = [
     title: 'فحص عينات الكور الإسفلتي واختبارات الكثافة بالمختبر الميداني المتنقل',
     titleEn: 'Field Asphalt Core Sampling & Mobile Laboratory Density Verification',
     desc: 'سحب واختبار عينات الكور الإسفلتي دورياً بأجهزة القياس المعملية المتقدمة للتأكد من مطابقة نسب الدمك، والسمك الفعلي، ومقاومة الضغط لأعلى معايير الجودة العالمية المعتمدة.',
-    descEn: 'Core sampling and geotechnical testing in the mobile field laboratory confirming compaction density compliance.',
+    descEn: 'Regular core sampling and geotechnical density tests conducted at the mobile field lab to ensure asphalt layer compliance with international highway engineering standards.',
     category: 'ضبط الجودة المعملي',
     categoryEn: 'Quality Control',
     image: './road-qa-testing-core.jpg',
@@ -484,10 +532,10 @@ export const initialNewsPosts = [
   },
   {
     id: 'POST-06',
-    title: 'مشهد جوي بانورامي 4K يوثق تقدم رصف الشريان البري الاستراتيجي بالجنوب',
-    titleEn: 'Panoramic 4K Aerial Drone View of Progress Across Desert Dunes',
-    desc: 'توثيق جوي شامل يرصد قطار الرصف وحركة الشاحنات والآليات على امتداد الطريق المخترق للكثبان الرملية الذهبية، مجسداً شريان التنمية الرابط بين مدن وواحات فزان بالمثلث الحدودي في غات.',
-    descEn: 'Aerial drone footage capturing the newly paved highway corridor advancing through desert dunes.',
+    title: 'مشهد جوي يوثق تقدم رصف الشريان البري الاستراتيجي بالجنوب',
+    titleEn: 'Panoramic Aerial Drone View of Progress Across Desert Corridor',
+    desc: 'تُبرز الصورة امتداد طريق اوباري -غات وتوضح الصورة نسبة كبيرة من انجاز المشروع وسط الطبيعة الصحراوية، في مشهد يعكس أهمية مشاريع الطرق في ربط المناطق وتسهيل الوصول إليها، بما يسهم في دعم النشاط الاقتصادي والاجتماعي وتعزيز التنمية بالمنطقة.\n\nويأتي الاهتمام بقطاع الطرق والمواصلات ضمن الجهود الرامية إلى تطوير البنية التحتية وتحسين جودة الخدمات المقدمة للمواطنين.\n\nجهاز المواصلات طريق أوباري – غات\nطريق يربط المناطق.. وخطوة نحو مستقبل أفضل.',
+    descEn: 'Aerial drone view capturing the expansive Ubari – Ghat strategic corridor cutting through the desert landscape, highlighting major progress in connecting Libyan southern communities and driving regional economic development.',
     category: 'توثيق جوي 4K',
     categoryEn: '4K Aerial Drone',
     image: './road-aerial-highway.jpg',
@@ -504,14 +552,7 @@ export const initialNewsPosts = [
 export const sanitizeNewsItem = (p) => {
   if (!p) return p;
   let img = p.image || '';
-  if (
-    p.id === 'POST-01' || 
-    (p.title && (p.title.includes('تواصل الاعمال') || p.title.includes('تواصل الأعمال'))) ||
-    (p.desc && p.desc.includes('الائتلاف الشركات المصرية')) ||
-    (typeof img === 'string' && (img.includes('road-asphalt-paver') || img.includes('paver')))
-  ) {
-    img = '';
-  } else if (typeof img === 'string' && img.startsWith('/') && !img.startsWith('//')) {
+  if (typeof img === 'string' && img.startsWith('/') && !img.startsWith('//')) {
     img = '.' + img;
   }
   return {

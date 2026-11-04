@@ -344,7 +344,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
       {/* ── Continuous Moving Marquee for Selected Work (Full Bleed on Mobile with Soft Edges) ── */}
       <div className="-mx-4 sm:mx-0 w-[calc(100%+2rem)] sm:w-full overflow-hidden">
-        <MarqueeTicker variant="selected-work" theme={theme} direction={lang === 'ar' ? 'rtl' : 'ltr'} />
+        <MarqueeTicker variant="selected-work" theme={theme} lang={lang} direction={lang === 'ar' ? 'rtl' : 'ltr'} />
       </div>
 
 

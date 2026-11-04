@@ -67,8 +67,9 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
 
   // Comprehensive paragraph extraction & sanitation
   const rawParagraphs = [];
-  if (post.desc && typeof post.desc === 'string') {
-    const split = post.desc.split(/\r?\n+/);
+  const textContent = (lang === 'ar' ? post.desc : (post.descEn || post.desc)) || '';
+  if (textContent && typeof textContent === 'string') {
+    const split = textContent.split(/\r?\n+/);
     rawParagraphs.push(...split);
   }
   
@@ -106,18 +107,12 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
   // Specs extraction
   const projectSpecs = post.specs || {};
 
-  // Strict check to ensure text reports never render forced images
+  // Strict check to ensure valid image display
   const hasValidImage = Boolean(
     post.image &&
     post.image !== 'none' &&
     post.image !== 'null' &&
-    String(post.image).trim().length > 0 &&
-    post.id !== 'POST-01' &&
-    !String(post.title || '').includes('تواصل الاعمال') &&
-    !String(post.title || '').includes('تواصل الأعمال') &&
-    !String(post.desc || '').includes('الائتلاف الشركات المصرية') &&
-    !String(post.image || '').includes('road-asphalt-paver') &&
-    !String(post.image || '').includes('paver')
+    String(post.image).trim().length > 0
   );
 
   const modalJSX = (

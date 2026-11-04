@@ -13,12 +13,12 @@ export default function MarqueeTicker({
   lang = 'ar'
 }) {
   const defaultHeroItems = [
-    { text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', tag: 'مشروع وطني' },
-    { text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', tag: 'متابعة دورية' },
-    { text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', tag: 'سير الأعمال' },
-    { text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', tag: 'السلامة المرورية' },
-    { text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', tag: 'ضبط الجودة' },
-    { text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', tag: 'الإشراف الهندسي' }
+    { text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', textEn: 'Maintenance & Paving of Strategic 360km Ubari – Ghat Highway', tag: 'مشروع وطني', tagEn: 'National Project' },
+    { text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', textEn: 'Overall project progress exceeds 68.5% across corridor', tag: 'متابعة دورية', tagEn: 'Update' },
+    { text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', textEn: 'Ongoing asphalt paving works adhering to certified quality standards', tag: 'سير الأعمال', tagEn: 'Operations' },
+    { text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', textEn: 'Installing traffic safety signs, guideboards and guardrails', tag: 'السلامة المرورية', tagEn: 'Safety' },
+    { text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', textEn: 'Testing asphalt mix and compaction density at certified labs', tag: 'ضبط الجودة', tagEn: 'Quality Control' },
+    { text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', textEn: 'Continuous field engineering supervision and safety monitoring', tag: 'الإشراف الهندسي', tagEn: 'Supervision' }
   ];
 
   const [dynamicSelectedWorkItems, setDynamicSelectedWorkItems] = useState(() => getSavedSelectedWorkItems());
@@ -80,7 +80,7 @@ export default function MarqueeTicker({
             {baseList.map((item, idx) => (
               <div
                 key={`work1-${idx}`}
-                dir="rtl"
+                dir={lang === 'ar' ? 'rtl' : 'ltr'}
                 className={`flex items-center gap-3 px-4 sm:px-5 py-3 rounded-2xl border shadow-md transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
                   theme === 'light'
                     ? 'bg-white border-amber-300/80 text-slate-900 shadow-slate-200/50'
@@ -92,12 +92,12 @@ export default function MarqueeTicker({
                 </div>
                 <div className="text-start min-w-0">
                   <div className="flex items-center gap-2 flex-nowrap">
-                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{lang === 'ar' ? item.title : (item.titleEn || item.title)}</span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
-                      {item.stat}
+                      {lang === 'ar' ? item.stat : (item.statEn || item.stat)}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{lang === 'ar' ? item.badge : (item.badgeEn || item.badge)}</p>
                 </div>
               </div>
             ))}
@@ -112,7 +112,7 @@ export default function MarqueeTicker({
             {baseList.map((item, idx) => (
               <div
                 key={`work2-${idx}`}
-                dir="rtl"
+                dir={lang === 'ar' ? 'rtl' : 'ltr'}
                 className={`flex items-center gap-3 px-4 sm:px-5 py-3 rounded-2xl border shadow-md transition-transform duration-200 hover:scale-[1.02] flex-shrink-0 ${
                   theme === 'light'
                     ? 'bg-white border-amber-300/80 text-slate-900 shadow-slate-200/50'
@@ -124,12 +124,12 @@ export default function MarqueeTicker({
                 </div>
                 <div className="text-start min-w-0">
                   <div className="flex items-center gap-2 flex-nowrap">
-                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{item.title}</span>
+                    <span className="text-xs sm:text-sm font-black whitespace-nowrap">{lang === 'ar' ? item.title : (item.titleEn || item.title)}</span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-slate-950 shrink-0 whitespace-nowrap shadow-sm">
-                      {item.stat}
+                      {lang === 'ar' ? item.stat : (item.statEn || item.stat)}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{item.badge}</p>
+                  <p className="text-[11px] text-slate-400 font-medium whitespace-nowrap mt-0.5">{lang === 'ar' ? item.badge : (item.badgeEn || item.badge)}</p>
                 </div>
               </div>
             ))}
@@ -178,14 +178,14 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track1-${idx}`} dir="rtl" className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track1-${idx}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'
                   }`}>
-                    {cleanTickerText(item.tag) || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
+                    {cleanTickerText(lang === 'ar' ? item.tag : (item.tagEn || item.tag)) || (lang === 'ar' ? 'متابعة دورية' : 'Field Update')}
                   </span>
 
                   {/* News Headline - High Clarity & Sharp Legibility */}
@@ -194,7 +194,7 @@ export default function MarqueeTicker({
                       ? 'text-slate-900 hover:text-amber-600' 
                       : 'text-slate-100 hover:text-amber-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]'
                   }`}>
-                    {cleanTickerText(item.text)}
+                    {cleanTickerText(lang === 'ar' ? item.text : (item.textEn || item.text))}
                   </span>
                 </div>
               ))}
@@ -207,14 +207,14 @@ export default function MarqueeTicker({
               style={{ animationDuration: animDuration }}
             >
               {baseList.map((item, idx) => (
-                <div key={`track2-${idx}`} dir="rtl" className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
+                <div key={`track2-${idx}`} dir={lang === 'ar' ? 'rtl' : 'ltr'} className="flex items-center gap-2 sm:gap-2.5 whitespace-nowrap text-xs sm:text-sm font-bold">
                   {/* News Tag Micro-Pill */}
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide border transition-all ${
                     theme === 'light'
                       ? 'bg-amber-500/10 text-amber-950 border-amber-500/25 shadow-sm'
                       : 'bg-amber-400/10 text-amber-300 border-amber-400/25 shadow-sm backdrop-blur-sm'
                   }`}>
-                    {cleanTickerText(item.tag) || (lang === 'ar' ? 'متابعة دورية' : 'Update')}
+                    {cleanTickerText(lang === 'ar' ? item.tag : (item.tagEn || item.tag)) || (lang === 'ar' ? 'متابعة دورية' : 'Field Update')}
                   </span>
 
                   {/* News Headline - High Clarity & Sharp Legibility */}
@@ -223,7 +223,7 @@ export default function MarqueeTicker({
                       ? 'text-slate-900 hover:text-amber-600' 
                       : 'text-slate-100 hover:text-amber-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)]'
                   }`}>
-                    {cleanTickerText(item.text)}
+                    {cleanTickerText(lang === 'ar' ? item.text : (item.textEn || item.text))}
                   </span>
                 </div>
               ))}

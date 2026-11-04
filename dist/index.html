@@ -42,7 +42,7 @@
       }
     } catch(e) {}
   </script>
-  <!-- Immediate Self-Healing Purge for Stale Client News Post Image -->
+  <!-- Immediate Self-Healing for Real Client News Posts -->
   <script>
     try {
       var nKey = 'portal-news-posts';
@@ -53,14 +53,8 @@
           var nChanged = false;
           var nCleaned = nParsed.map(function(item) {
             if (!item) return item;
-            var img = item.image || '';
-            if (
-              item.id === 'POST-01' ||
-              (item.title && (item.title.indexOf('تواصل الاعمال') !== -1 || item.title.indexOf('تواصل الأعمال') !== -1)) ||
-              (item.desc && item.desc.indexOf('الائتلاف الشركات المصرية') !== -1) ||
-              (typeof img === 'string' && (img.indexOf('road-asphalt-paver') !== -1 || img.indexOf('paver') !== -1))
-            ) {
-              item.image = '';
+            if (item.id === 'POST-01' && (!item.image || item.image === 'none')) {
+              item.image = './road-asphalt-paver.jpg';
               nChanged = true;
             }
             return item;
@@ -111,7 +105,7 @@
       }
     }, true);
   </script>
-  <script type="module" crossorigin src="./assets/index-B-nhlpIN.js"></script>
+  <script type="module" crossorigin src="./assets/index-BnOyXh-k.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-icons-C-XPAnUb.js">
   <link rel="modulepreload" crossorigin href="./assets/vendor-charts-i5zeXqZw.js">
   <link rel="stylesheet" crossorigin href="./assets/index-BhPgnxFG.css">
