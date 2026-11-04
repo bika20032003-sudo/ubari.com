@@ -15,7 +15,7 @@
     <!-- Automatic Cache Purge for Immediate Updates -->
   <script>
     try {
-      var buildId = 'build_1793745000000';
+      var buildId = 'build_1793788000000';
       var lastBuild = localStorage.getItem('portal_build_id');
       if (lastBuild !== buildId && 'caches' in window) {
         caches.keys().then(function(names) {
@@ -23,6 +23,23 @@
         });
       }
       localStorage.setItem('portal_build_id', buildId);
+      // Immediate Self-Healing for cached projects in client storage
+      var prjRaw = localStorage.getItem('portal-national-projects');
+      if (prjRaw) {
+        var prjParsed = JSON.parse(prjRaw);
+        if (Array.isArray(prjParsed)) {
+          var prjCleaned = prjParsed.filter(function(p) {
+            return p && p.id !== 'PRJ-EXEC-1463' && p.id !== 'PRJ-UBG-DUN-120' && p.id !== 'PRJ-GHT-ENT-045' && p.id !== 'PRJ-UBG-RST-004';
+          }).map(function(p) {
+            if (p.id === 'PRJ-UBG-SOL-1100') p.image = './road-solar-lighting.jpg';
+            if (p.id === 'PRJ-UBG-360') p.image = './road-aerial-highway.jpg';
+            if (p.id === 'PRJ-UBG-CUL-028') p.image = './road-rollers-compaction.jpg';
+            delete p.specs;
+            return p;
+          });
+          localStorage.setItem('portal-national-projects', JSON.stringify(prjCleaned));
+        }
+      }
     } catch(e) {}
   </script>
   <!-- Immediate Self-Healing Purge for Stale Client News Post Image -->
@@ -94,9 +111,9 @@
       }
     }, true);
   </script>
-  <script type="module" crossorigin src="./assets/index-DFv_rpEb.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/vendor-icons-BXXgBNzy.js">
-  <link rel="modulepreload" crossorigin href="./assets/vendor-charts-CUIPfDf-.js">
+  <script type="module" crossorigin src="./assets/index-BcnSG8ej.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/vendor-icons-C-XPAnUb.js">
+  <link rel="modulepreload" crossorigin href="./assets/vendor-charts-i5zeXqZw.js">
   <link rel="stylesheet" crossorigin href="./assets/index-DP2j6yn6.css">
 </head>
 
