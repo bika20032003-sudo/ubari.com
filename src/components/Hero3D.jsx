@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { 
   ArrowUpRight, 
   Zap, 
@@ -34,23 +34,11 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   // Dynamic Hero Showcase Card State (Controllable from Dashboard - Preserved for Desktop)
   const [heroCard, setHeroCard] = useState(getSavedHeroCard);
 
-  // Mobile News Post Feed State
-  const [mobileNewsList, setMobileNewsList] = useState(getSavedNewsPosts);
-  const [mobileNewsIdx, setMobileNewsIdx] = useState(0);
-  const [isNewsFading, setIsNewsFading] = useState(false);
+  // Selected News / Project Modal State
   const [selectedNewsPost, setSelectedNewsPost] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
-    fetchCloudNews().then(news => {
-      if (isMounted && news && Array.isArray(news) && news.length > 0) {
-        setMobileNewsList(prev => {
-          const merged = mergeNewsPostsResiliently(news, prev);
-          safeStorageSet('portal-news-posts', merged);
-          return merged;
-        });
-      }
-    }).catch(() => {});
 
     fetchCloudHeroCard().then(card => {
       if (isMounted && card && typeof card === 'object') {
@@ -63,17 +51,13 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
       if (!isMounted) return;
       setHeroCard(getSavedHeroCard());
       setHeroBg(getSavedHeroBackground());
-      const updatedNews = getSavedNewsPosts();
-      setMobileNewsList(updatedNews);
     };
     window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('cloud_news_updated', handleStorageChange);
     window.addEventListener('cloud_hero_updated', handleStorageChange);
     window.addEventListener('cloud_hero_bg_updated', handleStorageChange);
     return () => {
       isMounted = false;
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('cloud_news_updated', handleStorageChange);
       window.removeEventListener('cloud_hero_updated', handleStorageChange);
       window.removeEventListener('cloud_hero_bg_updated', handleStorageChange);
     };

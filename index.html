@@ -15,58 +15,20 @@
     <!-- Automatic Cache Purge for Immediate Updates -->
   <script>
     try {
-      var buildId = 'build_1793800000000';
+      var buildId = 'build_20261104_unified_v5';
       var lastBuild = localStorage.getItem('portal_build_id');
-      if (lastBuild !== buildId && 'caches' in window) {
-        caches.keys().then(function(names) {
-          names.forEach(function(name) { caches.delete(name); });
-        });
+      if (lastBuild !== buildId) {
+        localStorage.removeItem('portal-news-posts');
+        localStorage.removeItem('portal-deleted-news-ids');
+        localStorage.removeItem('portal-national-projects');
+        localStorage.removeItem('portal-hero-showcase-card');
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(name) { caches.delete(name); });
+          });
+        }
       }
       localStorage.setItem('portal_build_id', buildId);
-      // Immediate Self-Healing for cached projects in client storage
-      var prjRaw = localStorage.getItem('portal-national-projects');
-      if (prjRaw) {
-        var prjParsed = JSON.parse(prjRaw);
-        if (Array.isArray(prjParsed)) {
-          var prjCleaned = prjParsed.filter(function(p) {
-            return p && p.id !== 'PRJ-EXEC-1463' && p.id !== 'PRJ-UBG-DUN-120' && p.id !== 'PRJ-GHT-ENT-045' && p.id !== 'PRJ-UBG-RST-004';
-          }).map(function(p) {
-            if (p.id === 'PRJ-UBG-SOL-1100') p.image = './road-grader-earthwork.jpg';
-            if (p.id === 'PRJ-UBG-360') p.image = './road-aerial-highway.jpg';
-            if (p.id === 'PRJ-UBG-CUL-028') p.image = './road-rollers-compaction.jpg';
-            delete p.specs;
-            delete p.budget;
-            delete p.startDate;
-            delete p.targetDate;
-            return p;
-          });
-          localStorage.setItem('portal-national-projects', JSON.stringify(prjCleaned));
-        }
-      }
-    } catch(e) {}
-  </script>
-  <!-- Immediate Self-Healing for Real Client News Posts -->
-  <script>
-    try {
-      var nKey = 'portal-news-posts';
-      var nRaw = localStorage.getItem(nKey);
-      if (nRaw) {
-        var nParsed = JSON.parse(nRaw);
-        if (Array.isArray(nParsed)) {
-          var nChanged = false;
-          var nCleaned = nParsed.map(function(item) {
-            if (!item) return item;
-            if (item.id === 'POST-01' && (!item.image || item.image === 'none')) {
-              item.image = './road-asphalt-paver.jpg';
-              nChanged = true;
-            }
-            return item;
-          });
-          if (nChanged) {
-            localStorage.setItem(nKey, JSON.stringify(nCleaned));
-          }
-        }
-      }
     } catch(e) {}
   </script>
   <!-- Pre-render Theme Initialization (Night Mode Default) -->
