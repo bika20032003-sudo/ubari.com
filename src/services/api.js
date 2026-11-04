@@ -39,7 +39,7 @@ const initialSectors = [
     lengthKm: 95,
     progress: 72,
     residentEngineer: 'م. طارق المحجوب',
-    status: 'وفق الجدول الزمني',
+    status: 'جاري التنفيذ الميداني',
     statusColor: 'amber',
     asphaltThicknessCm: 10,
     solarPolesInstalled: 480,
@@ -84,9 +84,7 @@ const initialSummary = {
   totalLengthKm: 360,
   overallProgress: 68.5,
   plannedProgress: 70.0,
-  totalBudgetLyd: 145000000,
-  spentBudgetLyd: 99325000,
-  totalWorkforce: 428,
+      totalWorkforce: 428,
   asphaltPavedKm: 246.6,
   solarPolesTotal: 1730,
   lastUpdated: new Date().toISOString()
@@ -339,13 +337,13 @@ export const fetchMonthlyProgressHistory = async () => {
     // MySQL Server offline, use mock engine
   }
   return [
-    { month: 'يناير', planned: 15, actual: 12, plannedProgress: 15, actualProgress: 12, budget: 18 },
-    { month: 'فبراير', planned: 25, actual: 23, plannedProgress: 25, actualProgress: 23, budget: 32 },
-    { month: 'مارس', planned: 36, actual: 35, plannedProgress: 36, actualProgress: 35, budget: 48 },
-    { month: 'أبريل', planned: 48, actual: 46, plannedProgress: 48, actualProgress: 46, budget: 62 },
-    { month: 'مايو', planned: 58, actual: 56, plannedProgress: 58, actualProgress: 56, budget: 74 },
-    { month: 'يونيو', planned: 64, actual: 63, plannedProgress: 64, actualProgress: 63, budget: 85 },
-    { month: 'يوليو', planned: 70, actual: 68.5, plannedProgress: 70, actualProgress: 68.5, budget: 99.3 }
+    { month: 'يناير', planned: 15, actual: 12, plannedProgress: 15, actualProgress: 12 },
+    { month: 'فبراير', planned: 25, actual: 23, plannedProgress: 25, actualProgress: 23 },
+    { month: 'مارس', planned: 36, actual: 35, plannedProgress: 36, actualProgress: 35 },
+    { month: 'أبريل', planned: 48, actual: 46, plannedProgress: 48, actualProgress: 46 },
+    { month: 'مايو', planned: 58, actual: 56, plannedProgress: 58, actualProgress: 56 },
+    { month: 'يونيو', planned: 64, actual: 63, plannedProgress: 64, actualProgress: 63 },
+    { month: 'يوليو', planned: 70, actual: 68.5, plannedProgress: 70, actualProgress: 68.5 }
   ];
 };
 
@@ -505,30 +503,31 @@ export const addDeletedNewsId = async (id) => {
 
 export const mergeNewsPostsResiliently = (incoming = [], existing = []) => {
   const deletedIds = new Set(getDeletedNewsIds());
-
-  // 1. Authoritative Cloud Priority: If incoming cloud items exist, use them directly
-  if (Array.isArray(incoming) && incoming.length > 0) {
-    const validCloud = incoming
-      .filter(p => p && p.id && !deletedIds.has(p.id))
-      .map(sanitizeNewsItem);
-    if (validCloud.length > 0) {
-      return validCloud;
-    }
-  }
-
-  // 2. Fallback to existing or default initial posts
   const map = new Map();
+
+  // 1. Seed with initial posts (excluding deleted)
   (Array.isArray(initialNewsPosts) ? initialNewsPosts : [])
     .filter(p => p && p.id && !deletedIds.has(p.id))
     .forEach(p => map.set(p.id, sanitizeNewsItem(p)));
 
+  // 2. Overlay incoming cloud posts (excluding deleted) - high authoritative priority
+  if (Array.isArray(incoming)) {
+    incoming
+      .filter(p => p && p.id && !deletedIds.has(p.id))
+      .forEach(p => {
+        if (p && p.id) {
+          map.set(p.id, sanitizeNewsItem(p));
+        }
+      });
+  }
+
+  // 3. Preserve any local existing posts that are not deleted (e.g. newly published posts)
   if (Array.isArray(existing)) {
     existing
       .filter(p => p && p.id && !deletedIds.has(p.id))
       .forEach(p => {
-        if (p && p.id) {
-          const prev = map.get(p.id) || {};
-          map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
+        if (p && p.id && !map.has(p.id)) {
+          map.set(p.id, sanitizeNewsItem(p));
         }
       });
   }
@@ -901,11 +900,7 @@ export const initialHeroCard = {
   distanceEn: '360 km',
   supervisor: 'مشروعات المواصلات',
   supervisorEn: 'Transport Projects',
-  startDate: 'يناير 2025',
-  startDateEn: 'Jan 2025',
-  completionDate: 'ديسمبر 2026',
-  completionDateEn: 'Dec 2026'
-};
+        };
 
 export const getSavedHeroCard = () => {
   try {

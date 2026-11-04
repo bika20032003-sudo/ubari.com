@@ -201,7 +201,7 @@ export default function ProjectExecutiveAnalytics({
                 {lang === 'ar' ? 'منحنى تطور الإنجاز الشهري الفعلي (%)' : 'Monthly Project Execution Curve (%)'}
               </h3>
               <p className="text-xs text-slate-400">
-                {lang === 'ar' ? 'مقارنة نسبة التنفيذ الميداني الفعلي مع الجدول الزمني المعتمد' : 'Actual field progress vs planned schedule timeline'}
+                {lang === 'ar' ? 'متابعة ومطابقة مؤشرات الإنجاز الميداني الفعلي' : 'Monitoring and verification of actual field progress indicators'}
               </p>
             </div>
             <div className="flex items-center gap-4 text-xs font-bold font-mono">

@@ -320,18 +320,10 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 block">
-                      {lang === 'ar' ? 'تاريخ البدء المعتمد:' : 'Start Date:'}
+                      {lang === 'ar' ? 'معايير الرصف والسلامة:' : 'Paving & Safety Code:'}
                     </span>
-                    <strong className="font-mono font-bold text-slate-800 dark:text-slate-100">
-                      {lang === 'ar' ? (heroCard.startDate || 'يناير 2025') : (heroCard.startDateEn || heroCard.startDate || 'Jan 2025')}
-                    </strong>
-                  </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 block">
-                      {lang === 'ar' ? 'الموعد المخطط للإنجاز:' : 'Target Completion:'}
-                    </span>
-                    <strong className="font-mono font-bold text-emerald-600 dark:text-emerald-400">
-                      {lang === 'ar' ? (heroCard.completionDate || 'ديسمبر 2026') : (heroCard.completionDateEn || heroCard.completionDate || 'Dec 2026')}
+                    <strong className="font-bold text-slate-800 dark:text-slate-100">
+                      {lang === 'ar' ? 'كود الطرق الدولي AASHTO' : 'AASHTO Highway Standard'}
                     </strong>
                   </div>
                 </div>

@@ -164,11 +164,8 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
         statusLabel: 'توثيق تنفيذي ميداني 4K',
         statusLabelEn: 'Field Execution',
         statusColor: 'amber',
-        budget: 'معتمد وموثق',
-        contractor: newProjectPhoto.contractor?.trim() || 'م. الموقع الميداني',
-        startDate: new Date().toISOString().split('T')[0],
-        targetDate: '2026-12-31',
-        image: finalImage,
+                contractor: newProjectPhoto.contractor?.trim() || 'م. الموقع الميداني',
+                        image: finalImage,
         desc: newProjectPhoto.desc?.trim() || `توثيق تنفيذي ميداني عالي الدقة لأعمال الرصف والتطوير بمشروع طريق أوباري - غات.`,
         isFieldDoc: true,
         isCustomUploaded: true,
@@ -412,7 +409,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-xs text-amber-500 font-mono font-bold">
                 <span>{project.id}</span>
-                <span>{project.startDate} {project.targetDate ? `— ${project.targetDate}` : ''}</span>
+                <span>{project.progress ? `${project.progress}% نسبة الإنجاز` : ''}</span>
               </div>
               <h3 
                 onClick={() => setSelectedModalProject(project)}
@@ -670,7 +667,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
           location: selectedModalProject.region ? `${selectedModalProject.lengthKm ? selectedModalProject.lengthKm + ' كم • ' : ''}${selectedModalProject.region}` : selectedModalProject.location,
           category: selectedModalProject.statusLabel || (lang === 'ar' ? 'المشروعات التنفيذية' : 'Executive Projects'),
           author: selectedModalProject.contractor || (lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'),
-          timeAgo: selectedModalProject.startDate ? `${selectedModalProject.startDate} — ${selectedModalProject.targetDate || '2026'}` : (selectedModalProject.progress ? `${selectedModalProject.progress}% نسبة الإنجاز` : '')
+          timeAgo: selectedModalProject.progress ? `${selectedModalProject.progress}% نسبة الإنجاز` : (lang === 'ar' ? 'مشروع تنفيذي معتمد' : 'Approved Project')
         } : null}
         isOpen={Boolean(selectedModalProject)}
         onClose={() => setSelectedModalProject(null)}

@@ -447,8 +447,8 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
                   theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-white/5 border-white/10'
                 }`}>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">المخصص المالي:</span>
-                    <strong className="text-sm font-black font-mono text-amber-500">{fin.allocatedLyd}</strong>
+                    <span className="text-[10px] text-slate-400 block">الموقف الميداني:</span>
+                    <strong className="text-sm font-black text-amber-500">معتمد وموثق</strong>
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 block">المصروف الفعلي:</span>

@@ -533,22 +533,24 @@ export default function ExecutiveDashboard({
     }
   };
 
-  // File Upload Handler for News Post Image
+  // File Upload Handler for News Post Image (Optimized for instant lightweight cloud save)
   const handleNewsPostImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
       setIsCompressingNewsImage(true);
-      const compressed = await compressImageFile(file, 1600, 1100, 0.82);
+      // Strongly compress to 1000px max, 0.72 quality (~40-60KB) to ensure rapid, failproof Supabase persistence
+      const compressed = await compressImageFile(file, 1000, 700, 0.72);
       setNewsPostForm(prev => ({ ...prev, image: compressed }));
-      showToast('تم رفع ومعالجة صورة الخبر بنجاح');
+      showToast('تم رفع وضغط صورة الخبر بنجاح');
     } catch (err) {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        setNewsPostForm(prev => ({ ...prev, image: ev.target.result }));
-        showToast('تم رفع صورة الخبر بنجاح');
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressedFallback = await compressImageFile(file, 800, 600, 0.65);
+        setNewsPostForm(prev => ({ ...prev, image: compressedFallback }));
+        showToast('تم رفع ومعالجة صورة الخبر بنجاح');
+      } catch (e2) {
+        alert('تعذر ضغط الصورة. يرجى اختيار صورة بحجم أصغر.');
+      }
     } finally {
       setIsCompressingNewsImage(false);
       if (e.target) e.target.value = '';
@@ -634,9 +636,7 @@ export default function ExecutiveDashboard({
         statusLabel: executiveProjectForm.status === 'completed' ? 'مكتمل' : Number(executiveProjectForm.progress) > 70 ? 'متقدم جداً' : 'جاري التنفيذ',
         statusColor: 'emerald',
         contractor: executiveProjectForm.contractor || 'ائتلاف شركات الطرق الوطنية',
-        startDate: new Date().toISOString().split('T')[0],
-        targetDate: '2026-12-31',
-        image: executiveProjectForm.image || '/road-aerial-highway.jpg',
+                        image: executiveProjectForm.image || '/road-aerial-highway.jpg',
         desc: executiveProjectForm.desc || 'مشروع تنفيذي ميداني على مسار أوباري - غات.',
         specs: {
           thickness: '10-12 سم',
@@ -991,11 +991,8 @@ export default function ExecutiveDashboard({
         statusLabel: 'توثيق تنفيذي ميداني 4K',
         statusLabelEn: 'Field Execution',
         statusColor: 'amber',
-        budget: 'معتمد وموثق',
-        contractor: newMedia.photographer?.trim() || 'م. الموقع الميداني',
-        startDate: newMedia.date || new Date().toISOString().split('T')[0],
-        targetDate: '2026-12-31',
-        image: finalImg,
+                contractor: newMedia.photographer?.trim() || 'م. الموقع الميداني',
+                        image: finalImg,
         desc: newMedia.desc?.trim() || `توثيق تنفيذي ميداني عالي الدقة لأعمال ${newMedia.category} بطريق أوباري - غات.`,
         isFieldDoc: true,
         isCustomUploaded: true,
@@ -1673,15 +1670,15 @@ export default function ExecutiveDashboard({
                   </div>
                 </div>
 
-                {/* Card 4: إجمالي قيمة المشروع (Total Project Budget) */}
+                {/* Card 4: معايير الجودة والمطابقة الهندسية */}
                 <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex items-center justify-between">
                   <div className="space-y-1 text-start">
-                    <span className="text-xs font-bold text-slate-600">إجمالي قيمة المشروع</span>
-                    <div className="text-xl sm:text-2xl font-black font-mono text-blue-600">1,248,000,000</div>
-                    <div className="text-[10px] text-slate-400">دينار ليبي</div>
+                    <span className="text-xs font-bold text-slate-600">المطابقة الهندسية</span>
+                    <div className="text-lg sm:text-xl font-black font-mono text-blue-600">كود AASHTO</div>
+                    <div className="text-[10px] text-slate-400">معايير دولية معتمدة</div>
                   </div>
                   <div className="w-12 h-12 rounded-xl bg-blue-500 text-white flex items-center justify-center shadow-md flex-shrink-0">
-                    <Database className="w-6 h-6" />
+                    <ShieldCheck className="w-6 h-6" />
                   </div>
                 </div>
 
@@ -2465,14 +2462,7 @@ export default function ExecutiveDashboard({
                             <span className="text-slate-400 block text-[10px]">الجهة المشرفة:</span>
                             <strong className="text-slate-200 font-bold truncate block">{localHeroCard.supervisor || 'مشروعات المواصلات'}</strong>
                           </div>
-                          <div>
-                            <span className="text-slate-400 block text-[10px]">تاريخ البدء:</span>
-                            <strong className="text-slate-200 font-bold font-mono">{localHeroCard.startDate || 'يناير 2025'}</strong>
-                          </div>
-                          <div>
-                            <span className="text-slate-400 block text-[10px]">الموعد المخطط:</span>
-                            <strong className="text-emerald-400 font-bold font-mono">{localHeroCard.completionDate || 'ديسمبر 2026'}</strong>
-                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -5412,31 +5402,6 @@ export default function ExecutiveDashboard({
                     value={heroCardForm.supervisor || ''}
                     onChange={(e) => setHeroCardForm({ ...heroCardForm, supervisor: e.target.value })}
                     placeholder="مشروعات المواصلات"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500"
-                  />
-                </div>
-              </div>
-
-              {/* Start Date & Target Completion Date */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">تاريخ البدء المعتمد:</label>
-                  <input
-                    type="text"
-                    value={heroCardForm.startDate || ''}
-                    onChange={(e) => setHeroCardForm({ ...heroCardForm, startDate: e.target.value })}
-                    placeholder="يناير 2025"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">الموعد المخطط للإنجاز:</label>
-                  <input
-                    type="text"
-                    value={heroCardForm.completionDate || ''}
-                    onChange={(e) => setHeroCardForm({ ...heroCardForm, completionDate: e.target.value })}
-                    placeholder="ديسمبر 2026"
                     className="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-amber-500"
                   />
                 </div>
