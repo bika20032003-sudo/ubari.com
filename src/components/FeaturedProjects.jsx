@@ -52,7 +52,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
   });
 
   const mergeProjectsResiliently = (incoming, existing = []) => {
-    const deletedIds = new Set(safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004']));
+    const deletedIds = new Set(safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004', 'PRJ-EXEC-1463']));
     const map = new Map();
     // 1. Defaults first (excluding deleted)
     nationalProjects.filter(p => !deletedIds.has(p.id)).forEach(p => map.set(p.id, p));

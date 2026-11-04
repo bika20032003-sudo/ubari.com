@@ -362,46 +362,6 @@ export default function NewsDetailModal({ post, isOpen, onClose, theme = 'dark',
             </div>
           )}
 
-          {/* Project Technical Specifications Matrix (المواصفات الفنية الميدانية للمشروع) */}
-          {isProject && (
-            <div className={`p-4 rounded-2xl border space-y-3 ${
-              theme === 'light'
-                ? 'bg-white border-slate-200 text-slate-800 shadow-sm'
-                : 'bg-[#0f172a]/80 border-white/10 text-white shadow-md'
-            }`}>
-              <h4 className="text-xs font-black text-amber-500 flex items-center gap-1.5">
-                <Wrench className="w-4 h-4" />
-                <span>{lang === 'ar' ? 'المواصفات الفنية الميدانية المعتمدة:' : 'Certified Technical Specifications:'}</span>
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] sm:text-xs">
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/5">
-                  <span className="text-slate-400 font-medium">{lang === 'ar' ? 'طبقة الرصف والأسفلت:' : 'Pavement Thickness:'}</span>
-                  <span className="text-amber-400 font-bold font-mono">{projectSpecs.thickness || '10 - 12 سم (طبقتين معتمدتين)'}</span>
-                </div>
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/5">
-                  <span className="text-slate-400 font-medium">{lang === 'ar' ? 'المسافة المنجزة والموثقة:' : 'Paved Distance:'}</span>
-                  <span className="text-emerald-400 font-bold font-mono">{projectSpecs.paved || `${post.lengthKm || 90} كم منجز`}</span>
-                </div>
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/5">
-                  <span className="text-slate-400 font-medium">{lang === 'ar' ? 'الإنارة والشواخص المرورية:' : 'Lighting & Signs:'}</span>
-                  <span className="text-cyan-400 font-bold font-mono">
-                    {projectSpecs.solarPoles ? `${projectSpecs.solarPoles} عمود إنارة شمسية` : (projectSpecs.culverts || 'شواخص فسفورية وعواكس')}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 border border-white/5">
-                  <span className="text-slate-400 font-medium">{lang === 'ar' ? 'الآليات والمعدات العاملة:' : 'Field Fleet:'}</span>
-                  <span className="text-purple-400 font-bold font-mono">
-                    {projectSpecs.fleet ? `${projectSpecs.fleet} آلية ومعدة` : 'أسطول متكامل بالموقع'}
-                  </span>
-                </div>
-                <div className="col-span-1 sm:col-span-2 flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                  <span className="text-amber-300 font-medium">{lang === 'ar' ? 'مؤشر مطابقة الجودة والمعايير:' : 'Quality Compliance Score:'}</span>
-                  <span className="text-amber-400 font-black font-mono">{projectSpecs.qualityScore || '99.4% مطابقة معملية'}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Approved Scope & Technical Compliance Box with Logo Golden Dots */}
           <div className={`p-4 rounded-2xl border space-y-3 ${
             theme === 'light'

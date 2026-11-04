@@ -520,48 +520,121 @@ export const sanitizeNewsItem = (p) => {
   };
 };
 
+export const getDeletedNewsIds = () => {
+  try {
+    const ids = safeStorageGet('portal-deleted-news-ids', []);
+    return Array.isArray(ids) ? ids : [];
+  } catch (e) {
+    return [];
+  }
+};
+
+export const addDeletedNewsId = async (id) => {
+  if (!id) return;
+  const current = getDeletedNewsIds();
+  if (!current.includes(id)) {
+    const updated = [...current, id];
+    safeStorageSet('portal-deleted-news-ids', updated);
+    if (isSupabaseConfigured()) {
+      try {
+        await saveCloudStoreItem('portal-deleted-news-ids', updated);
+      } catch (_) {}
+    }
+  }
+};
+
+export const mergeNewsPostsResiliently = (incoming = [], existing = []) => {
+  const deletedIds = new Set(getDeletedNewsIds());
+  const map = new Map();
+
+  // 1. Initial defaults (excluding deleted)
+  (Array.isArray(initialNewsPosts) ? initialNewsPosts : [])
+    .filter(p => p && p.id && !deletedIds.has(p.id))
+    .forEach(p => map.set(p.id, sanitizeNewsItem(p)));
+
+  // 2. Existing items in memory / localStorage (excluding deleted)
+  if (Array.isArray(existing)) {
+    existing
+      .filter(p => p && p.id && !deletedIds.has(p.id))
+      .forEach(p => {
+        const prev = map.get(p.id) || {};
+        map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
+      });
+  }
+
+  // 3. Incoming cloud items (excluding deleted)
+  if (Array.isArray(incoming)) {
+    incoming
+      .filter(p => p && p.id && !deletedIds.has(p.id))
+      .forEach(p => {
+        const prev = map.get(p.id) || {};
+        map.set(p.id, sanitizeNewsItem({ ...prev, ...p }));
+      });
+  }
+
+  return Array.from(map.values()).filter(p => !deletedIds.has(p.id));
+};
+
 export const getSavedNewsPosts = () => {
+  const deletedIds = new Set(getDeletedNewsIds());
   try {
     const saved = localStorage.getItem('portal-news-posts');
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        const cleaned = parsed.map(sanitizeNewsItem);
-        if (JSON.stringify(cleaned) !== saved) {
-          try {
-            localStorage.setItem('portal-news-posts', JSON.stringify(cleaned));
-          } catch (_) {}
-        }
+        const cleaned = parsed
+          .filter(p => p && p.id && !deletedIds.has(p.id))
+          .map(sanitizeNewsItem);
         return cleaned;
       }
     }
   } catch (e) {}
-  return initialNewsPosts;
+  return initialNewsPosts.filter(p => !deletedIds.has(p.id));
 };
 
-export const saveNewsPosts = (posts) => {
+export const saveNewsPosts = async (posts) => {
+  const deletedIds = new Set(getDeletedNewsIds());
+  const filtered = (Array.isArray(posts) ? posts : [])
+    .filter(p => p && p.id && !deletedIds.has(p.id))
+    .map(sanitizeNewsItem);
+
   try {
-    localStorage.setItem('portal-news-posts', JSON.stringify(posts));
+    localStorage.setItem('portal-news-posts', JSON.stringify(filtered));
     window.dispatchEvent(new Event('storage'));
-    window.dispatchEvent(new CustomEvent('cloud_news_updated', { detail: posts }));
+    window.dispatchEvent(new CustomEvent('cloud_news_updated', { detail: filtered }));
   } catch (e) {}
 
   if (isSupabaseConfigured()) {
-    saveCloudNews(posts).catch(err => {
+    try {
+      await saveCloudNews(filtered);
+    } catch (err) {
       console.warn('[Supabase] فشل حفظ الأخبار سحابياً:', err);
-    });
+    }
   }
+  return filtered;
 };
 
 export const syncNewsFromCloud = async () => {
   if (!isSupabaseConfigured()) return null;
   try {
+    // Sync deleted news IDs from cloud first
+    try {
+      const cloudDeleted = await fetchCloudStoreItem('portal-deleted-news-ids');
+      if (Array.isArray(cloudDeleted) && cloudDeleted.length > 0) {
+        const localDeleted = getDeletedNewsIds();
+        const mergedDeleted = Array.from(new Set([...localDeleted, ...cloudDeleted]));
+        safeStorageSet('portal-deleted-news-ids', mergedDeleted);
+      }
+    } catch (_) {}
+
     const cloudNews = await fetchCloudNews();
-    if (cloudNews && Array.isArray(cloudNews) && cloudNews.length > 0) {
-      localStorage.setItem('portal-news-posts', JSON.stringify(cloudNews));
+    if (cloudNews && Array.isArray(cloudNews)) {
+      const localCurrent = getSavedNewsPosts();
+      const merged = mergeNewsPostsResiliently(cloudNews, localCurrent);
+      safeStorageSet('portal-news-posts', merged);
       window.dispatchEvent(new Event('storage'));
-      window.dispatchEvent(new CustomEvent('cloud_news_updated', { detail: cloudNews }));
-      return cloudNews;
+      window.dispatchEvent(new CustomEvent('cloud_news_updated', { detail: merged }));
+      return merged;
     }
   } catch (e) {
     console.warn('[Supabase Sync] خطأ في مزامنة الأخبار:', e);
@@ -614,7 +687,7 @@ export const syncTickerNewsFromCloud = async () => {
 };
 
 export const getDeletedProjectIds = () => {
-  return safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004']);
+  return safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004', 'PRJ-EXEC-1463']);
 };
 
 export const addDeletedProjectId = (id) => {

@@ -19,7 +19,7 @@ import {
 import { translations } from '../i18n/translations';
 import MarqueeTicker from './MarqueeTicker';
 import NewsDetailModal from './NewsDetailModal';
-import { getSavedHeroCard, getSavedNewsPosts, getSavedHeroBackground } from '../services/api';
+import { getSavedHeroCard, getSavedNewsPosts, getSavedHeroBackground, mergeNewsPostsResiliently } from '../services/api';
 import { fetchCloudNews, fetchCloudHeroCard } from '../services/supabase';
 import { safeStorageSet } from '../utils/imageCompressor';
 import { resolveAsset } from '../utils/assets';
@@ -44,8 +44,11 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
     let isMounted = true;
     fetchCloudNews().then(news => {
       if (isMounted && news && Array.isArray(news) && news.length > 0) {
-        setMobileNewsList(news);
-        safeStorageSet('portal-news-posts', news);
+        setMobileNewsList(prev => {
+          const merged = mergeNewsPostsResiliently(news, prev);
+          safeStorageSet('portal-news-posts', merged);
+          return merged;
+        });
       }
     }).catch(() => {});
 

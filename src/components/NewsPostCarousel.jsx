@@ -7,7 +7,7 @@ import {
   Tag, 
   Newspaper
 } from 'lucide-react';
-import { getSavedNewsPosts } from '../services/api';
+import { getSavedNewsPosts, mergeNewsPostsResiliently } from '../services/api';
 import { fetchCloudNews } from '../services/supabase';
 import { safeStorageSet } from '../utils/imageCompressor';
 import { resolveAsset } from '../utils/assets';
@@ -25,8 +25,11 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
     let isMounted = true;
     fetchCloudNews().then(cloudPosts => {
       if (isMounted && cloudPosts && Array.isArray(cloudPosts) && cloudPosts.length > 0) {
-        setPosts(cloudPosts);
-        safeStorageSet('portal-news-posts', cloudPosts);
+        setPosts(prev => {
+          const merged = mergeNewsPostsResiliently(cloudPosts, prev);
+          safeStorageSet('portal-news-posts', merged);
+          return merged;
+        });
       }
     }).catch(() => {});
 

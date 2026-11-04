@@ -88,6 +88,7 @@ import {
   saveExecutiveProjects,
   addDeletedProjectId,
   addDeletedPhotoId,
+  addDeletedNewsId,
   getSavedNewsPosts,
   saveNewsPosts,
   saveFieldPhotos,
@@ -697,7 +698,7 @@ export default function ExecutiveDashboard({
   };
 
   // ── Handlers: News Posts Management (مركز الأخبار المصورة) ──
-  const handleSaveNewsPost = (e) => {
+  const handleSaveNewsPost = async (e) => {
     e.preventDefault();
     if (!newsPostForm.title.trim()) {
       showToast('يرجى إدخال عنوان الخبر');
@@ -744,15 +745,16 @@ export default function ExecutiveDashboard({
     }
 
     setLocalNewsPosts(updated);
-    saveNewsPosts(updated);
+    await saveNewsPosts(updated);
     setIsAddNewsPostModalOpen(false);
   };
 
-  const handleDeleteNewsPost = () => {
+  const handleDeleteNewsPost = async () => {
     if (!newsPostToDelete) return;
+    await addDeletedNewsId(newsPostToDelete.id);
     const updated = localNewsPosts.filter(p => p.id !== newsPostToDelete.id);
     setLocalNewsPosts(updated);
-    saveNewsPosts(updated);
+    await saveNewsPosts(updated);
     showToast('تم حذف الخبر من مركز الأخبار بنجاح');
     setNewsPostToDelete(null);
   };
