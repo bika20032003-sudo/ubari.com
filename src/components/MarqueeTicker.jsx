@@ -13,12 +13,12 @@ function MarqueeTicker({
   lang = 'ar'
 }) {
   const defaultHeroItems = [
-    { text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', textEn: 'Maintenance & Paving of Strategic 360km Ubari – Ghat Highway', tag: 'مشروع وطني', tagEn: 'National Project' },
-    { text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', textEn: 'Overall project progress exceeds 68.5% across corridor', tag: 'متابعة دورية', tagEn: 'Update' },
-    { text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', textEn: 'Ongoing asphalt paving works adhering to certified quality standards', tag: 'سير الأعمال', tagEn: 'Operations' },
-    { text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', textEn: 'Installing traffic safety signs, guideboards and guardrails', tag: 'السلامة المرورية', tagEn: 'Safety' },
-    { text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', textEn: 'Testing asphalt mix and compaction density at certified labs', tag: 'ضبط الجودة', tagEn: 'Quality Control' },
-    { text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', textEn: 'Continuous field engineering supervision and safety monitoring', tag: 'الإشراف الهندسي', tagEn: 'Supervision' }
+    { text: 'دخول اعمال الرصف طريق اوباري-غات الي بلدية العوينات.', textEn: 'Asphalt Paving Operations on Ubari - Ghat Corridor Enter Al-Awaynat Municipality', tag: 'بيان معتمد', tagEn: 'Official Update' },
+    { text: 'في إطار المتابعة الميدانية: نسبة الإنجاز الإجمالية تبلغ 68.5% ووصول أعمال الرصف إلى مشارف العوينات', textEn: 'Field Inspection: 68.5% overall progress with pavement reaching Al-Awaynat outskirts', tag: 'متابعة ميدانية', tagEn: 'Field Progress' },
+    { text: 'مشروع صيانة ورصف وتوسعة طريق أوباري – غات الاستراتيجي بطول 360 كم تحت إشراف جهاز تنفيذ المشروعات', textEn: 'Strategic 360km Ubari - Ghat Highway Rehabilitation under Transportation Projects Authority', tag: 'مشروع وطني', tagEn: 'National Project' },
+    { text: 'توريد وتركيب الشواخص المرورية واللوحات الإرشادية والسياج الواقي', textEn: 'Supplying and installing traffic safety signs, guideboards and guardrails', tag: 'السلامة المرورية', tagEn: 'Road Safety' },
+    { text: 'فحص جودة خلطات الأسفلت والدمك عبر المعامل الجيوتقنية المعتمدة', textEn: 'Testing asphalt mix quality and compaction density at certified labs', tag: 'ضبط الجودة', tagEn: 'Quality Control' },
+    { text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لكافة مراحل الرصف الميداني', textEn: 'Continuous on-site engineering supervision across all paving stages', tag: 'الإشراف الهندسي', tagEn: 'Site Supervision' }
   ];
 
   const [dynamicSelectedWorkItems, setDynamicSelectedWorkItems] = useState(() => getSavedSelectedWorkItems());

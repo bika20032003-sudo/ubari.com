@@ -12,23 +12,21 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>مشروع طريق أوباري - غات | جهاز تنفيذ مشروعات المواصلات</title>
-    <!-- Automatic Cache Purge for Immediate Updates -->
+  <!-- Instant Preload of Authentic News Post Photos for 0ms First Render -->
+  <link rel="preload" as="image" href="./post-5458-alawaynat.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="./post-5474-field-followup.jpg" />
+  <link rel="preload" as="image" href="./road-hero-mobile.jpg" />
+    <!-- Instant Synchronous News Pre-Seed for 0ms Rendering -->
   <script>
     try {
-      var buildId = 'build_20261104_authoritative_db_v6';
+      var buildId = 'build_20261104_instant_v7';
       var lastBuild = localStorage.getItem('portal_build_id');
       if (lastBuild !== buildId) {
-        localStorage.removeItem('portal-news-posts');
-        localStorage.removeItem('portal-deleted-news-ids');
         localStorage.removeItem('portal-national-projects');
         localStorage.removeItem('portal-hero-showcase-card');
-        if ('caches' in window) {
-          caches.keys().then(function(names) {
-            names.forEach(function(name) { caches.delete(name); });
-          });
-        }
+        localStorage.removeItem('portal_ticker_news');
+        localStorage.setItem('portal_build_id', buildId);
       }
-      localStorage.setItem('portal_build_id', buildId);
     } catch(e) {}
   </script>
   <!-- Pre-render Theme Initialization (Night Mode Default) -->
@@ -70,7 +68,7 @@
       }
     }, true);
   </script>
-  <script type="module" crossorigin src="./assets/index-Dg3RWF59.js"></script>
+  <script type="module" crossorigin src="./assets/index-D1hEsY-k.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-ZEFjumsl.css">
 </head>
 

@@ -350,30 +350,30 @@ export const fetchMonthlyProgressHistory = async () => {
 export const initialTickerNews = [
   { 
     id: 'NEWS-01', 
-    text: 'مشروع صيانة ورصف طريق أوباري – غات الاستراتيجي بطول 360 كم', 
-    textEn: 'Maintenance & Paving of the Strategic 360km Ubari – Ghat Highway',
-    tag: 'مشروع وطني', 
-    tagEn: 'National Project',
+    text: 'دخول اعمال الرصف طريق اوباري-غات الي بلدية العوينات.', 
+    textEn: 'Asphalt Paving Operations on Ubari - Ghat Corridor Enter Al-Awaynat Municipality',
+    tag: 'بيان معتمد', 
+    tagEn: 'Official Update',
     active: true, 
-    date: '2026-08-20' 
+    date: '2026-11-04' 
   },
   { 
     id: 'NEWS-02', 
-    text: 'نسبة الإنجاز الفعلي الإجمالية تتجاوز 68.5% على امتداد مسار الطريق', 
-    textEn: 'Overall project execution progress surpasses 68.5% across corridor',
-    tag: 'متابعة دورية', 
-    tagEn: 'Progress Update',
+    text: 'في إطار المتابعة الميدانية: نسبة الإنجاز الإجمالية تبلغ 68.5% ووصول أعمال الرصف إلى مشارف العوينات', 
+    textEn: 'Field Inspection: 68.5% overall progress with pavement reaching Al-Awaynat outskirts',
+    tag: 'متابعة ميدانية', 
+    tagEn: 'Field Progress',
     active: true, 
-    date: '2026-08-19' 
+    date: '2026-11-04' 
   },
   { 
     id: 'NEWS-03', 
-    text: 'تواصل أعمال طبقات الرصف والأسفلت بأعلى معايير الجودة المعتمدة', 
-    textEn: 'Ongoing asphalt paving works adhering to certified quality standards',
-    tag: 'سير الأعمال', 
-    tagEn: 'Operations',
+    text: 'مشروع صيانة ورصف وتوسعة طريق أوباري – غات الاستراتيجي بطول 360 كم تحت إشراف جهاز تنفيذ المشروعات', 
+    textEn: 'Strategic 360km Ubari - Ghat Highway Rehabilitation under Transportation Projects Authority',
+    tag: 'مشروع وطني', 
+    tagEn: 'National Project',
     active: true, 
-    date: '2026-08-18' 
+    date: '2026-11-04' 
   },
   { 
     id: 'NEWS-04', 
@@ -382,7 +382,7 @@ export const initialTickerNews = [
     tag: 'السلامة المرورية', 
     tagEn: 'Road Safety',
     active: true, 
-    date: '2026-08-17' 
+    date: '2026-11-04' 
   },
   { 
     id: 'NEWS-05', 
@@ -391,16 +391,16 @@ export const initialTickerNews = [
     tag: 'ضبط الجودة', 
     tagEn: 'Quality Control',
     active: true, 
-    date: '2026-08-16' 
+    date: '2026-11-04' 
   },
   { 
     id: 'NEWS-06', 
-    text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لمعايير السلامة المرورية', 
-    textEn: 'Continuous on-site engineering supervision and traffic safety monitoring',
+    text: 'إشراف هندسي ميداني متواصل ومتابعة مستمرة لكافة مراحل الرصف الميداني', 
+    textEn: 'Continuous on-site engineering supervision across all paving stages',
     tag: 'الإشراف الهندسي', 
     tagEn: 'Site Supervision',
     active: true, 
-    date: '2026-08-15' 
+    date: '2026-11-04' 
   }
 ];
 
@@ -890,29 +890,23 @@ export const saveExecutiveProjects = (projects) => {
 
 // ── Hero 3D Showcase Card State Management ──
 export const initialHeroCard = {
-  tag: 'الموقف التنفيذي الميداني المعتمد',
-  tagEn: 'Field Operations Status',
-  title: 'أعمال رصف وتأهيل مسار 360 كم',
-  titleEn: '360km Highway Paving Operations',
-  image: './road-paving-official.jpg',
-  progress: 68.5,
+  tag: 'الموقف الميداني المعتمد',
+  tagEn: 'Official Field Status',
+  title: 'دخول اعمال الرصف طريق اوباري-غات الي بلدية العوينات.',
+  titleEn: 'Asphalt Paving Operations on Ubari - Ghat Corridor Reach Al-Awaynat Municipality',
   distance: '360 كيلومتراً',
   distanceEn: '360 km',
-  supervisor: 'مشروعات المواصلات',
-  supervisorEn: 'Transport Projects',
-        };
+  supervisor: 'جهاز تنفيذ مشروعات المواصلات',
+  supervisorEn: 'Transport Projects Authority',
+  image: './post-5458-alawaynat.jpg',
+  progress: 68.5,
+  desc: 'من خلال المتابعة المستمرة لطريق منذو الانطلاق من مدينة أوباري في إتجاه منطقة غات_الكبري بفضل من الله عز وجل اليوم أعمال رصف طبقة الأسفلت تدخل الي بلدية #العوينات ومن ثم باقي المناطق #نطمن أهلنا في جميع مناطق غات بأن الأعمال جارية علي قدم وساق من قبل الإئتلاف الشركات المصرية تستمر أعمالها في جميع المراحل الأخيرة من الطريق تحت إشراف جهاز تنفيذ المشروعات والمواصلات الليبيةلم يتبقى إلا القليل من المشروع الضخم والإستراتيجي في الجنوب بطول 360 كيلوا متر يعتبر من أطول الطرق في الجنوب الليبي والذي يخفف من معاناة المواطنين .\nمكتب المتابعة لمشروع طريق اوباري غات'
+};
 
 export const getSavedHeroCard = () => {
   try {
     const saved = localStorage.getItem('portal-hero-showcase-card');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed && typeof parsed === 'object') {
-        const img = parsed.image;
-        const normalizedImg = (img && img.startsWith('/') && !img.startsWith('//')) ? '.' + img : img;
-        return { ...initialHeroCard, ...parsed, image: normalizedImg || initialHeroCard.image };
-      }
-    }
+    if (saved) return JSON.parse(saved);
   } catch (e) {}
   return initialHeroCard;
 };

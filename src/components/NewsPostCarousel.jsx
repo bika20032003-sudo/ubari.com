@@ -208,7 +208,7 @@ export default function NewsPostCarousel({ theme, lang = 'ar' }) {
                   src={resolveAsset(currentPost.image)} 
                   alt={currentPost.title} 
                   className="w-full h-full object-cover object-center min-h-[250px] sm:min-h-[360px] photo-hover-zoom group-hover:scale-108 transition-transform duration-700 ease-out"
-                  loading="lazy"
+                  loading="eager" fetchpriority="high"
                   decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
