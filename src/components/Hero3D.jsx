@@ -34,74 +34,11 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   // Dynamic Hero Showcase Card State (Controllable from Dashboard - Preserved for Desktop)
   const [heroCard, setHeroCard] = useState(getSavedHeroCard);
 
-  // Mobile News Post Feed State (إرجاع بوست الأخبار الميدانية بالهاتف مكان البطاقة)
-  const [mobileNewsList, setMobileNewsList] = useState(getSavedNewsPosts);
-  const [mobileNewsIdx, setMobileNewsIdx] = useState(0);
-  const [isNewsFading, setIsNewsFading] = useState(false);
+  // Selected News / Project Modal State
   const [selectedNewsPost, setSelectedNewsPost] = useState(null);
 
-  // Touch Swipe for Mobile News Post Card
-  const [touchStartXHero, setTouchStartXHero] = useState(null);
-  const [touchEndXHero, setTouchEndXHero] = useState(null);
-
-  const onTouchStartHero = (e) => {
-    setTouchEndXHero(null);
-    setTouchStartXHero(e.targetTouches[0].clientX);
-  };
-  const onTouchMoveHero = (e) => {
-    setTouchEndXHero(e.targetTouches[0].clientX);
-  };
-  const onTouchEndHero = () => {
-    if (!touchStartXHero || !touchEndXHero) return;
-    const distance = touchStartXHero - touchEndXHero;
-    if (distance > 45) {
-      if (lang === 'ar') prevMobileNews(); else nextMobileNews();
-    } else if (distance < -45) {
-      if (lang === 'ar') nextMobileNews(); else prevMobileNews();
-    }
-  };
-
-  const goToMobileNews = useCallback((newIdx) => {
-    if (!mobileNewsList || mobileNewsList.length === 0 || isNewsFading) return;
-    setIsNewsFading(true);
-    setTimeout(() => {
-      setMobileNewsIdx(newIdx % mobileNewsList.length);
-      setIsNewsFading(false);
-    }, 200);
-  }, [mobileNewsList, isNewsFading]);
-
-  const nextMobileNews = useCallback(() => {
-    if (!mobileNewsList || mobileNewsList.length === 0) return;
-    goToMobileNews((mobileNewsIdx + 1) % mobileNewsList.length);
-  }, [mobileNewsList, mobileNewsIdx, goToMobileNews]);
-
-  const prevMobileNews = useCallback(() => {
-    if (!mobileNewsList || mobileNewsList.length === 0) return;
-    goToMobileNews((mobileNewsIdx - 1 + mobileNewsList.length) % mobileNewsList.length);
-  }, [mobileNewsList, mobileNewsIdx, goToMobileNews]);
-
-  // Automatic 6s progression on mobile
-  useEffect(() => {
-    if (!mobileNewsList || mobileNewsList.length <= 1) return;
-    const timer = setInterval(() => {
-      nextMobileNews();
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [mobileNewsList, nextMobileNews]);
-
-  // Sync state across Cloud and LocalStorage
   useEffect(() => {
     let isMounted = true;
-
-    fetchCloudNews().then(news => {
-      if (isMounted && news && Array.isArray(news) && news.length > 0) {
-        setMobileNewsList(prev => {
-          const merged = mergeNewsPostsResiliently(news, prev);
-          safeStorageSet('portal-news-posts', merged);
-          return merged;
-        });
-      }
-    }).catch(() => {});
 
     fetchCloudHeroCard().then(card => {
       if (isMounted && card && typeof card === 'object') {
@@ -114,16 +51,13 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
       if (!isMounted) return;
       setHeroCard(getSavedHeroCard());
       setHeroBg(getSavedHeroBackground());
-      setMobileNewsList(getSavedNewsPosts());
     };
     window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('cloud_news_updated', handleStorageChange);
     window.addEventListener('cloud_hero_updated', handleStorageChange);
     window.addEventListener('cloud_hero_bg_updated', handleStorageChange);
     return () => {
       isMounted = false;
       window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('cloud_news_updated', handleStorageChange);
       window.removeEventListener('cloud_hero_updated', handleStorageChange);
       window.removeEventListener('cloud_hero_bg_updated', handleStorageChange);
     };
@@ -133,6 +67,11 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
   const activeTickerItems = useMemo(() => {
     return Array.isArray(tickerNews) ? tickerNews.filter(n => n && n.active !== false) : [];
   }, [tickerNews]);
+
+  // Circular progress calculation for SVG
+  const radius = 38;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progressVal / 100) * circumference;
 
   return (
     <section 
@@ -165,114 +104,126 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
             className="w-full h-full object-cover object-center transition-all duration-700"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
+              e.currentTarget.src = resolveAsset('./post-5458-alawaynat.jpg');
             }}
           />
         </picture>
-        <div className={`absolute inset-0 transition-colors duration-500 ${
-          theme === 'light' 
-            ? 'bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/75 to-[#F8FAFC]/98' 
-            : 'bg-gradient-to-b from-[#06080E]/90 via-[#06080E]/75 to-[#06080E]/98'
+
+        {/* 3D Glowing Road Horizon Guide Trajectory */}
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <div className="w-full h-full bg-gradient-to-t from-amber-500/10 via-transparent to-transparent" />
+        </div>
+
+        {/* Multi-Layer Gradient Overlays for High-Contrast Readability */}
+        <div 
+          style={{ opacity: (heroBg.overlayOpacity ?? 70) / 100 }}
+          className={`hero-overlay-left absolute inset-0 transition-opacity duration-500 ${
+            theme === 'light'
+              ? 'bg-gradient-to-r from-[#F8FAFC]/85 via-[#F8FAFC]/50 to-transparent'
+              : 'bg-gradient-to-r from-[#06080E]/95 via-[#06080E]/70 to-transparent'
+          }`} 
+        />
+        {/* Mobile vertical contrast scrim to prevent text bleed over bright photos on phone */}
+        <div 
+          style={{ opacity: (heroBg.overlayOpacity ?? 70) / 100 }}
+          className={`sm:hidden absolute inset-0 transition-opacity duration-500 ${
+            theme === 'light'
+              ? 'bg-gradient-to-b from-[#F8FAFC]/90 via-[#F8FAFC]/50 to-[#F8FAFC]/95'
+              : 'bg-gradient-to-b from-[#06080E]/90 via-[#06080E]/50 to-[#06080E]/95'
+          }`} 
+        />
+        <div className={`hero-overlay-top absolute inset-0 ${
+          theme === 'light'
+            ? 'bg-gradient-to-t from-[#F8FAFC] via-transparent to-[#F8FAFC]/25'
+            : 'bg-gradient-to-t from-[#06080E] via-transparent to-[#06080E]/40'
         }`} />
-        <div className="absolute inset-0 bg-radial-gradient opacity-60 pointer-events-none" />
+        <div className={`absolute bottom-0 left-0 right-0 h-36 ${
+          theme === 'light'
+            ? 'bg-gradient-to-t from-[#F8FAFC] to-transparent'
+            : 'bg-gradient-to-t from-[#06080E] to-transparent'
+        }`} />
       </div>
 
-      {/* ── Top Floating Ticker Marquee with Unified Mobile & Desktop Feeds ── */}
-      <div className="relative z-20 w-full mb-1 sm:mb-3">
+      {/* ── Ambient Radial Glows (GPU-friendly zero-blur radial gradients) ── */}
+      <div 
+        className="absolute z-[1] rounded-full pointer-events-none opacity-60"
+        style={{
+          width: '420px', height: '420px',
+          right: '5%', top: '10%',
+          background: 'radial-gradient(circle, rgba(255,171,0,0.18) 0%, rgba(255,171,0,0.03) 50%, transparent 75%)',
+        }}
+      />
+      <div 
+        className="absolute z-[1] rounded-full pointer-events-none opacity-50"
+        style={{
+          width: '360px', height: '360px',
+          left: '8%', bottom: '12%',
+          background: 'radial-gradient(circle, rgba(0,245,212,0.12) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* ── Single Moving Live Marquee Ticker Directly Under Header ── */}
+      <div className="w-full relative z-30 mb-2 sm:mb-4 select-none">
         <MarqueeTicker 
-          externalItems={activeTickerItems} 
+          variant="hero" 
           theme={theme} 
-          lang={lang} 
+          lang={lang}
           direction={lang === 'ar' ? 'rtl' : 'ltr'} 
+          items={activeTickerItems}
         />
       </div>
 
-      {/* ── Central Hero Interactive Horizon ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto py-2 sm:py-6">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
+      {/* ── Main Hero Content ── */}
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 w-full space-y-4 sm:space-y-8 my-auto py-2 sm:py-4">
+        
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-10 lg:gap-16">
           
-          {/* ── Right Column: Highway Title, Telemetry & Action Buttons ── */}
-          <div className="w-full lg:w-7/12 text-start space-y-4 sm:space-y-6">
+          {/* ── Right Text Column: Clean Government Hierarchy ── */}
+          <div className="w-full lg:w-7/12 space-y-4 sm:space-y-6 animate-fadeIn text-start gsap-header">
             
-            {/* National Strategic Badge with High Security Shield */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full text-xs font-black bg-amber-500/15 border border-amber-500/35 text-amber-500 dark:text-amber-400 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-              <ShieldCheck className="w-4 h-4 text-amber-500" />
-              <span>{lang === 'ar' ? 'المشروع القومي الاستراتيجي بالجنوب الليبي' : 'Strategic National Corridor – Southern Libya'}</span>
+            {/* Official Kicker */}
+            <div className="flex items-center gap-2 text-[11px] sm:text-sm font-bold text-amber-500">
+              <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0" />
+              <span>{lang === 'ar' ? 'دولة ليبيا • جهاز تنفيذ مشروعات المواصلات' : 'State of Libya • Transportation Projects Authority'}</span>
             </div>
 
-            {/* Main Typographic Headline */}
-            <div className="space-y-1 sm:space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-mono tracking-widest text-slate-400 font-bold uppercase">
-                  {lang === 'ar' ? 'جهاز تنفيذ مشروعات المواصلات' : 'Transport Projects Authority'}
+            {/* 4K Hero Title */}
+            <div className="space-y-2 sm:space-y-4">
+              <h1 
+                style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                className={`text-xl xs:text-2xl sm:text-5xl lg:text-6xl font-black leading-normal sm:leading-[1.3] ${
+                  theme === 'light' ? 'text-slate-950' : 'text-white'
+                }`}
+              >
+                <span className="block mb-0.5 sm:mb-2 text-slate-900 dark:text-white text-base xs:text-xl sm:text-4xl lg:text-5xl">{t.heroMainTitle1}</span>
+                <span 
+                  style={{ fontFamily: "'Tajawal', 'Noto Sans Arabic', 'Almarai', sans-serif" }}
+                  className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 px-1 pe-2 pt-3 pb-3 text-2xl xs:text-3xl sm:text-5xl lg:text-6xl overflow-visible font-black tracking-normal"
+                >
+                  {t.heroMainTitle2}
                 </span>
-                <span className="h-px bg-amber-500/40 flex-1 max-w-[80px]" />
-              </div>
-              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-none">
-                <span className={theme === 'light' ? 'text-slate-950' : 'text-white'}>
-                  {lang === 'ar' ? 'مشروع طريق' : 'Ubari – Ghat'}
-                </span>{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 drop-shadow-sm">
-                  {lang === 'ar' ? 'أوباري – غات' : 'Highway Corridor'}
+                <span className="inline-block text-sm xs:text-base sm:text-3xl font-light text-slate-500 dark:text-white/85 ms-1.5 sm:ms-3">
+                  (360 كم)
                 </span>
               </h1>
-              <p className="text-xs sm:text-sm font-bold text-amber-600 dark:text-amber-400/90 font-mono">
-                {lang === 'ar' ? '360 كيلومتراً من التنمية والربط البري الشامل' : '360 km of Strategic Regional Connectivity'}
+              
+              <p className={`text-xs xs:text-sm sm:text-lg lg:text-xl font-bold leading-relaxed ${
+                theme === 'light' ? 'text-slate-800' : 'text-white'
+              }`}>
+                {t.heroSubtitle}
+              </p>
+
+              <p className={`text-[11px] xs:text-xs sm:text-sm lg:text-base max-w-xl leading-relaxed font-normal ${
+                theme === 'light' ? 'text-slate-700' : 'text-white'
+              }`}>
+                {t.heroDesc}
               </p>
             </div>
 
-            {/* Narrative Paragraph */}
-            <p className={`text-xs sm:text-base leading-relaxed font-medium max-w-2xl ${
-              theme === 'light' ? 'text-slate-600' : 'text-slate-300'
-            }`}>
-              {lang === 'ar' 
-                ? 'متابعة حية وميدانية وموثقة لأعمال الصيانة، وإعادة الرصف، والتدوير الأسفلتي، وأبراج الإنارة الشمسية، وحماية الطريق على امتداد مسار أوباري - الفيوات - العوينات - غات.'
-                : 'Direct digital field supervision for FDR cold recycling, asphalt resurfacing, solar illumination masts, and heavy vehicle traffic protection across southern municipal sectors.'}
-            </p>
-
-            {/* Core Telemetry Strip (Total Distance, Sectors, Quality Tested) */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-1 sm:pt-2">
-              <div className={`p-2.5 sm:p-4 rounded-2xl border text-start ${
-                theme === 'light' ? 'bg-white/80 border-slate-200 shadow-sm' : 'bg-white/[0.04] border-white/10 shadow-md'
-              }`}>
-                <span className="text-[10px] sm:text-xs text-slate-400 block font-medium">
-                  {lang === 'ar' ? 'المسافة الإجمالية:' : 'Distance:'}
-                </span>
-                <strong className="text-sm sm:text-xl font-black font-mono text-amber-500">
-                  {lang === 'ar' ? '360 كم' : '360 km'}
-                </strong>
-              </div>
-
-              <div className={`p-2.5 sm:p-4 rounded-2xl border text-start ${
-                theme === 'light' ? 'bg-white/80 border-slate-200 shadow-sm' : 'bg-white/[0.04] border-white/10 shadow-md'
-              }`}>
-                <span className="text-[10px] sm:text-xs text-slate-400 block font-medium">
-                  {lang === 'ar' ? 'القطاعات:' : 'Sectors:'}
-                </span>
-                <strong className={`text-sm sm:text-xl font-black font-mono ${
-                  theme === 'light' ? 'text-slate-900' : 'text-white'
-                }`}>
-                  {lang === 'ar' ? '4 قطاعات' : '4 Sectors'}
-                </strong>
-              </div>
-
-              <div className={`p-2.5 sm:p-4 rounded-2xl border text-start ${
-                theme === 'light' ? 'bg-white/80 border-slate-200 shadow-sm' : 'bg-white/[0.04] border-white/10 shadow-md'
-              }`}>
-                <span className="text-[10px] sm:text-xs text-slate-400 block font-medium">
-                  {lang === 'ar' ? 'الدمك والجودة:' : 'Quality:'}
-                </span>
-                <strong className="text-sm sm:text-xl font-black font-mono text-emerald-500">
-                  99.2%
-                </strong>
-              </div>
-            </div>
-
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1 sm:pt-2">
+            <div className="pt-0.5 sm:pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+              {/* Primary Action Button */}
               <button
-                type="button"
                 onClick={() => {
                   const el = document.getElementById('projects-section');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -285,176 +236,15 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
 
           </div>
 
-          {/* ── Left Column: Mobile News Post Card / Desktop Showcase Card with GPU Hover ── */}
+          {/* ── Left Column: News Post Card on Mobile / Desktop Showcase Card with GPU Hover ── */}
           <div 
             className="w-full lg:w-5/12 flex flex-col items-center lg:items-end animate-scaleUp gsap-scale-in"
           >
             
-            {/* 1. MOBILE ONLY: News Post Card (إرجاع بوست الأخبار الميدانية بالهاتف مكان البطاقة كما طلب المستخدم تماماً) */}
-            {(() => {
-              const currentMobileNews = (mobileNewsList && mobileNewsList.length > 0)
-                ? mobileNewsList[mobileNewsIdx % mobileNewsList.length]
-                : null;
-              if (!currentMobileNews) return null;
-
-              const hasMobileNewsImage = Boolean(
-                currentMobileNews.image &&
-                currentMobileNews.image !== 'none' &&
-                currentMobileNews.image !== 'null' &&
-                String(currentMobileNews.image).trim().length > 0
-              );
-
-              return (
-                <div 
-                  className="w-full max-w-md block lg:hidden"
-                  onTouchStart={onTouchStartHero}
-                  onTouchMove={onTouchMoveHero}
-                  onTouchEnd={onTouchEndHero}
-                >
-                  <div 
-                    onClick={() => setSelectedNewsPost(currentMobileNews)}
-                    className={`w-full rounded-2xl overflow-hidden border shadow-xl text-start transition-all duration-300 cursor-pointer active:scale-[0.99] ${
-                      theme === 'light'
-                        ? 'bg-white border-amber-300/80 shadow-slate-200/90 text-slate-900'
-                        : 'bg-[#090e1a]/95 border-amber-500/30 shadow-black/90 text-white'
-                    }`}
-                  >
-                    
-                    {/* Mobile Post Header: Agency Brand + Tag */}
-                    <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-slate-100 dark:border-white/10 gap-2">
-                      <div className="flex items-center gap-2 min-w-0 flex-1">
-                        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 p-[1px] shadow-sm flex-shrink-0">
-                          <img 
-                            src={resolveAsset('./logo-agency.jpg')} 
-                            alt="جهاز تنفيذ مشروعات المواصلات" 
-                            className="w-full h-full object-contain rounded-[10px] bg-white"
-                            onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                          />
-                        </div>
-                        <div className="text-start leading-tight min-w-0 flex-1 overflow-hidden">
-                          <div className="flex items-center gap-1 min-w-0">
-                            <span className="font-black text-xs truncate">
-                              {lang === 'ar' ? 'مشروعات المواصلات' : 'Transport Projects'}
-                            </span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0 shadow-sm shadow-amber-400/50" />
-                          </div>
-                          <span className="text-[10px] text-slate-400 font-medium truncate block">
-                            {lang === 'ar' ? (currentMobileNews.author || 'المكتب الإعلامي') : (currentMobileNews.authorEn || 'Media Office')} • {lang === 'ar' ? (currentMobileNews.timeAgo || 'مباشر') : (currentMobileNews.timeAgoEn || 'Live')}
-                          </span>
-                        </div>
-                      </div>
-
-                      <span className="text-[10px] font-black px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-500 border border-amber-500/30 shrink-0 whitespace-nowrap">
-                        {lang === 'ar' ? (currentMobileNews.category || 'المستجدات الميدانية') : (currentMobileNews.categoryEn || 'Field News')}
-                      </span>
-                    </div>
-
-                    {/* Mobile Post Photo with Controls */}
-                    <div className="h-44 xs:h-48 relative overflow-hidden group bg-slate-950">
-                      {hasMobileNewsImage ? (
-                        <div className={`w-full h-full relative transition-all duration-300 ease-in-out ${
-                          isNewsFading ? 'opacity-0 scale-[1.02]' : 'opacity-100 scale-100'
-                        }`}>
-                          <img 
-                            src={resolveAsset(currentMobileNews.image)} 
-                            alt={currentMobileNews.title || 'أخبار طريق أوباري غات'} 
-                            className="w-full h-full object-cover transition-transform duration-500"
-                            loading="eager" fetchpriority="high"
-                            onError={(e) => {
-                              e.currentTarget.onerror = null;
-                              e.currentTarget.src = resolveAsset('./post-5458-alawaynat.jpg');
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
-                        </div>
-                      ) : (
-                        <div className="w-full h-full p-4 flex flex-col justify-center items-center text-center bg-gradient-to-br from-amber-500/15 via-[#0c1220] to-[#06080e]">
-                          <span className="text-xs font-black text-amber-400">
-                            {lang === 'ar' ? 'تقرير ميداني معتمد' : 'Official Report'}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Navigation Arrows for Mobile News */}
-                      <button
-                        type="button"
-                        onClick={(e) => { e.stopPropagation(); prevMobileNews(); }}
-                        className="absolute top-1/2 start-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
-                        aria-label="Previous"
-                      >
-                        ‹
-                      </button>
-                      <button
-                        type="button"
-                        onClick={(e) => { e.stopPropagation(); nextMobileNews(); }}
-                        className="absolute top-1/2 end-2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center text-xs border border-white/20 active:scale-90 z-20 cursor-pointer"
-                        aria-label="Next"
-                      >
-                        ›
-                      </button>
-
-                      {/* Slide index & Location pill */}
-                      <div className="absolute bottom-2 start-2.5 end-2.5 flex items-center justify-between text-white text-[10px] gap-2 pointer-events-none z-10">
-                        <span className="px-2 py-0.5 rounded-md bg-black/70 font-mono font-bold text-amber-400 border border-white/10 truncate min-w-0">
-                          {lang === 'ar' ? (currentMobileNews.location || 'طريق أوباري - غات') : (currentMobileNews.locationEn || 'Ubari - Ghat Highway')}
-                        </span>
-                        <span className="font-mono bg-black/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap">
-                          {(mobileNewsIdx % mobileNewsList.length) + 1} / {mobileNewsList.length}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Mobile Post Text Content with Fade */}
-                    <div className="p-3.5 space-y-2">
-                      <div className={`space-y-2 transition-all duration-300 ease-in-out ${
-                        isNewsFading ? 'opacity-0 translate-y-0.5' : 'opacity-100 translate-y-0'
-                      }`}>
-                        <h3 className="font-black text-xs xs:text-sm leading-snug line-clamp-2">
-                          {lang === 'ar' ? currentMobileNews.title : (currentMobileNews.titleEn || currentMobileNews.title)}
-                        </h3>
-                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-normal">
-                          {lang === 'ar' ? currentMobileNews.desc : (currentMobileNews.descEn || currentMobileNews.desc)}
-                        </p>
-                      </div>
-
-                      {/* Dots Indicators + Full Story Prompt */}
-                      <div className="flex items-center justify-between pt-1.5 border-t border-slate-100 dark:border-white/10 text-[10px]">
-                        <div className="flex items-center gap-1">
-                          {mobileNewsList.slice(0, 6).map((_, i) => (
-                            <button
-                              key={i}
-                              type="button"
-                              onClick={(e) => { e.stopPropagation(); goToMobileNews(i); }}
-                              className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                                i === (mobileNewsIdx % mobileNewsList.length) ? 'w-4 bg-amber-500 shadow-sm shadow-amber-500/50' : 'w-1.5 bg-amber-500/30'
-                              }`}
-                              aria-label={`News ${i + 1}`}
-                            />
-                          ))}
-                        </div>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedNewsPost(currentMobileNews);
-                          }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-500 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
-                        >
-                          <span>{lang === 'ar' ? 'عرض المزيد' : 'Read More'}</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
-                        </button>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* 2. DESKTOP ONLY: Preserved 100% Technical Showcase Card */}
+            
             <div 
               onClick={() => setSelectedNewsPost(heroCard)}
-              className={`hidden lg:block w-full max-w-md rounded-2xl sm:rounded-3xl overflow-hidden border shadow-2xl text-start glass-card-hover cursor-pointer ${
+              className={`w-full max-w-md rounded-2xl sm:rounded-3xl overflow-hidden border shadow-2xl text-start glass-card-hover cursor-pointer ${
               theme === 'light' 
                 ? 'bg-white/95 border-slate-200/90 text-slate-900 shadow-slate-200/80' 
                 : 'bg-[#0b101e]/95 border-white/15 text-white shadow-black/80'
@@ -467,13 +257,13 @@ export default function Hero3D({ summaryData, setActiveTab, theme, user, onOpenG
                 data-cursor-label={lang === 'ar' ? 'معاينة 4K ↗' : 'View 4K ↗'}
               >
                 <img 
-                  src={resolveAsset(heroCard.image || "./post-5458-alawaynat.jpg")} 
+                  src={resolveAsset(heroCard.image || "./post-5458-alawaynat.jpg")}
+                  loading="eager" fetchpriority="high" 
                   alt={heroCard.title || "أعمال رصف وتأهيل طريق أوباري غات"} 
                   className="w-full h-full object-cover photo-hover-zoom group-hover:scale-110 transition-transform duration-700 ease-out"
-                  loading="eager" fetchpriority="high"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = resolveAsset('./post-5458-alawaynat.jpg');
+                    e.currentTarget.src = resolveAsset('./road-paving-official.jpg');
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
