@@ -53,21 +53,48 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
 
   const mergeProjectsResiliently = (incoming, existing = []) => {
     const deletedIds = new Set(safeStorageGet('portal-deleted-project-ids', ['PRJ-UBG-DUN-120', 'PRJ-GHT-ENT-045', 'PRJ-UBG-RST-004', 'PRJ-EXEC-1463']));
+    
+    // Dedicated authentic local images map
+    const authenticLocalImages = {
+      'PRJ-UBG-360': './project-fdr-recycling.jpg',
+      'PRJ-UBG-SOL-1100': './project-mc-prime-coat.jpg',
+      'PRJ-UBG-CUL-028': './project-asphalt-compaction.jpg'
+    };
+
+    const cleanProjectItem = (p) => {
+      if (!p || !p.id) return p;
+      const localImg = authenticLocalImages[p.id];
+      // If we have an authentic local image, always prefer it over heavy base64 strings
+      const finalImage = (localImg && (!p.image || p.image.startsWith('data:image')))
+        ? localImg
+        : (p.image || localImg || './project-fdr-recycling.jpg');
+      return { ...p, image: finalImage };
+    };
+
     const map = new Map();
     // 1. Defaults first (excluding deleted)
-    nationalProjects.filter(p => !deletedIds.has(p.id)).forEach(p => map.set(p.id, p));
+    nationalProjects.filter(p => !deletedIds.has(p.id)).forEach(p => map.set(p.id, cleanProjectItem(p)));
+    
     // 2. Existing items in memory (excluding deleted)
     if (Array.isArray(existing)) {
       existing.filter(p => !deletedIds.has(p.id)).forEach(p => {
-        if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
+        if (p && p.id) {
+          const prev = map.get(p.id) || {};
+          map.set(p.id, cleanProjectItem({ ...prev, ...p }));
+        }
       });
     }
+    
     // 3. Incoming items override (excluding deleted)
     if (Array.isArray(incoming)) {
       incoming.filter(p => !deletedIds.has(p.id)).forEach(p => {
-        if (p && p.id) map.set(p.id, { ...map.get(p.id), ...p });
+        if (p && p.id) {
+          const prev = map.get(p.id) || {};
+          map.set(p.id, cleanProjectItem({ ...prev, ...p }));
+        }
       });
     }
+    
     const result = Array.from(map.values()).filter(p => !deletedIds.has(p.id));
     return result.length > 0 ? result : nationalProjects.filter(p => !deletedIds.has(p.id));
   };
@@ -376,7 +403,7 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
               <img
                 src={resolveAsset(project.image)}
                 alt={project.title}
-                loading="lazy"
+                loading="eager" fetchpriority="high"
                 decoding="async"
                 className="w-full h-full object-cover photo-hover-zoom group-hover:scale-110 transition-transform duration-700 ease-out"
                 onError={(e) => {
