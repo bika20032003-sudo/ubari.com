@@ -11,27 +11,33 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>مشروع طريق أوباري - غات | جهاز تنفيذ مشروعات المواصلات</title>
+  <title>مشروع طريق أوباري - غات | جهاز تنفيذ مشروعات المواصلات</title>
+
   <!-- Instant Preload of Authentic Highway & Paving Project Photos (Zero Network Delay) -->
   <link rel="preload" as="image" href="./project-fdr-recycling.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="./project-mc-prime-coat.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="./project-asphalt-compaction.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="./post-5458-alawaynat.jpg" fetchpriority="high" />
-  <link rel="preload" as="image" href="./post-5474-field-followup.jpg" />
+  <link rel="preload" as="image" href="./post-5474-field-followup.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="./road-aerial-highway.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="./logo-agency.jpg" fetchpriority="high" />
   <link rel="preload" as="image" href="./road-hero-mobile.jpg" />
-    <!-- Instant Synchronous News Pre-Seed for 0ms Rendering -->
+
+  <!-- Instant Synchronous Build Cache Guard for 0ms Fresh Rendering -->
   <script>
     try {
-      var buildId = 'build_20261104_instant_v7';
+      var buildId = 'build_20261105_v9_instant';
       var lastBuild = localStorage.getItem('portal_build_id');
       if (lastBuild !== buildId) {
         localStorage.removeItem('portal-national-projects');
         localStorage.removeItem('portal-hero-showcase-card');
         localStorage.removeItem('portal_ticker_news');
+        localStorage.removeItem('portal-field-photos-v2');
         localStorage.setItem('portal_build_id', buildId);
       }
     } catch(e) {}
   </script>
+
   <!-- Pre-render Theme Initialization (Night Mode Default) -->
   <script>
     try {
@@ -45,12 +51,14 @@
       }
     } catch(e) {}
   </script>
+
   <!-- Google Fonts Optimized (Tajawal, Almarai & Noto Sans Arabic with swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Almarai:wght@400;700;800&family=Noto+Sans+Arabic:wght@400;600;700;800;900&display=swap"
     rel="stylesheet">
+
   <!-- GitHub Pages & Mobile WebKit Universal Asset Rescue -->
   <script>
     window.addEventListener('error', function(e) {
@@ -71,12 +79,12 @@
       }
     }, true);
   </script>
-  <script type="module" crossorigin src="./assets/index-Oq9uCZ_f.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-ZEFjumsl.css">
+  <script type="module" crossorigin src="./assets/index-De7sZB4f.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Cc-awF5Q.css">
 </head>
 
 <body class="bg-[#06080E] text-slate-100 overflow-x-hidden selection:bg-amber-500 selection:text-black">
-  <div id="root"></div>
+  <div id="root"></div>
 </body>
 
 </html>
