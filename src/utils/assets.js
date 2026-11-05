@@ -12,6 +12,7 @@ export const ASSETS = {
  * Universal Asset URL Resolver:
  * Ensures assets resolve cleanly whether running locally (Vite),
  * or hosted in subfolders like GitHub Pages (/-/portal/ or /-/ubari-portal/).
+ * Matches <link rel="preload"> exactly without dynamic query params for 0ms instant loading.
  */
 export const resolveAsset = (path) => {
   if (!path || typeof path !== 'string' || !path.trim()) return '';
@@ -19,7 +20,6 @@ export const resolveAsset = (path) => {
     return path;
   }
   const clean = path.replace(/^(\.\/|\/)/, '');
-  const versionParam = '?v=20261104_unified_ticker_v3';
 
   if (typeof window !== 'undefined' && window.location) {
     const pathname = window.location.pathname || '';
@@ -30,11 +30,11 @@ export const resolveAsset = (path) => {
       : (pathname.endsWith('/') ? pathname : pathname + '/');
 
     if (baseDir && baseDir !== '/') {
-      return `${baseDir}${clean}${versionParam}`;
+      return `${baseDir}${clean}`;
     }
   }
 
-  return `./${clean}${versionParam}`;
+  return `./${clean}`;
 };
 
 export const getImageAsset = (key) => {

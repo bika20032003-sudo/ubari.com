@@ -382,11 +382,13 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
       )}
 
       {/* 1. DESKTOP ONLY: Luxury Cards Grid (Ubari - Ghat Projects) with GSAP Stagger (100% Preserved) */}
-      <div className="hidden md:grid grid-cols-2 gap-6 sm:gap-8 gsap-stagger-container">
-        {displayProjects.map((project) => (
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 gsap-stagger-container">
+        {displayProjects.map((project, pIndex) => (
           <div
             key={project.id}
-            className={`p-6 sm:p-8 rounded-[36px] border shadow-2xl space-y-4 sm:space-y-6 text-start relative overflow-hidden glass-card-hover gsap-stagger-item ${
+            className={`p-6 sm:p-7 rounded-[32px] border shadow-2xl space-y-4 sm:space-y-5 text-start relative overflow-hidden glass-card-hover gsap-stagger-item flex flex-col justify-between ${
+              displayProjects.length === 3 && pIndex === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+            } ${
               project.isFieldDoc ? 'border-amber-500/40 ring-1 ring-amber-500/20' : ''
             } ${theme === 'light'
                 ? 'bg-white border-slate-200/90 text-slate-900 shadow-slate-200/80'
@@ -468,25 +470,19 @@ export default function FeaturedProjects({ theme, lang = 'ar' }) {
             </div>
 
             {/* Specifications Strip & Interactive Button */}
-            <div className="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 dark:border-white/10">
-              <div className="flex items-center gap-4 text-xs font-mono">
-                <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400">
-                  <Building2 className="w-3.5 h-3.5 text-amber-500" />
-                  <span className="truncate max-w-[140px]">{project.contractor}</span>
-                </div>
-                <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>{project.statusLabel || (project.status === 'completed' ? 'مشروع مكتمل' : 'جاري التنفيذ')}</span>
-                </div>
+            <div className="pt-3 border-t border-slate-200 dark:border-white/10 flex items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 min-w-0">
+                <Building2 className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <span className="truncate max-w-[160px] font-medium">{project.contractor}</span>
               </div>
 
               {/* Action Button for Details */}
               <button
                 type="button"
                 onClick={() => setSelectedModalProject(project)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500/15 hover:bg-amber-500 text-amber-400 hover:text-slate-950 border border-amber-500/35 transition-all duration-200 active:scale-95 shadow-sm group/btn shrink-0 cursor-pointer"
               >
-                <span>{lang === 'ar' ? 'عرض تفاصيل المشروع' : 'View Project Details'}</span>
+                <span>{lang === 'ar' ? 'عرض تفاصيل المشروع' : 'View Details'}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-[-1px] group-hover/btn:translate-y-[-1px]" />
               </button>
             </div>

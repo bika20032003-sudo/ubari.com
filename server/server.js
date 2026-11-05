@@ -20,8 +20,8 @@ const fallbackSummary = {
   totalLengthKm: 360,
   overallProgress: 68.5,
   plannedProgress: 70.0,
-  totalBudgetLyd: 145000000,
-  spentBudgetLyd: 99325000,
+  
+  
   totalWorkforce: 428,
   asphaltPavedKm: 246.6,
   solarPolesTotal: 1730,
@@ -49,7 +49,7 @@ const fallbackSectors = [
     lengthKm: 95,
     progress: 72,
     residentEngineer: 'م. طارق المحجوب',
-    status: 'وفق الجدول الزمني',
+    status: 'جاري التنفيذ الميداني',
     statusColor: 'amber',
     asphaltThicknessCm: 10,
     solarPolesInstalled: 480,

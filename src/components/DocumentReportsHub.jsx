@@ -451,8 +451,8 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
                     <strong className="text-sm font-black text-amber-500">معتمد وموثق</strong>
                   </div>
                   <div>
-                    <span className="text-[10px] text-slate-400 block">المصروف الفعلي:</span>
-                    <strong className="text-sm font-black font-mono text-emerald-500">{fin.disbursedLyd} ({fin.rate})</strong>
+                    <span className="text-[10px] text-slate-400 block">نسبة الإنجاز المعتمدة:</span>
+                    <strong className="text-sm font-black font-mono text-emerald-500">{fin.rate || "68.5%"}</strong>
                   </div>
                 </div>
 
@@ -463,7 +463,7 @@ export default function DocumentReportsHub({ documents = DEFAULT_DOCS, theme, la
                     className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs shadow-md flex items-center gap-1.5 transition-transform hover:scale-105 cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
-                    <span>تحميل التقرير المالي</span>
+                    <span>تحميل التقرير الفني</span>
                   </button>
                 </div>
               </div>

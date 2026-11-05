@@ -27,7 +27,7 @@ CREATE TABLE `project_summary` (
     `total_length_km` DECIMAL(6, 2) NOT NULL DEFAULT 360.00 COMMENT 'الطول الإجمالي للطريق بالكيلومتر',
     `overall_progress` DECIMAL(5, 2) NOT NULL DEFAULT 68.50 COMMENT 'نسبة الإنجاز الفعلي %',
     `planned_progress` DECIMAL(5, 2) NOT NULL DEFAULT 70.00 COMMENT 'نسبة الإنجاز المخطط %',
-    `total_budget_lyd` DECIMAL(15, 2) NOT NULL DEFAULT 145000000.00 COMMENT 'الميزانية الكلية المرصودة بالدينار الليبي',
+    
     `spent_budget_lyd` DECIMAL(15, 2) NOT NULL DEFAULT 99325000.00 COMMENT 'المصروف الفعلي حتى تاريخه',
     `total_workforce` INT NOT NULL DEFAULT 428 COMMENT 'إجمالي القوى العاملة الميدانية',
     `asphalt_paved_km` DECIMAL(6, 2) NOT NULL DEFAULT 246.60 COMMENT 'إجمالي المسافة المرصوفة بالأسفلت (كم)',
@@ -129,7 +129,7 @@ INSERT INTO `project_summary` (
     360.00,
     68.50,
     70.00,
-    145000000.00,
+    
     99325000.00,
     428,
     246.60,
@@ -151,7 +151,7 @@ INSERT INTO `sectors` (
 ),
 (
     2, 'SEC-02', 'القطاع الثاني: الفيوات - العوينات', 95.00, 72.00,
-    'م. طارق المحجوب', 'وفق الجدول الزمني', 'amber',
+    'م. طارق المحجوب', 'جاري التنفيذ الميداني', 'amber',
     10.00, 480, 130, '/road-paving-official.jpg',
     'أعمال توسعة الأكتاف وبناء قنوات تصريف مياه الأمطار في أودية العوينات.'
 ),

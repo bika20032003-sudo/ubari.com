@@ -31,7 +31,7 @@ const initialSectors = [
     solarPolesInstalled: 640,
     activeWorkers: 115,
     notes: 'تم الانتهاء من الطبقة الرابطة وجاري استكمال الرصف النهائي للطبقة السطحية.',
-    image: './road-paving-official.jpg'
+    image: './project-fdr-recycling.jpg'
   },
   {
     id: 'SEC-02',
@@ -45,7 +45,7 @@ const initialSectors = [
     solarPolesInstalled: 480,
     activeWorkers: 130,
     notes: 'أعمال دمك الأسفلت وتوسعة الأكتاف وقنوات تصريف مياه الأمطار في أودية العوينات.',
-    image: './road-rollers-compaction.jpg'
+    image: './post-5458-alawaynat.jpg'
   },
   {
     id: 'SEC-03',
@@ -59,7 +59,7 @@ const initialSectors = [
     solarPolesInstalled: 320,
     activeWorkers: 98,
     notes: 'تسوية الأساس الحجري بالكاشطات الموتورية وإزالة الرمال الزاحفة وإعادة التأسيس.',
-    image: './road-grader-earthwork.jpg'
+    image: './project-asphalt-compaction.jpg'
   },
   {
     id: 'SEC-04',
@@ -296,26 +296,24 @@ export const initialFieldDispatches = [
 
 export const initialFinancialReports = [
   {
-    id: 'FIN-2026-Q2',
-    title: 'تقرير الموقف المالي والمستخلصات الربع سنوي – Q2 2026',
-    category: 'التقارير المالية',
+    id: 'DOC-TECH-Q2',
+    title: 'تقرير الموقف الفني والتنفيذي الربع سنوي – Q2 2026',
+    category: 'التقارير الهندسية',
     date: '2026-07-30',
     allocatedLyd: 'معتمد وموثق',
-    disbursedLyd: '99,325,000 د.ل',
     rate: '68.5%',
-    author: 'الإدارة المالية – جهاز تنفيذ مشروعات المواصلات',
+    author: 'إدارة المشروعات – جهاز تنفيذ مشروعات المواصلات',
     size: '3.4 MB',
     type: 'PDF'
   },
   {
-    id: 'FIN-AUD-01',
-    title: 'محضر التدقيق المالي ومطابقة كميات الأسفلت الموردة',
-    category: 'التدقيق المالي',
+    id: 'DOC-AUD-01',
+    title: 'محضر التدقيق الفني ومطابقة كميات الأسفلت المنفذة بالموقع',
+    category: 'التدقيق الهندسي',
     date: '2026-06-25',
-    allocatedLyd: '38,500,000 د.ل',
-    disbursedLyd: '32,340,000 د.ل',
+    allocatedLyd: 'معتمد وموثق',
     rate: '84.0%',
-    author: 'لجنة المراجعة والتدقيق المالي الفني',
+    author: 'لجنة المراجعة والتدقيق الفني الميداني',
     size: '2.1 MB',
     type: 'PDF'
   }
